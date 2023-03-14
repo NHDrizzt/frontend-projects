@@ -1,0 +1,49 @@
+:root {
+  --clr-primary-hsl-bright-blue: hsl(220, 98%, 61%);
+
+  --clr-light-theme-gray: hsl(0, 0%, 98%);
+  --clr-light-theme-grayish-blue-verylight: hsl(236, 33%, 92%);
+  --clr-light-theme-grayish-blue-light: hsl(233, 11%, 84%);
+  --clr-light-theme-grayish-blue-dark: hsl(236, 9%, 61%);
+  --clr-light-theme-grayish-blue-verydark: hsl(235, 19%, 35%);
+
+  --clr-dark-theme-verydark-blue: hsl(235, 21%, 11%);
+  --clr-dark-theme-verydark-blue-desaturated: hsl(235, 24%, 19%);
+  --clr-dark-theme-light-grayish-blue: hsl(234, 39%, 85%);
+  --clr-dark-theme-light-grayish-blue-hover: hsl(236, 33%, 92%);
+  --clr-dark-theme-dark-grayish-blue: hsl(234, 11%, 52%);
+  --clr-dark-theme-verydark-grayish-blue: hsl(233, 14%, 35%);
+
+  --fs--primary: 1.125rem;
+  --ff-dafault: 'Josefin Sans', sans-serifl;
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ff-dafault);
+  font-size: var(--fs--primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrapper {
+  width: calc(100% - 2rem);
+  max-width: 70.5rem;
+  margin-inline: auto;
+}
