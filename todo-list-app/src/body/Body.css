@@ -3,52 +3,86 @@
     background-image: url("../images/bg-mobile-light.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-
-}
-
-.content-header {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 200px;
-}
-
-
-.item-input-li {
-    display: flex;
-    gap: 10px;
-}
-
-main {
-    position: relative;
 }
 
 .content-wrapper {
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    width: 100%;
     align-items: center;
-    top: -50%;
-    left: 50%;
-    translate: -50%
+}
+
+.content-container {
+    width: 88%;
 }
 
 .content-header {
-    width: 375px;
+    margin-block-start: 48px;
+    display: flex;
+    justify-content: space-between;
 }
 
+.content-header > img {
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.content-header h1{
+    font-weight: var(--fw-bold);
+    color: #FFF;
+    font-size: 24px;
+    letter-spacing: 15px;
+}
+
+.content-body {
+    padding-top: 40px;
+}
+
+.item-input-li {
+    display: flex;
+    gap: 10px;
+}
 
 @media(min-width: 37.5em) {
 
+    .content-container {
+        width: auto;
+    }
+
+    .content-header > img {
+        max-width: 26px;
+        max-height: 26px;
+    }
+
     .content-header {
-        width: 37.5em;
+        width: 38.5em;
         display: flex;
         justify-content: space-between;
-        margin-top: 40vh;
+        margin-top: 34vh;
+    }
+
+    .content-body {
+        display: flex;
+        width: 100%;
+        padding-top: 40px;
     }
 
     .todo-list-section {
         min-height: 300px;
         background-image: url('../images/bg-desktop-light.jpg');
+    }
+
+    .content-wrapper {
+        left: 50%;
+        translate: -50%
+    }
+
+    .content-wrapper {
+        top: -210px;
+    }
+
+    .content-header h1{
+        font-size: 40px;
     }
 }

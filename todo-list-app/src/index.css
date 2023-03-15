@@ -44,6 +44,6 @@ body {
 
 .wrapper {
   width: calc(100% - 2rem);
-  max-width: 70.5rem;
+  max-width: 20rem;
   margin-inline: auto;
 }
