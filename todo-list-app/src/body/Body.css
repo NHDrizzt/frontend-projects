@@ -36,12 +36,76 @@
 }
 
 .content-body {
+    display: flex;
+    flex-direction: column;
     padding-top: 40px;
+}
+
+.main-input {
+    margin-bottom: 1.5rem;
+}
+
+.main-input .item-input-li {
+    border-radius: 5px;
 }
 
 .item-input-li {
     display: flex;
-    gap: 10px;
+    background-color: #FFFFFF;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 23px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.custom-radio input[type='radio'] {
+    width: 25px;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status p {
+    opacity: 0.5;
+}
+
+.status .items-main {
+    display: flex;
+    gap: 24px;
+}
+
+.custom-radio::after {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.custom-radio input[type="radio"]:checked + ::after {
+    content: url('../images/icon-check.svg'); /* use your custom image for the checkmark */
+}
+
+.input-cool {
+    border: none;
+    width: 100%;
+}
+
+.main-input {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-tasks {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    text-align: center;
+    padding: 50px;
+    opacity: 0.5;
 }
 
 @media(min-width: 37.5em) {
