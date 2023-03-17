@@ -52,7 +52,6 @@
 .item-input-li {
     display: flex;
     background-color: #FFFFFF;
-    border-radius: 5px 5px 0 0;
     width: 100%;
     overflow: hidden;
     padding: 23px;
@@ -102,10 +101,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.secondary-tasks .item-input-li:nth-child(1) {
+    border-radius: 5px 5px 0 0;
+}
+
 .footer {
     text-align: center;
     padding: 50px;
     opacity: 0.5;
+    color: #5B5E7E;
 }
 
 @media(min-width: 37.5em) {

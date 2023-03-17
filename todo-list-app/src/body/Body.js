@@ -4,17 +4,29 @@ import backgroundImageLightThemeMobile from '../images/bg-mobile-light.jpg'
 import backgroundImageDarkTheme from '../images/bg-desktop-dark.jpg'
 import iconSun from '../images/icon-sun.svg'
 import iconMoon from '../images/icon-moon.svg'
+import {useState} from "react";
 
 
 const Body = () => {
+    const [isDarkMode, setIsDarkMode] = useState(false)
+    
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode)
+        !isDarkMode ? document.body.style.backgroundColor = '#171823' : document.body.style.backgroundColor = '#FFF'
+    }
+    
+    const imageBackgroundChange = {
+        backgroundImage: !isDarkMode ? `url(${backgroundImageLightThemeDesktop})` : `url(${backgroundImageDarkTheme})`,
+    };
+    
     return (
         <main>
-            <section className='todo-list-section'>
+            <section className='todo-list-section' style={imageBackgroundChange}>
                 <div className="content-wrapper">
                     <div className="content-container">
                         <div className="content-header">
                             <h1>TODO</h1>
-                            <img src={iconMoon} alt=""/>
+                            <img onClick={toggleDarkMode} src={isDarkMode ? iconMoon : iconSun} alt=""/>
                         </div>
                         <div className="content-body">
                             <div className="main-input">
@@ -26,6 +38,18 @@ const Body = () => {
                                 </div>
                             </div>
                             <div className="secondary-tasks">
+                                <div className="item-input-li">
+                                    <label className='custom-radio'>
+                                        <input className='radio-button' type="radio" name="example" value="option1"/>
+                                    </label>
+                                    <p>some task todo</p>
+                                </div>
+                                <div className="item-input-li">
+                                    <label className='custom-radio'>
+                                        <input className='radio-button' type="radio" name="example" value="option1"/>
+                                    </label>
+                                    <p>some task todo</p>
+                                </div>
                                 <div className="item-input-li">
                                     <label className='custom-radio'>
                                         <input className='radio-button' type="radio" name="example" value="option1"/>
