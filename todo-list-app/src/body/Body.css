@@ -45,21 +45,45 @@
     margin-bottom: 1.5rem;
 }
 
-.main-input .item-input-li {
+.main-input .item-input-li-lightmode {
     border-radius: 5px;
 }
 
-.item-input-li {
+.main-input .item-input-li-darkmode {
+    border-radius: 5px;
+}
+
+.item-input-li-lightmode {
     display: flex;
     background-color: #FFFFFF;
     width: 100%;
     overflow: hidden;
     padding: 23px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+
 }
 
-.custom-radio input[type='radio'] {
-    width: 25px;
+.item-input-li-lightmode:hover .close {
+    opacity: 1;
+}
+
+.item-input-li-darkmode:hover .close {
+    opacity: 1;
+}
+
+.task-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.item-input-li-darkmode {
+    display: flex;
+    background-color: var(--clr-dark-theme-verydark-blue-desaturated);
+    width: 100%;
+    overflow: hidden;
+    padding: 23px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
 
 .status {
@@ -69,7 +93,12 @@
 }
 
 .status p {
-    opacity: 0.5;
+    color: var(--clr-dark-theme-dark-grayish-blue);
+    opacity: 0.8;
+}
+
+.status p:hover {
+    color: var(--clr-primary-hsl-bright-blue);
 }
 
 .status .items-main {
@@ -77,19 +106,46 @@
     gap: 24px;
 }
 
-.custom-radio::after {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
+.check {
+    width: 24px;
+    height: 22px;
+    border: 1px solid hsl(233, 14%, 35%);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 20px;
 }
 
-.custom-radio input[type="radio"]:checked + ::after {
-    content: url('../images/icon-check.svg'); /* use your custom image for the checkmark */
+.check img {
+    transform: scale(0);
+}
+
+.active-check {
+    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+
+.active-check img {
+    transform: scale(1);
+}
+
+.check.active-check {
+    display: flex;
+    border: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    background: transparent;
+    border: none;
+    outline: none;
+    opacity: 0;
+    transition: all 0.4s ease;
+    cursor: pointer;
 }
 
 .input-cool {
-    border: none;
+    all: unset;
+    color: #C8CBE7;
     width: 100%;
 }
 
@@ -105,10 +161,18 @@
     border-radius: 5px 5px 0 0;
 }
 
+.secondary-tasks-lightmode p {
+    color: #C8CBE7;
+}
+
+.secondary-tasks-darkmode p {
+    color: black;
+}
+
 .footer {
     text-align: center;
     padding: 50px;
-    opacity: 0.5;
+    opacity: 0.8;
     color: #5B5E7E;
 }
 
