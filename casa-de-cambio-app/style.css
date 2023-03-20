@@ -25,6 +25,7 @@ span {
     height: 48px;
     border-radius: 10px;
     margin-right: 14px;
+    text-indent: 10px;
 }
 
 button {
@@ -45,7 +46,7 @@ button {
     font-family: 'Fira Code';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 24px;
     line-height: 16px;
 }
 
@@ -83,4 +84,9 @@ h2 {
 .content-card-container {
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
+}
+
+::placeholder {
+    font-size: 16px;
 }
