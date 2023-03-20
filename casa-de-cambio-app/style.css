@@ -1,0 +1,86 @@
+body {
+    background-color: #282C33;
+    display: grid;
+    place-items: center;
+    min-height: 80vh;
+}
+
+p, h1 {
+    color: white;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+span {
+    color: #95EBA8;
+}
+
+.input-field {
+    border: none;
+    color: white;
+    background: rgba(217, 217, 217, 0.1);
+    width: 171px;
+    height: 48px;
+    border-radius: 10px;
+    margin-right: 14px;
+}
+
+button {
+    border: none;
+    background-color: #96EB95;
+    padding: 10px;
+    width: 171px;
+    height: 48px;
+    border-radius: 10px;
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+}
+
+.main-paragraph {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.content-api {
+    width: 1200px;
+    height: auto;
+    background: rgba(217, 217, 217, 0.1);
+    border-radius: 10px;
+    margin-top: 57px;
+}
+
+.card-api {
+    background: rgba(0, 0, 0, 0.2);
+    width: 150px;
+    height: 44px;
+    padding: 5px;
+    margin: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.main-title {
+    color: white;
+    text-align: center;
+    padding-top: 16px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.content-card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
