@@ -51,7 +51,7 @@ button {
 }
 
 .content-api {
-    width: 1200px;
+    width: 380px;
     height: auto;
     background: rgba(217, 217, 217, 0.1);
     border-radius: 10px;
@@ -89,4 +89,10 @@ h2 {
 
 ::placeholder {
     font-size: 16px;
+}
+
+@media (min-width: 1200px) {
+    .content-api {
+        width: 1200px;
+    }
 }
