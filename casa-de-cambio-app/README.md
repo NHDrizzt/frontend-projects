@@ -5,8 +5,8 @@ Thanks for checking out this front-end project.
 
 ### Links
 
-- Solution URL: [My solution](http://chubby-straw.surge.sh)
-  http://chubby-straw.surge.sh
+- Solution URL: [My solution](http://glamorous-receipt.surge.sh)
+
 ### Screenshot
 
 ![](./solution/casa-de-cambio-app.PNG)
