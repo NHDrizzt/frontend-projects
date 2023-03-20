@@ -10,7 +10,7 @@ const URL = 'https://api.exchangerate.host/latest?base='
 const createMainTitle = () => {
     mainTitle.innerHTML = ''
     const mainH2 = document.createElement('h2')
-    mainH2.innerHTML = `Valores referentes a 1 ${mainButton.value}`
+    mainH2.innerHTML = `Valores referentes a 1 ${mainButton.value.toUpperCase()}`
     mainTitle.appendChild(mainH2)
 }
 
@@ -39,7 +39,7 @@ pesquisa.addEventListener('click', () => {
         .then((data) => {
             const keyValues = Object.entries(data.rates)
             const myKeys = Object.keys(data.rates)
-            if(!myKeys.includes(mainButton.value)) {
+            if(!myKeys.includes(mainButton.value.toUpperCase())) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
