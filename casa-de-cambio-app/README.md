@@ -5,7 +5,7 @@ Thanks for checking out this front-end project.
 
 ### Links
 
-- Solution URL: [Add solution URL here](chubby-straw.surge.sh)
+- Solution URL: [My solution](chubby-straw.surge.sh)
 
 ### Screenshot
 
