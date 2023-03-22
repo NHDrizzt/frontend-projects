@@ -103,25 +103,6 @@
     border-radius: 5px 5px 0 0;
 }
 
-.status {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.status p {
-    color: var(--clr-dark-theme-dark-grayish-blue);
-    opacity: 0.8;
-}
-
-.status p:hover {
-    color: var(--clr-primary-hsl-bright-blue);
-}
-
-.status .items-main {
-    display: flex;
-    gap: 24px;
-}
 
 .check {
     width: 24px;

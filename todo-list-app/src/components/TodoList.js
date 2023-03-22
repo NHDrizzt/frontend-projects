@@ -10,18 +10,6 @@ const TodoList = ({ isDarkMode, toggleCheckmark, todos, setTodos }) => {
         setTodos(updatedTodos);
     }
     
-    const handleAll = () => {
-    
-    }
-    
-    const handleActive = () => {
-    
-    }
-    
-    const handleCompleted = () => {
-    
-    }
-    
     return (
         <div className={!isDarkMode ? 'secondary-tasks secondary-tasks-darkmode' : 'secondary-tasks secondary-tasks-lightmode'}>
             {todos.map((todo, index) => (

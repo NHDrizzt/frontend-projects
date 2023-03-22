@@ -1,11 +1,45 @@
-.items-left {
-    cursor: pointer;
-}
-
 .items-main {
     cursor: pointer;
 }
 
 .clear {
     cursor: pointer;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status p {
+    color: #5B5E7E;
+    opacity: 0.6;
+}
+
+.status .items-main {
+    display: flex;
+    gap: 24px;
+}
+
+.status-lightmode p:hover {
+    opacity: 1;
+    color: black;
+}
+
+.status-darkmode p:hover {
+    opacity: 1;
+    color: white;
+}
+
+.status .items-main .all-todos {
+    color: #3A7CFD;
+}
+
+.status .items-main .active-todos {
+    color: #3A7CFD;
+}
+
+.status .items-main .completed-todos {
+    color: #3A7CFD;
 }

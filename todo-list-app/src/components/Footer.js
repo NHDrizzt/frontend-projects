@@ -1,18 +1,20 @@
 import '../componentsCSS/Footer.css'
 
-const Footer = ({ isDarkMode, handleAllClick, handleActiveClick, handleCompletedClick }) => {
+const Footer = ({ isDarkMode, handleAllClick, handleActiveClick, handleCompletedClick, selectedListType, handleClearCompletedClick, todos }) => {
+    
+    
     return (
-        <div className={!isDarkMode ? 'item-input-li-lightmode status' : 'item-input-li-darkmode status'}>
+        <div className={!isDarkMode ? 'item-input-li-lightmode status status-lightmode' : 'item-input-li-darkmode status status-darkmode'}>
             <div className="items-left">
-                <p>5 items left</p>
+                <p>{todos.length} items left</p>
             </div>
             <div className="items-main">
-                <p onClick={handleAllClick}>All</p>
-                <p onClick={handleActiveClick}>Active</p>
-                <p onClick={handleCompletedClick}>Completed</p>
+                <p className={selectedListType === 'all' ? 'all-todos' : ''} onClick={handleAllClick}>All</p>
+                <p className={selectedListType === 'active' ? 'active-todos' : ''} onClick={handleActiveClick}>Active</p>
+                <p className={selectedListType === 'completed' ? 'completed-todos' : ''} onClick={handleCompletedClick}>Completed</p>
             </div>
             <div className="clear">
-                <p>Clear Completed</p>
+                <p onClick={handleClearCompletedClick}>Clear Completed</p>
             </div>
         </div>
     )
