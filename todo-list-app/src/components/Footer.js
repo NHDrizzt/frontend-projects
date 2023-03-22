@@ -2,7 +2,6 @@ import '../componentsCSS/Footer.css'
 
 const Footer = ({ isDarkMode, handleAllClick, handleActiveClick, handleCompletedClick, selectedListType, handleClearCompletedClick, todos }) => {
     
-    
     return (
         <div className={!isDarkMode ? 'item-input-li-lightmode status status-lightmode' : 'item-input-li-darkmode status status-darkmode'}>
             <div className="items-left">

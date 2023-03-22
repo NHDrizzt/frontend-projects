@@ -60,14 +60,6 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-.item-input-li-lightmode:nth-child(0) {
-    border-radius: 5px;
-}
-
-.item-input-li-darkmode:nth-child(0) {
-
-}
-
 .item-input-li-lightmode:hover .close {
     opacity: 1;
 }
@@ -92,6 +84,10 @@
 }
 
 .main-input .item-input-li-lightmode:first-child {
+    border-radius: 5px;
+}
+
+.main-input .item-input-li-darkmode:first-child {
     border-radius: 5px;
 }
 

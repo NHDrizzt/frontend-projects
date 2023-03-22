@@ -2,22 +2,26 @@ import iconChecked from "../images/icon-check.svg";
 import iconCross from "../images/icon-cross.svg";
 
 
-const TodoList = ({ isDarkMode, toggleCheckmark, todos, setTodos }) => {
+const TodoList = ({ isDarkMode, todos, setTodos }) => {
     
-    const handleDeleteButton = (index) => {
-        const updatedTodos = [...todos];
-        updatedTodos.splice(index, 1);
-        setTodos(updatedTodos);
+    const toggleCheckmark = (index) => {
+        const newTodos = [...todos];
+        newTodos[index].isChecked = !newTodos[index].isChecked;
+        setTodos(newTodos);
+    }
+    
+    const handleDeleteButton = (id) => {
+        setTodos(todos.filter((item) => item.id !== id));
     }
     
     return (
         <div className={!isDarkMode ? 'secondary-tasks secondary-tasks-darkmode' : 'secondary-tasks secondary-tasks-lightmode'}>
             {todos.map((todo, index) => (
-                <div key={index} className={!isDarkMode ? 'item-input-li-lightmode' : 'item-input-li-darkmode'}>
+                <div key={todo.id} className={!isDarkMode ? 'item-input-li-lightmode' : 'item-input-li-darkmode'}>
                     <div className={todo.isChecked ? 'check active-check' : 'check'} onClick={() => toggleCheckmark(index)}> <img src={iconChecked} alt=""/></div>
                     <div className="task-container">
-                        <p className={todo.isChecked ? 'crossline-check' : ''}>{todo}</p>
-                        <button className='close' onClick={() => handleDeleteButton(index)}><img src={iconCross} alt=""/></button>
+                        <p>{todo.name}</p>
+                        <button className='close' onClick={() => handleDeleteButton(todo.id)}><img src={iconCross} alt=""/></button>
                     </div>
                 </div>
             ))}
