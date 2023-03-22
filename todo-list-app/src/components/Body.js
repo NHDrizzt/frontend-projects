@@ -11,12 +11,27 @@ import Footer from "./Footer";
 const Body = () => {
     const [isDarkMode, setIsDarkMode] = useState(false)
     const [todos, setTodos] = useState([]);
+    const [selectedListType, setSelectedListType] = useState("all");
+    const [activeTodos, setActiveTodos] = useState([])
+    const [completedTodos, setCompletedTodos] = useState([])
     
-    const toggleActive = () => {
-        const newTodos = [...todos]
-        const newTho = newTodos.filter((item) => item.isChecked)
-        setTodos(newTho)
-    }
+    const handleAllClick = () => {
+        setSelectedListType("all");
+    };
+    
+    const handleActiveClick = () => {
+        const allTodos = [...todos]
+        const active = allTodos.filter(todo => !todo.isChecked);
+        setSelectedListType("active");
+        setActiveTodos(active)
+    };
+    
+    const handleCompletedClick = () => {
+        const allTodos = [...todos]
+        const completed = allTodos.filter(todo => todo.isChecked);
+        setSelectedListType("completed");
+        setCompletedTodos(completed)
+    };
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode)
         !isDarkMode ? document.body.style.backgroundColor = '#171823' : document.body.style.backgroundColor = '#FFF'
@@ -49,8 +64,18 @@ const Body = () => {
                         <HeaderTheme isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
                         <div className="content-body">
                             <TodoInput isDarkMode={isDarkMode} onAddTodo={handleInputChange}/>
-                            <TodoList isDarkMode={isDarkMode} toggleCheckmark={toggleCheckmark} todos={todos} setTodos={setTodos}/>
-                            <Footer isDarkMode={isDarkMode} toggleActive={toggleActive}/>
+                            {selectedListType === "all" && (
+                                <TodoList isDarkMode={isDarkMode} toggleCheckmark={toggleCheckmark} todos={todos} setTodos={setTodos} />
+                            )}
+    
+                            {selectedListType === "active" && (
+                                <TodoList isDarkMode={isDarkMode} toggleCheckmark={toggleCheckmark} todos={activeTodos} setTodos={setTodos} />
+                            )}
+    
+                            {selectedListType === "completed" && (
+                                <TodoList isDarkMode={isDarkMode} toggleCheckmark={toggleCheckmark} todos={completedTodos} setTodos={setTodos} />
+                            )}
+                            <Footer isDarkMode={isDarkMode} handleAllClick={handleAllClick} handleActiveClick={handleActiveClick} handleCompletedClick={handleCompletedClick}/>
                         </div>
                         <div className='footer'>
                             <p>Drag and drop to reoder list</p>
