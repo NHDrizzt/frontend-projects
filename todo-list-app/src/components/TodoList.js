@@ -16,7 +16,7 @@ const TodoList = ({ isDarkMode, toggleCheckmark, todos, setTodos }) => {
                 <div key={index} className={!isDarkMode ? 'item-input-li-lightmode' : 'item-input-li-darkmode'}>
                     <div className={todo.isChecked ? 'check active-check' : 'check'} onClick={() => toggleCheckmark(index)}> <img src={iconChecked} alt=""/></div>
                     <div className="task-container">
-                        <p>{todo}</p>
+                        <p className={todo.isChecked ? 'crossline-check' : ''}>{todo}</p>
                         <button className='close' onClick={() => handleDeleteButton(index)}><img src={iconCross} alt=""/></button>
                     </div>
                 </div>
