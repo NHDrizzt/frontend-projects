@@ -1,6 +1,6 @@
+import '../componentsCSS/Footer.css'
 
-
-const Footer = ({ isDarkMode }) => {
+const Footer = ({ isDarkMode, toggleActive }) => {
     return (
         <div className={!isDarkMode ? 'item-input-li-lightmode status' : 'item-input-li-darkmode status'}>
             <div className="items-left">
@@ -8,7 +8,7 @@ const Footer = ({ isDarkMode }) => {
             </div>
             <div className="items-main">
                 <p>All</p>
-                <p>Active</p>
+                <p onClick={toggleActive}>Active</p>
                 <p>Completed</p>
             </div>
             <div className="clear">

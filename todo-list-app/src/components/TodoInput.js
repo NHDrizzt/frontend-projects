@@ -1,3 +1,5 @@
+import '../componentsCSS/Body.css'
+
 const TodoInput = ({ isDarkMode, onAddTodo }) => {
     return (
         <div className="main-input">

@@ -3,6 +3,7 @@
     background-image: url("../images/bg-mobile-light.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 .content-wrapper {
@@ -14,6 +15,7 @@
 }
 
 .content-container {
+    position: absolute;
     width: 88%;
 }
 
@@ -45,12 +47,8 @@
     margin-bottom: 1.5rem;
 }
 
-.main-input .item-input-li-lightmode {
-    border-radius: 5px;
-}
-
-.main-input .item-input-li-darkmode {
-    border-radius: 5px;
+.main-input .input-cool {
+    color: #C8CBE7;
 }
 
 .item-input-li-lightmode {
@@ -60,6 +58,13 @@
     overflow: hidden;
     padding: 23px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.item-input-li-lightmode:nth-child(0) {
+    border-radius: 5px;
+}
+
+.item-input-li-darkmode:nth-child(0) {
 
 }
 
@@ -84,6 +89,18 @@
     overflow: hidden;
     padding: 23px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.main-input .item-input-li-lightmode:first-child {
+    border-radius: 5px;
+}
+
+.item-input-li-lightmode:first-child {
+    border-radius: 5px 5px 0 0;
+}
+
+.item-input-li-darkmode:first-child {
+    border-radius: 5px 5px 0 0;
 }
 
 .status {
@@ -150,7 +167,7 @@
 
 .input-cool {
     all: unset;
-    color: #C8CBE7;
+    color: black;
     width: 100%;
 }
 
@@ -160,10 +177,6 @@
 
 .secondary-tasks {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.secondary-tasks .item-input-li:nth-child(1) {
-    border-radius: 5px 5px 0 0;
 }
 
 .secondary-tasks-lightmode p {

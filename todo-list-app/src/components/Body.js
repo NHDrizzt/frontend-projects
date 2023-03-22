@@ -1,10 +1,6 @@
 import '../componentsCSS/Body.css'
 import backgroundImageLightThemeDesktop from '../images/bg-desktop-light.jpg'
 import backgroundImageDarkTheme from '../images/bg-desktop-dark.jpg'
-import iconSun from '../images/icon-sun.svg'
-import iconMoon from '../images/icon-moon.svg'
-import iconChecked from '../images/icon-check.svg'
-import iconCross from '../images/icon-cross.svg'
 import {useState} from "react";
 import TodoInput from "./TodoInput";
 import HeaderTheme from "./Header";
@@ -14,8 +10,13 @@ import Footer from "./Footer";
 
 const Body = () => {
     const [isDarkMode, setIsDarkMode] = useState(false)
-    const [isChecked, setIsChecked] = useState(false)
     const [todos, setTodos] = useState([]);
+    
+    const toggleActive = () => {
+        const newTodos = [...todos]
+        const newTho = newTodos.filter((item) => item.isChecked)
+        setTodos(newTho)
+    }
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode)
         !isDarkMode ? document.body.style.backgroundColor = '#171823' : document.body.style.backgroundColor = '#FFF'
@@ -27,8 +28,6 @@ const Body = () => {
         setTodos(newTodos);
     }
     
-    
-    
     const imageBackgroundChange = {
         backgroundImage: !isDarkMode ? `url(${backgroundImageLightThemeDesktop})` : `url(${backgroundImageDarkTheme})`,
     };
@@ -36,10 +35,8 @@ const Body = () => {
     const handleInputChange = (event) => {
         if (event.key === "Enter") {
             let newArray = []
-            newArray.push({
-                text:event.target.value,
-                isChecked:false
-            })
+            newArray.push(event.target.value)
+            event.target.value = ''
             setTodos([...todos, newArray]);
         }
     };
@@ -52,8 +49,8 @@ const Body = () => {
                         <HeaderTheme isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
                         <div className="content-body">
                             <TodoInput isDarkMode={isDarkMode} onAddTodo={handleInputChange}/>
-                            <TodoList isDarkMode={isDarkMode} isChecked={isChecked} toggleCheckmark={toggleCheckmark} todos={todos}/>
-                            <Footer isDarkMode={isDarkMode}/>
+                            <TodoList isDarkMode={isDarkMode} toggleCheckmark={toggleCheckmark} todos={todos} setTodos={setTodos}/>
+                            <Footer isDarkMode={isDarkMode} toggleActive={toggleActive}/>
                         </div>
                         <div className='footer'>
                             <p>Drag and drop to reoder list</p>
