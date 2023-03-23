@@ -55,18 +55,19 @@ const Body = () => {
     
     return (
         <main>
-            <section className='todo-list-section' style={imageBackgroundChange}>
+            <section>
+                <div className='todo-list-section' style={imageBackgroundChange}></div>
                 <div className="content-wrapper">
                     <div className="content-container">
                         <HeaderTheme isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
                         <div className="content-body">
-                                <TodoInput isDarkMode={isDarkMode} todos={todos} setTodos={setTodos}/>
+                                <TodoInput isDarkMode={isDarkMode}/>
                                 {selectedListType === "all" && (
                                     <TodoList isDarkMode={isDarkMode} todos={todos} setTodos={setTodos}/>
                                 )}
         
                                 {selectedListType === "active" && (
-                                    <TodoList isDarkMode={isDarkMode} todos={activeTodos} setTodos={setTodos}/>
+                                    <TodoList isDarkMode={isDarkMode} todos={activeTodos} setTodos={setTodos} setActiveTodos={setActiveTodos}/>
                                 )}
         
                                 {selectedListType === "completed" && (
