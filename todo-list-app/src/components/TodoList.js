@@ -35,17 +35,13 @@ const TodoList = ({ isDarkMode, todos, setTodos }) => {
                     >
                         {todos.map((todo, index) => (
                             <Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
-                                {(provided, snapshot) => (
-                                    <div className={snapshot.isDragging ? 'selected' : ''}>
-                                        {console.log(snapshot.isDragging)}
-                                   
+                                {(provided) => (
                                     <div
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                         ref={provided.innerRef}
-                                        className={!isDarkMode ? 'item-input-li-lightmode' : 'item-input-li-darkmode'}
+                                        className={`${!isDarkMode ? 'item-input-li-lightmode' : 'item-input-li-darkmode'} ${index === 0 ? 'first-item' : ''}`}
                                     >
-                                        
                                         <div
                                             className={todo.isChecked ? 'check active-check' : 'check'}
                                             onClick={() => toggleCheckmark(index)}
@@ -58,7 +54,6 @@ const TodoList = ({ isDarkMode, todos, setTodos }) => {
                                                 <img src={iconCross} alt="" />
                                             </button>
                                         </div>
-                                    </div>
                                     </div>
                                 )}
                             </Draggable>
