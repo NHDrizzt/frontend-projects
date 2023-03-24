@@ -1,7 +1,7 @@
 import '../componentsCSS/Body.css'
 import backgroundImageLightThemeDesktop from '../images/bg-desktop-light.jpg'
 import backgroundImageDarkTheme from '../images/bg-desktop-dark.jpg'
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {useState} from "react";
 import TodoInput from "./TodoInput";
 import HeaderTheme from "./Header";
@@ -9,14 +9,19 @@ import TodoList from "./TodoList";
 import Footer from "./Footer";
 import {DataContext} from "./DataList";
 
-
-
 const Body = () => {
     const [isDarkMode, setIsDarkMode] = useState(false)
     const [selectedListType, setSelectedListType] = useState("all");
     const [todos, setTodos] = useContext(DataContext);
     const [activeTodos, setActiveTodos] = useState([])
     const [completedTodos, setCompletedTodos] = useState([])
+    
+    useEffect(() => {
+        const storedTodos = JSON.parse(localStorage.getItem('myTodos'));
+        if (storedTodos) {
+            setTodos(storedTodos);
+        }
+    },[setTodos])
     
     const handleAllClick = () => {
         setSelectedListType("all");
@@ -67,11 +72,11 @@ const Body = () => {
                                 )}
         
                                 {selectedListType === "active" && (
-                                    <TodoList isDarkMode={isDarkMode} todos={activeTodos} setTodos={setTodos} setActiveTodos={setActiveTodos}/>
+                                    <TodoList isDarkMode={isDarkMode} todos={activeTodos} setTodos={setActiveTodos} />
                                 )}
         
                                 {selectedListType === "completed" && (
-                                    <TodoList isDarkMode={isDarkMode} todos={completedTodos} setTodos={setTodos}/>
+                                    <TodoList isDarkMode={isDarkMode} todos={completedTodos} setTodos={setCompletedTodos}/>
                                 )}
                                 <Footer isDarkMode={isDarkMode}
                                         handleAllClick={handleAllClick}

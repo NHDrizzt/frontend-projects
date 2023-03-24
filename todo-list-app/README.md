@@ -1,4 +1,4 @@
-# Frontend Mentor - Todo app solution
+Todo app solution
 
 This is a solution to the [Todo app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
@@ -27,6 +27,7 @@ Users should be able to:
 - Filter by all/active/complete todos
 - Clear all completed todos
 - Toggle light and dark mode
+- Save tasks on refresh
 - **Bonus**: Drag and drop to reorder items on the list
 
 ### Screenshot
@@ -36,7 +37,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [MySolution](http://mixed-fruit.surge.sh)
+- Solution URL: [MySolution](http://tan-nose.surge.sh)
 - Live Site URL: [Gabriel Carvalho]()
 
 ### Usage

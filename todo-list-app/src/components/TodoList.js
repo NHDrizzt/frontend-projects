@@ -1,9 +1,12 @@
 import iconChecked from "../images/icon-check.svg";
 import iconCross from "../images/icon-cross.svg";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import {useContext} from "react";
+import {DataContext} from "./DataList";
 
 
 const TodoList = ({ isDarkMode, todos, setTodos }) => {
+    
     const onDragEnd = (result) => {
         if (!result.destination) return;
         
@@ -16,7 +19,6 @@ const TodoList = ({ isDarkMode, todos, setTodos }) => {
     const toggleCheckmark = (index) => {
         const newTodos = [...todos];
         newTodos[index].isChecked = !newTodos[index].isChecked;
-
         setTodos(newTodos);
     }
     
