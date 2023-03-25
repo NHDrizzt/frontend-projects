@@ -1,0 +1,179 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: 24px;
+}
+
+.container-font-theme {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container-font-theme .risk {
+    margin-top: -10px;
+    transform: scaleY(2);
+    color: var(--clr-lightgray);
+}
+
+
+.toggle {
+    display: flex;
+    gap: 12px;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+}
+
+.check {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: var(--clr-gray);
+}
+
+.toggle input[type="checkbox"]:checked + .check {
+    background-color: var(--clr-purple);
+}
+
+.toggle input[type="checkbox"]:checked + .check:before {
+    transform: translateX(20px);
+}
+
+.header .container-font-theme .toggle .darkmode {
+    : var(--clr-purple);
+}
+
+
+.check:before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background: var(--clr-light);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.font-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.font-block .change-font {
+    margin-bottom: 4px;
+}
+
+.change-font {
+    font-weight: var(--fw-bold);
+    font-family: "Roboto Mono";
+}
+
+.dropdown:checked + label,
+.dropdown:not(:checked) + label{
+    font-size: 15px;
+    line-height: 2;
+    height: 50px;
+    transition: all 200ms linear;
+    border-radius: 4px;
+    width: 180px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.for-dropdown img{
+    padding-left: 18px;
+}
+
+
+.section-dropdown {
+    position: absolute;
+    padding: 5px;
+    background-color: var(--clr-light);
+    top: 70px;
+    width: 183px;
+    height: 152px;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 200ms linear;
+}
+
+.section-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    font-size: 22px;
+}
+
+.sans-serif {
+    font-weight: var(--fw-bold);
+    font-family: sans-serif;
+}
+
+.serif {
+    font-weight: var(--fw-bold);
+    font-family: var(--ff-serif);
+}
+
+.mono {
+    font-weight: var(--fw-bold);
+    font-family: var(--ff);
+}
+
+.card-dark {
+    color: var(--clr-light);
+    background-color: var(--clr-softdark);
+    box-shadow: 0 0 32px 0 var(--clr-purple);
+    border-radius: 10px;
+}
+
+.card-light {
+    background-color: var(--clr-light);
+    box-shadow: 0 0 8px 8px var(--clr-softlight);
+    border-radius: 10px;
+}
+
+
+.dropdown:checked ~ .section-dropdown{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-20px, 10px);
+}
+
+.dropdown-sub:checked + label,
+.dropdown-sub:not(:checked) + label{
+    color: #fff;
+    transition: all 200ms linear;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    border-radius: 2px;
+    text-align: left;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    -ms-flex-pack: distribute;
+    border: none;
+    cursor: pointer;
+}
+
+.sub:hover {
+    cursor: pointer;
+    color: var(--clr-purple);
+}

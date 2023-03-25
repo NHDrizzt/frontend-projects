@@ -1,0 +1,53 @@
+:root {
+    --clr-verydark: #050505;
+    --clr-dark: #1F1F1F;
+    --clr-softdark: #2D2D2D;
+    --clr-grayish: #3A3A3A;
+    --clr-gray: #757575;
+    --clr-lightgray: #E9E9E9;
+    --clr-softlight: #F4F4F4;
+    --clr-light: #FFFFFF;
+    --clr-purple: #A445ED;
+    --clr-redish: #FF5252;
+
+    --fw-regular: 400;
+    --fw-bold: 700;
+
+    --ff: "Mono";
+    --ff-serif: "IBM Plex Serif"
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: 1s ease;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.content {
+    width: calc(100% - 2rem);
+    max-width: 375px;
+}
+
+
+@media(min-width: 600px) {
+    .content {
+        width: calc(100% - 2rem);
+        max-width: 600px;
+    }
+}
+
+@media(min-width: 1440px) {
+    .content {
+        width: 100%;
+        max-width: 1440px;
+    }
+}
+
