@@ -1,0 +1,25 @@
+input[type="text"] {
+    text-decoration: none;
+    appearance: none;
+    outline: none;
+    width: 100%;
+    padding: 20px;
+    border: none;
+    background-color: var(--clr-softlight);
+    border-radius: 15px;
+    color: var(--clr-softdark);
+    background-image: url('../assets/images/icon-search.svg');
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+
+}
+
+
+input[type="text"]:focus {
+    outline: 2px solid var(--clr-purple);
+    box-shadow: none;
+}
+
+.main-input {
+    margin-top: 45px;
+}

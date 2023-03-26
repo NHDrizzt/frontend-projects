@@ -1,9 +1,13 @@
 import React from 'react';
+import '../css/InputComponent.css'
 
 const InputComponent = () => {
     return (
         <div>
-            <h1>Input Component</h1>
+            <label htmlFor='main-input'>
+            <input id='main-input' className='main-input' type="text"/>
+            
+            </label>
         </div>
     );
 };
