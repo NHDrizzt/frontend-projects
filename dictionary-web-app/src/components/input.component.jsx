@@ -6,7 +6,6 @@ const InputComponent = () => {
         <div>
             <label htmlFor='main-input'>
             <input id='main-input' className='main-input' type="text"/>
-            
             </label>
         </div>
     );
