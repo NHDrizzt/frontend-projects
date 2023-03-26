@@ -7,7 +7,7 @@ import {ThemeContext} from "./theme.provider";
 
 const HeaderComponent = () => {
     const [Theme, setTheme] = useContext(ThemeContext)
-    const [Font, setFont] = useState('')
+    const [Font, setFont] = useState('Sans Serif')
     const inputRef = useRef(null)
     
     useEffect(() => {
@@ -15,16 +15,19 @@ const HeaderComponent = () => {
     }, []);
     
     const toggleDarkmode = () => {
+        
         const darkTheme = document.querySelector('.darktheme-checkbox');
     
         if (darkTheme.checked) {
             const divCard = document.querySelector('.section-dropdown');
             divCard.classList.remove('card-light')
             divCard.classList.add('card-dark')
+            document.body.style.color = 'white'
         } else {
             const divCard = document.querySelector('.section-dropdown');
             divCard.classList.remove('card-dark')
             divCard.classList.add('card-light')
+            document.body.style.color = ''
         }
         
         setTheme(!Theme)
@@ -32,15 +35,18 @@ const HeaderComponent = () => {
     }
     
     function toggleSansSerifFont() {
-    
+        document.body.style.fontFamily = 'Sans Serif'
+        setFont('Sans Serif')
     }
     
-    function toggleSerifFont(event) {
-    
+    function toggleSerifFont() {
+        document.body.style.fontFamily = 'IBM Plex Serif'
+        setFont('Serif')
     }
     
-    function toggleMonoFont(event) {
-    
+    function toggleMonoFont() {
+        document.body.style.fontFamily = 'Roboto Mono'
+        setFont('Mono')
     }
     
     return (
@@ -50,7 +56,7 @@ const HeaderComponent = () => {
                 <div className="font-block">
                     <div className="change-font">
                         <input className="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
-                        <label className="for-dropdown" htmlFor="dropdown">  <img src={arrowDown} alt=""/> </label>
+                        <label className="for-dropdown" htmlFor="dropdown">{Font}  <img src={arrowDown} alt=""/> </label>
                         <div className="card-light section-dropdown">
                             <div className="section-container">
                                 <input className="sub sans-serif" ref={inputRef} onClick={toggleSansSerifFont} type="checkbox" id="sans-serif" name="dropdown-sub"/>
