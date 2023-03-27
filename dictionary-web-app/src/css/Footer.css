@@ -1,0 +1,19 @@
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.footer h3 {
+    color: #757575;
+    opacity: 0.6;
+}
+
+.footer a {
+    opacity: 0.5;
+}
+
+.img-link {
+    display: flex;
+    gap: 5px;
+}

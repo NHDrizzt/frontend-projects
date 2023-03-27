@@ -20,6 +20,7 @@
     font-weight: var(--fw-regular);
     color: var(--clr-purple);
     line-height: 29px;
+    opacity: 0.5;
 }
 
 .image-button:hover circle {

@@ -72,7 +72,7 @@ const HeaderComponent = () => {
                 </div>
                 <span className='risk'>|</span>
                 <div className="toggle">
-                    <label for="darktheme-checkbox">
+                    <label htmlFor="darktheme-checkbox">
                         <input className="darktheme-checkbox" id="darktheme-checkbox" type="checkbox" onChange={toggleDarkmode}/>
                         <span className="check"></span>
                     </label>

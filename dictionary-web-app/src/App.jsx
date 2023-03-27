@@ -26,7 +26,6 @@ const App = () => {
                     <HeaderComponent />
                     <InputComponent />
                     <TitleComponent />
-                    <DescriptionComponent />
                     {
                         Loading ?
                             <div className="loading">
@@ -35,6 +34,8 @@ const App = () => {
                             </div>
                             : null
                     }
+                    <DescriptionComponent />
+                    
                     <FooterComponent />
                 </ThemeProvider>
             </div>

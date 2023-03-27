@@ -1,0 +1,41 @@
+.description-section {
+    margin-top: -24px;
+}
+
+.description-section h3 {
+    font-size: 24px;
+    font-style: italic;
+}
+
+.line {
+    border-top: 2px solid var(--clr-softdark);
+    width: 88%;
+    margin-left: auto;
+    margin-top: 45px;
+}
+
+.meaning-description h4 {
+    color: #757575;
+    opacity: 0.6;
+}
+
+.synonymus {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.synonymus p {
+    color: #757575;
+    opacity: 0.6;
+}
+
+.synonymus span {
+    color: var(--clr-purple);
+}
+
+.synonymus span:hover {
+    text-decoration: 1px solid #A445ED underline;
+    cursor: pointer;
+
+}
