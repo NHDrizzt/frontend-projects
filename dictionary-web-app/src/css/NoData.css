@@ -1,0 +1,19 @@
+.no-data-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+
+.nodata {
+    display: flex;
+    flex-direction: column;
+    width: 93%;
+    justify-content: center;
+    align-items: center;
+}
+
+.nodata p {
+    text-align: center;
+}

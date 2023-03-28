@@ -18,6 +18,7 @@ input[type="text"] {
 input[type="text"]:focus {
     outline: 2px solid var(--clr-purple);
     box-shadow: none;
+    background-image: none;
 }
 
 .main-input {
@@ -25,5 +26,6 @@ input[type="text"]:focus {
 }
 
 .darkmode-title input{
+    color: var(--clr-light);
     background-color: var(--clr-softdark);
 }

@@ -15,6 +15,24 @@
     color: var(--clr-softdark);
 }
 
+.main-text-dark h1, h3 {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.main-text-dark h1 {
+    font-size: 64px;
+    color: var(--clr-light);
+}
+
+.main-text-dark h3 {
+    font-size: 24px;
+    font-weight: var(--fw-regular);
+    color: var(--clr-purple);
+    line-height: 29px;
+    opacity: 0.5;
+}
+
 .main-text h3 {
     font-size: 24px;
     font-weight: var(--fw-regular);

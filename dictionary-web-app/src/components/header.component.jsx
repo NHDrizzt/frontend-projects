@@ -9,15 +9,14 @@ const HeaderComponent = () => {
     const [Theme, setTheme] = useContext(ThemeContext)
     const [Font, setFont] = useState('Sans Serif')
     const inputRef = useRef(null)
+    const dropdownRef = useRef(null)
     
     useEffect(() => {
         setTheme(!Theme)
     }, []);
     
     const toggleDarkmode = () => {
-        
         const darkTheme = document.querySelector('.darktheme-checkbox');
-    
         if (darkTheme.checked) {
             const divCard = document.querySelector('.section-dropdown');
             divCard.classList.remove('card-light')
@@ -49,17 +48,30 @@ const HeaderComponent = () => {
         setFont('Mono')
     }
     
+    function handleClickOutside(event) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            inputRef.current.checked = false;
+        }
+    }
+    
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    });
+    
     return (
         <div className='header'>
             <img src={iconBook} alt="iconbook"/>
             <div className="container-font-theme">
                 <div className="font-block">
                     <div className="change-font">
-                        <input className="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                        <input className="dropdown" type="checkbox" id="dropdown" name="dropdown" ref={inputRef}/>
                         <label className="for-dropdown" htmlFor="dropdown">{Font}  <img src={arrowDown} alt=""/> </label>
-                        <div className="card-light section-dropdown">
+                        <div className="card-light section-dropdown" ref={dropdownRef}>
                             <div className="section-container">
-                                <input className="sub sans-serif" ref={inputRef} onClick={toggleSansSerifFont} type="checkbox" id="sans-serif" name="dropdown-sub"/>
+                                <input className="sub sans-serif" onClick={toggleSansSerifFont} type="checkbox" id="sans-serif" name="dropdown-sub"/>
                                 <label className="sub sans-serif" htmlFor="sans-serif">Sans Serif</label>
                                 <input className="sub serif" onClick={toggleSerifFont} type="checkbox" id="serif" name="dropdown-sub"/>
                                 <label className="sub serif" htmlFor="serif">Serif</label>
@@ -68,7 +80,7 @@ const HeaderComponent = () => {
                             </div>
                         </div>
                     </div>
-                   
+                
                 </div>
                 <span className='risk'>|</span>
                 <div className="toggle">

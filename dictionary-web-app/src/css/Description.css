@@ -5,11 +5,12 @@
 .description-section h3 {
     font-size: 24px;
     font-style: italic;
+    width: fit-content;
 }
 
 .line {
     border-top: 2px solid var(--clr-softdark);
-    width: 88%;
+    width: 80%;
     margin-left: auto;
     margin-top: 45px;
 }

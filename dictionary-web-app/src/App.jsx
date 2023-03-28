@@ -13,13 +13,15 @@ import NoDataComponent from "./components/nodata.component";
 const App = () => {
     const [Loading, setLoading] = useState(true);
     const [data, setData] = useState([])
-    const [word, setWord] = useState('')
-    
     const inputFetch = async (event) => {
         if (event.key === "Enter") {
-            const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${event.target.value}`
-            const fetchResult = await fetch(URL).then((response) => response.json())
-            setData(fetchResult)
+            try {
+                const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${event.target.value}`
+                const fetchResult = await fetch(URL).then((response) => response.json())
+                setData(fetchResult)
+            } catch (e) {
+                console.log(e.message)
+            }
         }
     }
     
@@ -46,6 +48,8 @@ const App = () => {
         return ''
     }
     
+    const findPhonetics = () => data.find((item) => item.hasOwnProperty('phonetics'))
+    
     useEffect(() => {
         setLoading(false);
     }, []);
@@ -58,7 +62,7 @@ const App = () => {
                     <InputComponent inputFetch={inputFetch}/>
                     {data.length > 0 ? (
                         <div>
-                            <TitleComponent word={findWord()} phonetic={findPhonetic()} />
+                            <TitleComponent word={findWord()} phonetic={findPhonetic()} phonetics={findPhonetics()}/>
                             {Loading && (
                                 <div className="loading">
                                     <h2>Loading... </h2>
@@ -71,7 +75,7 @@ const App = () => {
                             <FooterComponent findUrl={findUrl()}/>
                         </div>
                     ) : (
-                        <NoDataComponent/>
+                        <NoDataComponent data={data}/>
                     )}
                 </ThemeProvider>
             </div>
