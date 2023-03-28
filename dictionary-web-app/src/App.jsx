@@ -7,36 +7,72 @@ import DescriptionComponent from "./components/description.component";
 import FooterComponent from "./components/footer.component";
 import {BiLoaderAlt} from "react-icons/bi";
 import ThemeProvider from "./components/theme.provider";
+import NoDataComponent from "./components/nodata.component";
 
 
 const App = () => {
-    
-    const [Theme, setTheme] = useState('dark');
     const [Loading, setLoading] = useState(true);
+    const [data, setData] = useState([])
+    const [word, setWord] = useState('')
+    
+    const inputFetch = async (event) => {
+        if (event.key === "Enter") {
+            const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${event.target.value}`
+            const fetchResult = await fetch(URL).then((response) => response.json())
+            setData(fetchResult)
+        }
+    }
+    
+    const findWord = () => data.find((item) => item.hasOwnProperty('word')).word
+    const findPhonetic = () => {
+        const hasPhonetic = data.find(item => item.hasOwnProperty('phonetic'))
+        if (hasPhonetic) {
+            return hasPhonetic.phonetic;
+        } else {
+            const hasPhonetics = data.find(item => item.hasOwnProperty('phonetics'))
+            if (hasPhonetics) {
+                const hasText = hasPhonetics.phonetics.find(item => item.hasOwnProperty('text'))
+                if (hasText) {
+                    return hasText.text
+                }
+            }
+        }
+        return '';
+    }
+    
+    const findUrl = () =>  {
+        const hasData = data.find((item) => item.hasOwnProperty('sourceUrls'))
+        if (hasData) return hasData
+        return ''
+    }
     
     useEffect(() => {
         setLoading(false);
     }, []);
     
-    const changeTheme = (newTheme) => setTheme(newTheme);
     return (
         <>
             <div className="content">
-                <ThemeProvider >
+                <ThemeProvider>
                     <HeaderComponent />
-                    <InputComponent />
-                    <TitleComponent />
-                    {
-                        Loading ?
-                            <div className="loading">
-                                <h2>Loading... </h2>
-                                <BiLoaderAlt className='icon-loading'/>
-                            </div>
-                            : null
-                    }
-                    <DescriptionComponent />
-                    
-                    <FooterComponent />
+                    <InputComponent inputFetch={inputFetch}/>
+                    {data.length > 0 ? (
+                        <div>
+                            <TitleComponent word={findWord()} phonetic={findPhonetic()} />
+                            {Loading && (
+                                <div className="loading">
+                                    <h2>Loading... </h2>
+                                    <BiLoaderAlt className='icon-loading'/>
+                                </div>
+                            )}
+                            {data.map((data) => (
+                                <DescriptionComponent data={data}/>
+                            ))}
+                            <FooterComponent findUrl={findUrl()}/>
+                        </div>
+                    ) : (
+                        <NoDataComponent/>
+                    )}
                 </ThemeProvider>
             </div>
         </>

@@ -2,12 +2,12 @@ import React from 'react';
 import iconPlayButton from '../assets/images/icon-play.svg'
 import '../css/TittleComponent.css'
 
-const TitleComponent = () => {
+const TitleComponent = ({word, phonetic}) => {
     return (
         <div className='title-container'>
             <div className="main-text">
-                <h1>keyboard</h1>
-                <h3>/kibod/</h3>
+                <h1>{word}</h1>
+                <h3>{phonetic}</h3>
             </div>
             <div className="image-button">
                 <svg xmlns="http://www.w3.org/2000/svg"

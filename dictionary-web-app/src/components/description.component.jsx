@@ -1,40 +1,44 @@
 import React from 'react';
 import '../css/Description.css'
 
-const DescriptionComponent = () => {
+const DescriptionComponent = ({data}) => {
+    
     return (
         <>
             <div className="line"></div>
             <div className='description-section'>
-                <h3>noun</h3>
-                <div className="meaning-description">
-                    <h4>Meaning</h4>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-                <div className="synonymus">
-                    <p>Synonyms</p>
-                    <span>eletronic keyboard</span>
-                </div>
-            </div>
-            <div className="line"></div>
-            <div className='description-section'>
-                <h3>verb</h3>
-                <div className="meaning-description">
-                    <h4>Meaning</h4>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-                <div className="synonymus">
-                    <p>Synonyms</p>
-                    <span>eletronic keyboard</span>
-                </div>
+                {
+                    data.meanings.map((item) => (
+                        <>
+                            <h3>{item.partOfSpeech}</h3>
+                            <div className="meaning-description">
+                                <h4>Meaning</h4>
+                                <ul>
+                                    {
+                                        item.definitions.map((ele) => (
+                                            <>
+                                                <li>{ele.definition}</li>
+                                                {
+                                                    ele.example ? (<p>"{ele.example}"</p>) : (<></>)
+                                                }
+                                            </>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                            <div className="synonymus">
+                                {item.synonyms ? (
+                                    <>
+                                        <p>Synonyms</p>
+                                        <span>{item.synonyms.join(', ')}</span>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                            </div>
+                        </>
+                    ))
+                }
             </div>
         </>
     );

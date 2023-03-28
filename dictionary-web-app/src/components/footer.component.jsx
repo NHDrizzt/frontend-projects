@@ -1,12 +1,15 @@
 import React from 'react';
 import '../css/Footer.css'
 
-const FooterComponent = () => {
+const FooterComponent = ({findUrl}) => {
+    
+    
+    
     return (
         <div className='footer'>
             <h3>Source</h3>
             <div className="img-link">
-                <a>https://en.wiktionary.org/wiki/keyboard</a>
+                <a href={findUrl.sourceUrls}>{findUrl.sourceUrls}</a>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="14"
