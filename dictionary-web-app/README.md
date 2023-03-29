@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](http://grandiose-brush.surge.sh)
+- Solution URL: [My Solution](https://grandiose-brush.surge.sh)
 
 ## My process
 
