@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [My Solution](https://grandiose-brush.surge.sh)
+- Solution URL: [My Solution](https://magical-rabanadas-1218c4.netlify.app/)
 
 ## My process
 

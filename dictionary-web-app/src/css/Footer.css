@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
+    margin-block-end: 40px;
 }
 
 .footer h3 {
