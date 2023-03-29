@@ -38,5 +38,17 @@
 .synonymus span:hover {
     text-decoration: 1px solid #A445ED underline;
     cursor: pointer;
+}
 
+.meaning-description ul li::before {
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    color: var(--clr-purple);
+}
+
+.meaning-description ul {
+    list-style: none;
 }
