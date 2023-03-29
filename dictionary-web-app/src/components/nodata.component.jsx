@@ -2,7 +2,6 @@ import React from 'react';
 import '../css/NoData.css'
 
 const NoDataComponent = ({data}) => {
-    
     return (
         <div className='no-data-container'>
             <div className="nodata">

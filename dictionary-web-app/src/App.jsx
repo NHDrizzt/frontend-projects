@@ -13,16 +13,15 @@ import NoDataComponent from "./components/nodata.component";
 const App = () => {
     const [Loading, setLoading] = useState(true);
     const [data, setData] = useState([])
-    const inputFetch = async (event) => {
-        if (event.key === "Enter") {
+    const inputFetch = async (value) => {
+        console.log(value)
             try {
-                const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${event.target.value}`
+                const URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${value}`
                 const fetchResult = await fetch(URL).then((response) => response.json())
                 setData(fetchResult)
             } catch (e) {
                 console.log(e.message)
             }
-        }
     }
     
     const findWord = () => data.find((item) => item.hasOwnProperty('word')).word
@@ -69,8 +68,8 @@ const App = () => {
                                     <BiLoaderAlt className='icon-loading'/>
                                 </div>
                             )}
-                            {data.map((data) => (
-                                <DescriptionComponent data={data}/>
+                            {data.map((data, index) => (
+                                <DescriptionComponent key={index} data={data}/>
                             ))}
                             <FooterComponent findUrl={findUrl()}/>
                         </div>

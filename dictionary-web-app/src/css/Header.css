@@ -1,21 +1,28 @@
 .header {
     display: flex;
     justify-content: space-between;
-    margin-block-start: 24px;
+    margin-block-start: 48px;
 }
 
 .container-font-theme {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     gap: 8px;
 }
 
-.container-font-theme .risk {
-    margin-top: -10px;
-    transform: scaleY(2);
-    color: var(--clr-lightgray);
+.change-font {
+    font-weight: var(--fw-bold);
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 50px;
 }
 
+.for-dropdown {
+    display: flex;
+    align-items: center;
+}
 
 .toggle {
     display: flex;
@@ -64,33 +71,16 @@ input[type="checkbox"] {
     transition: 0.5s;
 }
 
-.font-block {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.font-block .change-font {
-    margin-bottom: 4px;
-}
-
-.change-font {
-    font-weight: var(--fw-bold);
-    font-family: "Roboto Mono";
-}
-
 .dropdown:checked + label,
 .dropdown:not(:checked) + label{
-    font-size: 15px;
+    font-size: 16px;
     line-height: 2;
     height: 50px;
     transition: all 200ms linear;
     border-radius: 4px;
-    width: 180px;
+    width: fit-content;
+    margin-right: 15px;
     letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: none;
     cursor: pointer;
 }
@@ -99,33 +89,31 @@ input[type="checkbox"] {
     padding-left: 18px;
 }
 
-
 .section-dropdown {
-    position: absolute;
+    position: relative;
     padding: 5px;
     background-color: var(--clr-light);
-    top: 70px;
+    top: 80px;
     width: 183px;
-    height: 152px;
+    height: 124px;
+    margin-left: -180px;
     z-index: 2;
     opacity: 0;
     pointer-events: none;
     transition: all 200ms linear;
 }
 
-
-
 .section-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 22px;
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .sans-serif {
     font-weight: var(--fw-bold);
-    font-family: sans-serif;
+    font-family: 'Sans Serif';
 }
 
 .serif {
@@ -155,24 +143,11 @@ input[type="checkbox"] {
 .dropdown:checked ~ .section-dropdown{
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-20px, 10px);
+    transform: translate(-10px, 10px);
 }
 
-.dropdown-sub:checked + label,
-.dropdown-sub:not(:checked) + label{
-    color: #fff;
-    transition: all 200ms linear;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    border-radius: 2px;
-    text-align: left;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    -ms-flex-pack: distribute;
-    border: none;
-    cursor: pointer;
+.sub {
+    width: fit-content;
 }
 
 .sub:hover {
