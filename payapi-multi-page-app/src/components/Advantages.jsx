@@ -1,0 +1,5 @@
+export const Advantages = () => {
+    return (
+        <></>
+    )
+}

@@ -1,0 +1,5 @@
+export const ReadyToStart = () => {
+    return (
+        <></>
+    )
+}
