@@ -1,2 +1,5 @@
-@forward "./general.scss";
-@forward "./components/Header";
+@forward "components/Header/Header";
+@forward "components/Header/LogoDesktop";
+@forward "components/Header/LogoMobile";
+@forward "components/Header/Sidebar";
+@forward "general";
