@@ -1,0 +1,29 @@
+@use "../../util/_colors.scss" as colors;
+
+.header-desktop {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+  flex-wrap: wrap;
+
+  nav {
+    display: flex;
+    gap: 40px;
+    margin-left: 64px;
+    background-color: transparent;
+    color: colors.$clr-secondary-light-sanjuanblue;
+    font-weight: bold;
+    line-height: 18px;
+  }
+
+  button {
+    border: none;
+    background-color: colors.$clr-primary-darkpink;
+    border-radius: 25px;
+    width: 173px;
+    height: 48px;
+    color: white;
+    margin-left: auto;
+  }
+}

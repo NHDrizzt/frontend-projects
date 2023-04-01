@@ -1,10 +1,12 @@
 import React from 'react';
 import './sass/index.scss'
-import {Header} from "./components/Header";
+import {Header} from "./components/Header/Header";
+import {ScheduleDemo} from "./components/ScheduleDemo";
 const App = () => {
     return (
         <div>
             <Header />
+            <ScheduleDemo />
         </div>
     );
 };

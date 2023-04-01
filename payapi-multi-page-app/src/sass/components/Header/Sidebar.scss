@@ -1,0 +1,32 @@
+@use "../../util/colors" as color;
+
+
+.sidebar {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  width: 70%;
+  color: color.$clr-primary-linkwaterwhite;
+  background-color: color.$clr-secondary-mirageblue;
+}
+
+.close-sidebar {
+}
+
+.nav-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  button {
+    border: none;
+    background-color: color.$clr-primary-darkpink;
+    border-radius: 25px;
+    width: 173px;
+    height: 48px;
+    color: white;
+    margin-left: auto;
+  }
+}
