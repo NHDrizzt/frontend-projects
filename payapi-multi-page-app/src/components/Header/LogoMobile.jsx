@@ -13,7 +13,7 @@ export const LogoMobile = () => {
                 <svg onClick={handleClick} width="28" height="17" xmlns="http://www.w3.org/2000/svg"><g fill="#36536B" fillRule="evenodd"><path d="M0 0h28v3H0zM0 7h28v3H0zM0 14h28v3H0z"/></g></svg>
             </section>
             <section>
-                {showSideBar && <Sidebar showSideBar={showSideBar} setShowSideBar={setShowSideBar}/>}
+                <Sidebar showSideBar={showSideBar} setShowSideBar={setShowSideBar}/>
             </section>
         </>
     )
