@@ -10,6 +10,7 @@ export const LogoDesktop = () => {
                 <a>Contact</a>
             </nav>
             <button>Schedule a demo</button>
+            
         </section>
     )
 }

@@ -5,13 +5,14 @@
   position: absolute;
   height: 100%;
   top: 0;
-  right: -300px;
+  right: -600px;
   width: 80%;
   color: color.$clr-primary-linkwaterwhite;
   background-color: color.$clr-secondary-mirageblue;
-  transition: right 0.3s ease;
+  transition: right 0.5s ease;
+  z-index: 1;
   .wrap-sidebar {
-    width: 80%;
+    width: 85%;
     margin-inline: auto;
   }
   button {
@@ -28,7 +29,14 @@
 
 .sidebar.open {
   right: 0;
+  height: 100vh;
 }
+
+.sidebar.close {
+  height: 100vh;
+}
+
+
 
 .close-sidebar {
   display: flex;
