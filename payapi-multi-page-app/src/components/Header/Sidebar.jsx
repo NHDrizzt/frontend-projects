@@ -8,7 +8,7 @@ export const Sidebar = ({ showSideBar, setShowSideBar }) => {
     
     
     return (
-        <aside className={`sidebar ${showSideBar ? "open" : ""}`}>
+        <aside className={`sidebar ${showSideBar ? "open" : "close"}`}>
             <div className="wrap-sidebar">
                 <div className="close-sidebar">
                     <svg
