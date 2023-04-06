@@ -7,7 +7,7 @@ export const Header = () => {
     
     useEffect(() => {
         const handleResize = () => {
-            setShouldRender(window.innerWidth > 600);
+            setShouldRender(window.innerWidth > 768);
         };
         
         window.addEventListener('resize', handleResize);

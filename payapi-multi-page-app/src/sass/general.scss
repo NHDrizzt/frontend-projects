@@ -89,13 +89,8 @@ a {
   font-size: 15px;
 }
 
-
-#root, #__next {
-  isolation: isolate;
-}
-
 .wrapper {
-  width: calc(100% - 13rem);
+  width: calc(100% - 8rem);
   max-width: 70.5rem;
   margin-inline: auto;
 }
