@@ -1,0 +1,47 @@
+@use "../../util/_colors.scss" as colors;
+
+
+.section-workwith {
+  background-color: #1B262F;
+  margin-block-start: 120px;
+  .workwith-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    place-items: center;
+    padding: 25px;
+    min-height: 360px;
+
+    .about-partners h2{
+      color: white;
+    }
+    .about-partners p {
+      color: #FBFCFE;
+      opacity: 0.5;
+    }
+    .about-partners button {
+      all: unset;
+      border-radius: 24px;
+      border: 1px solid white;
+      color: white;
+      padding: 12px;
+      margin-top: 16px;
+      width: 100px;
+      text-align: center;
+    }
+    .partners-icons {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      place-items: center;
+      width: 100%;
+      gap: 24px;
+      padding: 25px;
+      img {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+
