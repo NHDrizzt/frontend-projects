@@ -2,7 +2,7 @@
 
 .phone-img {
   display: grid;
-  grid-template-rows: 1fr 200px;
+  grid-template-rows: 1fr;
   .test {
     justify-self: center;
     transform: translateX(30px);
@@ -51,7 +51,7 @@
 
 @media(min-width: 600px) {
   .container-schedule {
-    max-width: 50rem;
+    max-width: 80rem;
   }
   .phone-img{
     .description-site {
