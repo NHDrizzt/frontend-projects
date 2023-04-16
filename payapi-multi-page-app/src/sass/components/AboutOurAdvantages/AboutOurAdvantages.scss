@@ -1,0 +1,48 @@
+@use "../../util/_colors.scss" as colors;
+
+.about-our-app-container h3 {
+  color: colors.$clr-primary-darksanjuanblue;
+}
+
+.about-our-app-container p {
+  color: colors.$clr-secondary-mirageblue;
+  opacity: 0.8;
+}
+
+.about-our-app-container img {
+  transform: translateX(20px);
+}
+
+.about-our-app-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 8px;
+  .icon-section-container {
+    display: flex;
+    flex-direction: column;
+    .icon-section {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      gap: 16px;
+      flex-wrap: wrap;
+      img {
+        transform: translateX(-1px);
+        width: 106px;
+      }
+    }
+  }
+
+}
+
+@media(min-width: 600px) {
+  .about-our-app-container {
+    .icon-section-container {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
