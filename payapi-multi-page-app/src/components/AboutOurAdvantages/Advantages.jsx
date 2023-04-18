@@ -5,21 +5,30 @@ import simpleUiUxImg from "../../assets/home/desktop/illustration-simple-ui.svg"
 import financesIcon from "../../assets/home/desktop/icon-personal-finances.svg"
 import bankingCoverageIcon from "../../assets/home/desktop/icon-banking-and-coverage.svg"
 import consumerPaymentsIcon from "../../assets/home/desktop/icon-consumer-payments.svg"
-
+import circlePattern from "../../assets/shared/desktop/bg-pattern-circle.svg"
 export const Advantages = () => {
     return (
-        <section>
+        <section className="wrapper">
             <div className="about-our-app-container">
-                <img src={easyToImplementImg} alt="example of how the app is implemented"/>
-                <h3>Easy to implement</h3>
-                <p>Our API comes with just a few lines of code. You’ll be up and running in
-                    no time. We built our documentation page to integrate payments functionality
-                    with ease.</p>
-    
-                <img src={simpleUiUxImg} alt="demonstration of the UI UX design of the app"/>
-                <h3>Simple UI & UX</h3>
-                <p>Our pre-built form is easy to integrate in your app or website’s checkout
-                    flow and designed to optimize conversion.</p>
+                <div className="easy-to-implement-container">
+                    <img src={easyToImplementImg} alt="example of how the app is implemented"/>
+                    <div className="easy-to-implement-content">
+                        <h3>Easy to implement</h3>
+                        <p>Our API comes with just a few lines of code. You’ll be up and running in
+                            no time. We built our documentation page to integrate payments functionality
+                            with ease.</p>
+                    </div>
+                </div>
+                
+                <div className="simpleuiux-container">
+                    <img src={simpleUiUxImg} alt="demonstration of the UI UX design of the app"/>
+                    <div className="simpleuiux-content">
+                        <h3>Simple UI & UX</h3>
+                        <p>Our pre-built form is easy to integrate in your app or website’s checkout
+                            flow and designed to optimize conversion.</p>
+                    </div>
+                </div>
+                
                 <div className="icon-section-container">
                     <div className="icon-section">
                         <img src={financesIcon} alt="finances icon"/>
@@ -40,7 +49,7 @@ export const Advantages = () => {
                             user experience in mind. Customers could instantly authenticate their account.</p>
                     </div>
                 </div>
-            
+                <img className="bg-circle-pattern" src={circlePattern} alt=""/>
                 <ReadyToStart />
             </div>
         </section>
