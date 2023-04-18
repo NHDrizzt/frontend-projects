@@ -1,0 +1,14 @@
+@use "../../util/_colors.scss" as colors;
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: colors.$clr-secondary-mirageblue;
+  .icons-footer {
+    display: flex;
+    gap: 24px;
+  }
+}
