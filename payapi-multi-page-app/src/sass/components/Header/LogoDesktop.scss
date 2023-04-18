@@ -25,5 +25,26 @@
     height: 48px;
     color: white;
     margin-left: auto;
+    z-index: 2;
+  }
+
+  .circle-pattern-header {
+    max-width: 1000px;
+    width: 1000px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+
+@media(min-width: 1440px) {
+  .header-desktop {
+    .circle-pattern-header {
+      left: 85%;
+      transform: translate(-50%, -35%);
+    }
   }
 }

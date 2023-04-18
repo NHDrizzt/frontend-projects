@@ -5,6 +5,8 @@ import {ScheduleDemo} from "./components/ScheduleDemo/ScheduleDemo";
 import {WorkWith} from "./components/WorkWith/WorkWith";
 import {Advantages} from "./components/AboutOurAdvantages/Advantages";
 import Footer from "./components/Footer/Footer";
+
+
 const App = () => {
     return (
         <div>

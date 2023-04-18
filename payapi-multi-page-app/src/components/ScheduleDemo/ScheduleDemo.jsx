@@ -1,11 +1,12 @@
 
 import React from "react";
 import phoneImg from "../../assets/home/desktop/illustration-phone-mockup.svg"
+import circlePattern from '../../assets/shared/desktop/bg-pattern-circle.svg'
 
 export const ScheduleDemo = () => {
     return (
         <section>
-            <div className=" container-schedule phone-img">
+            <div className="wrapper container-schedule phone-img">
                 <div className="test">
                     <img src={phoneImg} alt=""/>
                 </div>
@@ -16,6 +17,7 @@ export const ScheduleDemo = () => {
                     <p>Have any questions? <span className="span-contact-us">Contact Us</span></p>
                 </div>
             </div>
+            
         </section>
     )
 }
