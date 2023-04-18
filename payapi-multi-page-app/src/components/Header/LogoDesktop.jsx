@@ -1,5 +1,4 @@
 import React from "react";
-import circlePattern from '../../assets/shared/desktop/bg-pattern-circle.svg'
 
 export const LogoDesktop = () => {
     return (
@@ -11,7 +10,6 @@ export const LogoDesktop = () => {
                 <a>Contact</a>
             </nav>
             <button>Schedule a demo</button>
-            <img className="circle-pattern-header" src={circlePattern} alt=""/>
         </section>
     )
 }
