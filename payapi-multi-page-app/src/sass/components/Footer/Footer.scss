@@ -4,14 +4,16 @@ footer {
   height: 100vh;
   background-color: colors.$clr-secondary-mirageblue;
   margin-top: 64px;
+  max-height: 353px;
   position: relative;
+  overflow: hidden;
   .container-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     flex-wrap: wrap;
-    .wrapper-footer {
-      margin-top: 40px;
+    margin-top: 40px;
       .nav-content {
         display: flex;
         flex-direction: column;
@@ -20,16 +22,15 @@ footer {
         gap: 32px;
         p {
           color: white;
-          opacity: 0.5;
+          opacity: 0.6;
           font-weight: bold;
         }
       }
-      .icons-footer {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        justify-content: center;
-      }
+    .icons-footer {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
     }
   }
   .circle-pattern-footer {
@@ -38,5 +39,33 @@ footer {
     left: 50%;
     max-width: 750px;
     transform: translate(-50%, -50%);
+  }
+}
+
+@media(min-width: 600px) {
+  footer {
+    max-height: 100px;
+    .container-footer {
+      .wrapper-footer {
+        width: 100%;
+        display: flex;
+        gap: 64px;
+        margin-left: 50px;
+        .nav-content {
+          flex-direction: row;
+          margin: 0;
+        }
+        .icons-footer {
+          margin-right: 100px;
+          margin-left: auto;
+        }
+      }
+
+    }
+    .circle-pattern-footer {
+      position: absolute;
+      top: 300px;
+      transform: translate(-5%, -50%);
+    }
   }
 }
