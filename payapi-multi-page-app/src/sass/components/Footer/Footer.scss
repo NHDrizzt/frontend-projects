@@ -1,14 +1,42 @@
 @use "../../util/_colors.scss" as colors;
 
 footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
+  height: 100vh;
   background-color: colors.$clr-secondary-mirageblue;
-  .icons-footer {
+  margin-top: 64px;
+  position: relative;
+  .container-footer {
     display: flex;
-    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    .wrapper-footer {
+      margin-top: 40px;
+      .nav-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 40px 0;
+        gap: 32px;
+        p {
+          color: white;
+          opacity: 0.5;
+          font-weight: bold;
+        }
+      }
+      .icons-footer {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .circle-pattern-footer {
+    position: absolute;
+    top: 560px;
+    left: 50%;
+    max-width: 750px;
+    transform: translate(-50%, -50%);
   }
 }
