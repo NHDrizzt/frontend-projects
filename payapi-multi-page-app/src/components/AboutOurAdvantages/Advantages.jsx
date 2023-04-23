@@ -8,9 +8,9 @@ import consumerPaymentsIcon from "../../assets/home/desktop/icon-consumer-paymen
 import circlePattern from "../../assets/shared/desktop/bg-pattern-circle.svg"
 export const Advantages = () => {
     return (
-        <section className="wrapper">
-            <div className="about-our-app-container">
-                <div className="easy-to-implement-container">
+        <section>
+            <div className="advantages-container about-our-app-container">
+                <div className="advantages-wrapper easy-to-implement-container">
                     <img src={easyToImplementImg} alt="example of how the app is implemented"/>
                     <div className="easy-to-implement-content">
                         <h3>Easy to implement</h3>
@@ -19,8 +19,7 @@ export const Advantages = () => {
                             with ease.</p>
                     </div>
                 </div>
-                
-                <div className="simpleuiux-container">
+                <div className="advantages-wrapper simpleuiux-container">
                     <img src={simpleUiUxImg} alt="demonstration of the UI UX design of the app"/>
                     <div className="simpleuiux-content">
                         <h3>Simple UI & UX</h3>
@@ -29,22 +28,22 @@ export const Advantages = () => {
                     </div>
                 </div>
                 
-                <div className="icon-section-container">
+                <div className="icon-wrapper icon-section-container">
                     <div className="icon-section">
                         <img src={financesIcon} alt="finances icon"/>
-                        <h3>Personal Finances</h3>
+                        <h4>Personal Finances</h4>
                         <p>Consolidate financial data from multiple sources and categorize transactions up to
                             2 years of history. Analyze reports to reconcile activities in your account.</p>
                     </div>
                     <div className="icon-section">
                         <img src={bankingCoverageIcon} alt="banking and coverage icon"/>
-                        <h3>Banking & Coverage</h3>
+                        <h4>Banking & Coverage</h4>
                         <p>With our platform, you can speed up account onboarding and support ongoing payments
                             for checking, savings, credit card, and brokerage accounts.</p>
                     </div>
                     <div className="icon-section">
                         <img src={consumerPaymentsIcon} alt="consumer & payments icon"/>
-                        <h3>Consumer Payments</h3>
+                        <h4>Consumer Payments</h4>
                         <p>It’s easier to set up secure bank payments with us through a flow designed with the
                             user experience in mind. Customers could instantly authenticate their account.</p>
                     </div>

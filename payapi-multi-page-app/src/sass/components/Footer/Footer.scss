@@ -69,3 +69,14 @@ footer {
     }
   }
 }
+
+@media(min-width: 1440px) {
+  footer {
+    .container-footer {
+      padding: 0 128px;
+    }
+     .circle-pattern-footer {
+       transform: translate(50%, -60%);
+     }
+  }
+}

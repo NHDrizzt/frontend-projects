@@ -3,14 +3,16 @@
 
 .sidebar {
   position: absolute;
-  height: 100%;
+  height: 100vh;
+  max-height: 100vh;
   top: 0;
-  right: -600px;
+  right: -9999px;
   width: 80%;
+  overflow: visible;
   color: color.$clr-primary-linkwaterwhite;
   background-color: color.$clr-secondary-mirageblue;
   transition: right 0.5s ease;
-  z-index: 1;
+  z-index: 3;
   .wrap-sidebar {
     width: 85%;
     margin-inline: auto;

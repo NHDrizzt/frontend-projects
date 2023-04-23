@@ -78,16 +78,18 @@
   .phone-img {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
+    gap: 200px;
     .test {
       grid-column: 2;
     }
     .description-site {
       grid-row: 1;
       text-align: left;
-      width: 95%;
+      width: 100%;
       align-self: center;
       h1 {
         font-size: 4rem;
+        width: 100%;
       }
     }
   }

@@ -1,16 +1,35 @@
 @use "../../util/_colors.scss" as colors;
+@use "../../util/_fonts.scss" as font;
 
 .about-our-app-container h3 {
   color: colors.$clr-primary-darksanjuanblue;
+  font-weight: font.$font-weight-secondary;
+  font-size: clamp(2.25rem, calc(1.53rem + 3.05vw), 3.00rem);
+  margin-bottom: 16px;
 }
 
 .about-our-app-container p {
-  color: colors.$clr-secondary-mirageblue;
+  color: colors.$clr-primary-darksanjuanblue;
+  font-weight: font.$font-weight-primary;
+  font-size: font.$font-size-secondary-small;
   opacity: 0.8;
+}
+
+.about-our-app-container h4 {
+  font-family: font.$font-secondary;
+  font-size: font.$font-size-secondary-small;
+  color: colors.$clr-primary-darksanjuanblue;
+  margin-top: 16px;
 }
 
 .about-our-app-container img {
   transform: translateX(20px);
+  box-shadow: 0 0 0 -10px rgba(54, 83, 107, 0.25);
+}
+
+.advantages-container {
+  width: calc(100% - 1.2rem);
+  margin-inline: auto;
 }
 
 .about-our-app-container {
@@ -18,14 +37,30 @@
   place-items: center;
   text-align: center;
   gap: 8px;
+  .advantages-wrapper {
+    margin-inline: auto;
+  }
   .easy-to-implement-container {
     display: grid;
     place-items: center;
+    width: 100%;
+    .easy-to-implement-content {
+      width: 100%;
+      margin-top: -24px;
+      margin-bottom: 40px;
+      word-break: break-word;
+    }
   }
   .simpleuiux-container {
     display: grid;
     place-items: center;
   }
+
+  .icon-wrapper {
+    width: calc(100% - 2rem);
+    margin-inline: auto;
+  }
+
   .icon-section-container {
     display: flex;
     flex-direction: column;
@@ -42,6 +77,9 @@
         width: 106px;
       }
     }
+    p {
+      width: 100%;
+    }
   }
   .bg-circle-pattern {
     display: none;
@@ -49,55 +87,96 @@
 }
 
 @media(min-width: 600px) {
-  .about-our-app-container {
-    .icon-section-container {
-      display: flex;
-      flex-direction: row;
+    .about-our-app-container {
+      .easy-to-implement-container {
+        .easy-to-implement-content {
+          margin-top: -80px;
+          margin-bottom: 50px;
+          h3 {
+            font-size: 48px;
+          }
+        }
+      }
+
+      .simpleuiux-container {
+        .simpleuiux-content {
+          margin-top: -40px;
+          h3 {
+            font-size: 48px;
+          }
+        }
+        img {
+          display: block;
+          margin: 0;
+        }
+      }
+
+      .icon-wrapper {
+        width: calc(100% - 2rem);
+        margin-inline: auto;
+        top: 0;
+      }
+      .icon-section-container {
+        display: flex;
+        flex-direction: row;
+        .icon-section {
+          margin-top: 68px;
+        }
+      }
     }
-  }
 }
 
 @media(min-width: 1400px) {
+
+  .advantages-container {
+    width: calc(100% - 8rem);
+  }
+
   .about-our-app-container {
     position: relative;
     .easy-to-implement-container {
       grid-auto-flow: column;
+      gap: 10%;
       img {
-        max-width: 600px;
+        justify-self: start;
+        transform:translateX(-9%);
+        left: 0;
       }
       .easy-to-implement-content {
+        margin: 0;
         text-align: left;
+        justify-self: start;
+        justify-content: space-between;
         width: 80%;
+        word-break: break-word;
         padding-bottom: 40px;
         h3 {
-          font-size: 48px;
           padding-bottom: 24px;
         }
         p {
           color: colors.$clr-primary-darksanjuanblue;
-          opacity: 0.7;
         }
       }
     }
     .simpleuiux-container {
       grid-auto-flow: column;
-      margin-left: 24px;
+      width: 100%;
+      word-break: break-word;
       img {
-        max-width: 600px;
         transform: translateY(20px);
         z-index: 1;
       }
       .simpleuiux-content {
         text-align: left;
+        justify-self: start;
         width: 85%;
+        max-width: 650px;
         order: -1;
         h3 {
-          font-size: 48px;
           padding-bottom: 24px;
         }
         p {
           color: colors.$clr-primary-darksanjuanblue;
-          opacity: 0.7;
         }
       }
     }
@@ -110,7 +189,7 @@
       position: absolute;
       top: 50%;
       left: 113%;
-      transform: translate(-50%, -50%);
+      transform: translate(-56%, -56%);
       z-index: 0;
     }
   }
