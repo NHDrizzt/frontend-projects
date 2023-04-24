@@ -68,6 +68,7 @@ footer {
       .wrapper-footer {
         width: 100%;
         display: flex;
+        flex-direction: row;
         gap: 64px;
         margin-left: 50px;
         .nav-content {
