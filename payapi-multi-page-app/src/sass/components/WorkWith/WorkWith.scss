@@ -11,45 +11,56 @@
     display: grid;
     min-height: 360px;
     width: 100%;
-    .about-partners {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 86%;
-      margin: 0 auto;
-      text-align: center;
-      grid-row: 2;
-    }
-    .about-partners h2 {
-      font-size: 32px;
-      color: white;
-    }
-    .about-partners p {
-      color: #FBFCFE;
-      opacity: 0.5;
-      padding-top: 10px;
-    }
-    .about-partners button {
-      all: unset;
-      border-radius: 24px;
-      border: 1px solid white;
-      color: white;
-      padding: 12px;
-      margin-top: 16px;
-      width: 100px;
-      text-align: center;
-      cursor: pointer;
-    }
-    .partners-icons {
+    .about-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      place-items: center;
-      gap: 32px;
-      padding: 24px;
-      margin-top: 3rem;
-      margin-bottom: 3rem;
+      .about-partners {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 86%;
+        margin: 0 auto;
+        text-align: center;
+        grid-row: 2;
+      }
+      .about-partners h2 {
+        font-size: 32px;
+        color: white;
+      }
+      .about-partners p {
+        color: #FBFCFE;
+        opacity: 0.7;
+        mix-blend-mode: normal;
+        font-weight: 400;
+        padding-top: 10px;
+      }
+      .about-partners button {
+        all: unset;
+        border-radius: 24px;
+        border: 1px solid white;
+        color: white;
+        padding: 12px;
+        margin-top: 16px;
+        width: 100px;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+          color: colors.$clr-primary-darkblue;
+          font-weight: 700;
+          background-color: white;
+        }
+      }
+      .partners-icons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: center;
+        gap: 32px;
+        padding: 24px;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+      }
     }
+
   }
   .circle-pattern-workwith {
     max-width: 600px;
@@ -64,17 +75,20 @@
   .section-workwith {
     .workwith-container {
       height: 100%;
-      .about-partners h2 {
-        font-size: clamp(2rem, 1.044806517311609rem + 4.0733197556008145vw, 3rem);      }
-      .about-partners p {
-        text-align: center;
-        width: 70%;
-      }
-      .about-partners {
-        align-items: center;
-      }
-      .partners-icons {
-        grid-template-columns: repeat(3, 1fr);
+      .about-container {
+        display: grid;
+        .about-partners h2 {
+          font-size: clamp(2rem, 1.044806517311609rem + 4.0733197556008145vw, 3rem);      }
+        .about-partners p {
+          text-align: center;
+          width: 70%;
+        }
+        .about-partners {
+          align-items: center;
+        }
+        .partners-icons {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
     }
 
@@ -89,24 +103,31 @@
     height: 472px;
     padding-bottom: 0;
     .workwith-container {
-      .about-partners h2 {
-        font-size: 48px;
-        font-weight: 400;
-      }
-      .about-partners p {
-        text-align: left;
-        margin: 16px 0;
-        width: 80%;
-        color: colors.$clr-primary-linkwaterwhite;
-      }
-      justify-content: center;
-      .about-partners {
-        width: 100%;
-        align-items: flex-start;
-        grid-row: 1;
-      }
-      .partners-icons {
-        grid-column: 2;
+      margin: 0;
+      .about-container {
+        display: flex;
+        .about-partners h2 {
+          font-size: 48px;
+          font-weight: 400;
+        }
+        .about-partners p {
+          word-break: break-word;
+          text-align: left;
+          margin: 16px 0;
+          width: 100%;
+          max-width: 445px;
+          color: colors.$clr-primary-linkwaterwhite;
+        }
+        .about-partners {
+          width: 40%;
+          margin: 0;
+          left: 0;
+          align-items: flex-start;
+          grid-row: 1;
+        }
+        .partners-icons {
+          grid-column: 2;
+        }
       }
     }
     .circle-pattern-workwith {

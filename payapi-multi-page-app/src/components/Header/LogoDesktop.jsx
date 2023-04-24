@@ -10,7 +10,7 @@ export const LogoDesktop = () => {
                 <a>About</a>
                 <a>Contact</a>
             </nav>
-            <button>Schedule a demo</button>
+            <button>Schedule a Demo</button>
             <img className="circle-pattern-header" src={circlePattern} alt=""/>
         </section>
     )

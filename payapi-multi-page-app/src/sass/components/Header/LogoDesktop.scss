@@ -1,5 +1,7 @@
 @use "../../util/_colors.scss" as colors;
 
+
+
 .header-desktop {
   display: flex;
   justify-content: flex-start;
@@ -13,8 +15,16 @@
     margin-left: 64px;
     background-color: transparent;
     color: colors.$clr-secondary-light-sanjuanblue;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 18px;
+    z-index: 5;
+    a {
+      &:hover {
+        color: colors.$clr-primary-darksanjuanblue;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
   }
 
   button {
@@ -25,7 +35,14 @@
     height: 48px;
     color: white;
     margin-left: auto;
+    font-size: 0.95rem;
+    font-family: "Public Sans", serif;
+    font-weight: 700;
     z-index: 2;
+    cursor: pointer;
+    &:hover {
+      background-color: colors.$clr-secondary-charmpink;
+    }
   }
 
   .circle-pattern-header {

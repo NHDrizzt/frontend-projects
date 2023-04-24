@@ -12,8 +12,11 @@ export const ScheduleDemo = () => {
                 </div>
                 <div className="description-site">
                     <h1>Start building with our APIs for absolutely free.</h1>
-                    <input type="text" placeholder="Enter email address"/>
-                    <button>Schedule a Demo</button>
+                    <div className="wrap-input">
+                        <input type="text" placeholder="Enter email address"/>
+                        <button>Schedule a Demo</button>
+                    </div>
+                    
                     <p>Have any questions? <span className="span-contact-us">Contact Us</span></p>
                 </div>
             </div>
