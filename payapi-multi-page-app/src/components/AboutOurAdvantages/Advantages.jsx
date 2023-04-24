@@ -9,7 +9,7 @@ import circlePattern from "../../assets/shared/desktop/bg-pattern-circle.svg"
 export const Advantages = () => {
     return (
         <section>
-            <div className="advantages-container about-our-app-container">
+            <div className="wrapper advantages-container about-our-app-container">
                 <div className="advantages-wrapper easy-to-implement-container">
                     <img src={easyToImplementImg} alt="example of how the app is implemented"/>
                     <div className="easy-to-implement-content">

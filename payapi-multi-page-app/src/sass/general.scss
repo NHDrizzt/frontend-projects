@@ -90,8 +90,26 @@ a {
   font-size: 15px;
 }
 
-.wrapper {
-  width: calc(100% - 8rem);
-  max-width: 80.5rem;
-  margin-inline: auto;
+
+@media(min-width: 375px) {
+  .wrapper {
+    width: calc(100% - 2rem) !important;
+    max-width: 25rem !important;
+    margin-inline: auto;
+  }
 }
+
+@media(min-width: 768px) {
+  .wrapper {
+    width: calc(100% - 1rem) !important;
+    max-width: 50rem !important;
+  }
+}
+
+@media(min-width: 1440px) {
+  .wrapper {
+    width: calc(100% - 14rem) !important;
+    max-width: 100rem !important;
+  }
+}
+

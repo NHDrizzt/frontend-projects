@@ -1,8 +1,14 @@
 @use "../../util/_colors.scss" as colors;
 
+.wrapper {
+  width: calc(100% - 2rem) !important;
+  margin-inline: auto;
+}
+
 .phone-img {
   display: grid;
   grid-template-rows: 1fr;
+
   .test {
     justify-self: center;
     transform: translateX(30px);
@@ -15,8 +21,10 @@
     gap: 1rem;
     text-align: center;
     justify-self: center;
+    width: 100%;
+    margin-top: -32px;
     h1 {
-      font-size: 2rem;
+      font-size: clamp(2rem, 1.1190833959429rem + 3.7565740045078884vw, 4.5rem);
     }
     input[type='text'] {
       all: unset;
@@ -55,6 +63,9 @@
   .phone-img{
     .description-site {
       display: block;
+      width: 100%;
+      word-break: break-word;
+      margin-top: 0;
       input[type='text'] {
         text-align: left;
         width: 50%;

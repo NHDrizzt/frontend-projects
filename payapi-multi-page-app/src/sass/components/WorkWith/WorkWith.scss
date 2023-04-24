@@ -64,6 +64,8 @@
   .section-workwith {
     .workwith-container {
       height: 100%;
+      .about-partners h2 {
+        font-size: clamp(2rem, 1.044806517311609rem + 4.0733197556008145vw, 3rem);      }
       .about-partners p {
         text-align: center;
         width: 70%;
