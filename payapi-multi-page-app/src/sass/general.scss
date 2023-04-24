@@ -95,22 +95,22 @@ a {
 @media(min-width: 375px) {
   .wrapper {
     width: calc(100% - 2rem) !important;
-    max-width: 25rem !important;
+    max-width: 50rem !important;
     margin-inline: auto;
   }
 }
 
-@media(min-width: 768px) {
+@media(min-width: 600px) {
   .wrapper {
     width: calc(100% - 1rem) !important;
-    max-width: 50rem !important;
+    max-width: 100rem !important;
   }
 }
 
 @media(min-width: 1440px) {
   .wrapper {
     width: calc(100% - 14rem) !important;
-    max-width: 100rem !important;
+    max-width: 150rem !important;
   }
 }
 
