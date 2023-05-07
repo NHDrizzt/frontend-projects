@@ -1,11 +1,11 @@
 import React from 'react'
 import ReadyToStart from "./ReadyToStart";
-import easyToImplementImg from "../../assets/home/desktop/illustration-easy-to-implement.svg"
-import simpleUiUxImg from "../../assets/home/desktop/illustration-simple-ui.svg"
-import financesIcon from "../../assets/home/desktop/icon-personal-finances.svg"
-import bankingCoverageIcon from "../../assets/home/desktop/icon-banking-and-coverage.svg"
-import consumerPaymentsIcon from "../../assets/home/desktop/icon-consumer-payments.svg"
-import circlePattern from "../../assets/shared/desktop/bg-pattern-circle.svg"
+import easyToImplementImg from "../../../assets/home/desktop/illustration-easy-to-implement.svg"
+import simpleUiUxImg from "../../../assets/home/desktop/illustration-simple-ui.svg"
+import financesIcon from "../../../assets/home/desktop/icon-personal-finances.svg"
+import bankingCoverageIcon from "../../../assets/home/desktop/icon-banking-and-coverage.svg"
+import consumerPaymentsIcon from "../../../assets/home/desktop/icon-consumer-payments.svg"
+import circlePattern from "../../../assets/shared/desktop/bg-pattern-circle.svg"
 export const Advantages = () => {
     return (
         <section>

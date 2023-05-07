@@ -1,8 +1,8 @@
 import React from 'react';
-import faceIcon from '../../assets/shared/desktop/facebook.svg'
-import twitterIcon from '../../assets/shared/desktop/twitter.svg'
-import linkedinIcon from '../../assets/shared/desktop/linkedin.svg'
-import circlePattern from '../../assets/shared/desktop/bg-pattern-circle.svg'
+import faceIcon from '../../../assets/shared/desktop/facebook.svg'
+import twitterIcon from '../../../assets/shared/desktop/twitter.svg'
+import linkedinIcon from '../../../assets/shared/desktop/linkedin.svg'
+import circlePattern from '../../../assets/shared/desktop/bg-pattern-circle.svg'
 
 const Footer = (props) => {
     return (

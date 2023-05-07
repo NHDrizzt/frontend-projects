@@ -1,11 +1,11 @@
 import React from 'react'
-import teslaIcon from '../../assets/shared/desktop/tesla.svg'
-import microsoftIcon from '../../assets/shared/desktop/microsoft.svg'
-import hewlettIcon from '../../assets/shared/desktop/hewlett-packard.svg'
-import oracleIcon from '../../assets/shared/desktop/oracle.svg'
-import googleIcon from '../../assets/shared/desktop/google.svg'
-import nvidiaIcon from '../../assets/shared/desktop/nvidia.svg'
-import circlePattern from '../../assets/shared/desktop/bg-pattern-circle.svg'
+import teslaIcon from '../../../assets/shared/desktop/tesla.svg'
+import microsoftIcon from '../../../assets/shared/desktop/microsoft.svg'
+import hewlettIcon from '../../../assets/shared/desktop/hewlett-packard.svg'
+import oracleIcon from '../../../assets/shared/desktop/oracle.svg'
+import googleIcon from '../../../assets/shared/desktop/google.svg'
+import nvidiaIcon from '../../../assets/shared/desktop/nvidia.svg'
+import circlePattern from '../../../assets/shared/desktop/bg-pattern-circle.svg'
 
 export const WorkWith = () => {
     return (

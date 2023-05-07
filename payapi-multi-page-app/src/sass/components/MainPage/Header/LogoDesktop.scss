@@ -1,4 +1,4 @@
-@use "../../util/_colors.scss" as colors;
+@use "../../../util/_colors.scss" as colors;
 
 
 
@@ -56,9 +56,21 @@
   }
 }
 
+@media(min-width: 768px) {
+  .header-desktop {
+    nav {
+      align-items: center;
+    }
+  }
+}
+
 
 @media(min-width: 1440px) {
   .header-desktop {
+    margin-left: 0;
+    nav {
+      margin: 0;
+    }
     .circle-pattern-header {
       left: 100%;
       transform: translate(-50%, -35%);

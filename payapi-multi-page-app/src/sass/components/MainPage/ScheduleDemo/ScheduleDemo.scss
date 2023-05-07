@@ -1,4 +1,4 @@
-@use "../../util/_colors.scss" as colors;
+@use "../../../util/_colors.scss" as colors;
 
 .phone-img {
   display: grid;
@@ -72,7 +72,6 @@
 
 
 @media(min-width: 600px) {
-
   .phone-img{
     .description-site {
       display: block;
@@ -113,11 +112,6 @@
 }
 
 @media(min-width: 1440px) {
-  .container-schedule {
-    width: calc(100% - 8rem);
-    max-width: 70.5rem;
-    margin-inline: auto;
-  }
   .phone-img {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
@@ -128,17 +122,22 @@
     .description-site {
       grid-row: 1;
       text-align: left;
-      width: 100%;
+      width: 110%;
       align-self: center;
       h1 {
-        font-size: 4rem;
-        width: 100%;
+        width: 130%;
+        line-height: 72px;
       }
       button {
         width: 172px;
       }
       .wrap-input {
-        width: 100%;
+        width: 75%;
+        margin-left: 0;
+        input[type='text'] {
+          margin-left: auto;
+          left: 0;
+        }
       }
     }
   }
