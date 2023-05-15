@@ -2,9 +2,11 @@ import React from 'react';
 import { Header } from '../../MainPage/Header/Header';
 import { LogoMobile } from '../../MainPage/Header/LogoMobile';
 import { LogoDesktop } from '../../MainPage/Header/LogoDesktop';
+import ReadyToStart from "../../MainPage/AboutOurAdvantages/ReadyToStart";
 import circle from '../../../assets/shared/desktop/bg-pattern-circle.svg';
 import ButtonRequestAccess from '../components/ButtonRequestAccess';
 import Plan from '../components/Plan';
+import Footer from "../../MainPage/Footer/Footer";
 
 const Pricing = (props) => {
     return (
@@ -22,6 +24,9 @@ const Pricing = (props) => {
             <ButtonRequestAccess/>
             
             <Plan name="Premium Plan" description="Get tailored solutions, volume pricing, and dedicated support for your team" price="$499.00" planLimit="7" />
+            
+            <ReadyToStart />
+            <Footer />
         </section>
     );
 };
