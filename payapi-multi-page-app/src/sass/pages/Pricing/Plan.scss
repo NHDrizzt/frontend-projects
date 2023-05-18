@@ -1,0 +1,62 @@
+@use "../../util/_colors.scss" as colors;
+@use "../../util/_fonts.scss" as font;
+
+.plan-section {
+  display: flex;
+  flex-wrap: wrap;
+  .plan-content {
+    text-align: center;
+    margin-top: 48px;
+    .plan-name {
+      color: colors.$clr-primary-darkpink;
+      font-weight: font.$font-weight-primary;
+      margin-bottom: 16px;
+    }
+    .plan-description {
+      width: 85%;
+      margin-inline: auto;
+      margin-bottom: 8px;
+      color: colors.$clr-secondary-light-sanjuanblue;
+    }
+    span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 56px;
+      line-height: 72px;
+      font-family: font.$font-primary;
+      color: colors.$clr-primary-darksanjuanblue;
+    }
+    .plan-advantages-container {
+      flex-basis: 95%;
+      width: 90%;
+      border-top: 1px solid rgba(54, 83, 107, 0.2);
+      border-bottom: 1px solid rgba(54, 83, 107, 0.2);
+      margin-top: 24px;
+      margin-bottom: 24px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      margin-inline: auto;
+      .plan-advantages {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 40px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        .child1 {
+          flex-basis: 10%;
+        }
+        .child2 {
+          flex-basis: 40%;
+          text-align: start;
+          p {
+            color: colors.$clr-primary-darksanjuanblue;
+          }
+        }
+        .non-advantages {
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+}

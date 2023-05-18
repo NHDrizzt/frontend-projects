@@ -3,7 +3,7 @@ import React from 'react';
 const ButtonRequestAccess = (props) => {
     return (
         <>
-            <button>Request Access</button>
+            <button className="request-access-button">Request Access</button>
         </>
     )
 }

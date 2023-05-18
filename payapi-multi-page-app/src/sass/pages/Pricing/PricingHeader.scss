@@ -10,5 +10,15 @@
     transform: translate(60%, -82%);
     max-width: 1000px;
   }
-
+  .title-text {
+    text-align: center;
+    margin-top: 8px;
+    color: colors.$clr-primary-darksanjuanblue;
+  }
+  .plan-sec {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 }
