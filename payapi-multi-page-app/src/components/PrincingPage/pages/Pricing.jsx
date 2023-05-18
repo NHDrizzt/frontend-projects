@@ -10,9 +10,9 @@ import Footer from "../../MainPage/Footer/Footer";
 
 const Pricing = (props) => {
     return (
-        <section>
+        <section className="princing-section">
             <LogoMobile />
-            <img src={circle} alt=""/>
+            <img className="circle-pricing" src={circle} alt=""/>
             <h3>Pricing</h3>
             
             <Plan name="Free Plan" description="Build and test using our core set of products with up to 100 API requests" price="$0.00" planLimit="3" />
