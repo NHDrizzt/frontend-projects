@@ -28,7 +28,7 @@
     }
     .plan-advantages-container {
       flex-basis: 95%;
-      width: 90%;
+      width: 95%;
       border-top: 1px solid rgba(54, 83, 107, 0.2);
       border-bottom: 1px solid rgba(54, 83, 107, 0.2);
       margin-top: 24px;
@@ -55,6 +55,51 @@
         }
         .non-advantages {
           opacity: 0.4;
+        }
+      }
+    }
+  }
+}
+
+@media(min-width: 767px) {
+  .plan-section {
+    max-width: 253px;
+    .plan-content {
+      .plan-advantages-container {
+        .plan-advantages {
+          .child1 {
+            flex-basis: 15%;
+          }
+          .child2 {
+            flex-basis: 60%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(min-width: 1439px) {
+  .plan-section {
+    max-width: 405px;
+    .plan-content {
+      text-align: left;
+      .plan-name {
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 40px;
+      }
+      .plan-description {
+        margin-inline: initial;
+      }
+      .plan-advantages-container {
+        .plan-advantages {
+          margin: 0;
+          align-items: center;
+          justify-content: flex-start;
+          .child1 {
+            flex-basis: 8%;
+          }
         }
       }
     }
