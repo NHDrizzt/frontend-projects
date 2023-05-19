@@ -19,6 +19,8 @@
     line-height: 18px;
     z-index: 5;
     a {
+      color: inherit;
+      text-decoration: none;
       &:hover {
         color: colors.$clr-primary-darksanjuanblue;
         font-weight: 700;

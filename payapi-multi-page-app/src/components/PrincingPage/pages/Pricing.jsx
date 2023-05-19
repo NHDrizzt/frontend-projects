@@ -8,6 +8,7 @@ import Footer from "../../MainPage/Footer/Footer";
 const Pricing = (props) => {
     return (
         <section className="princing-section">
+            <img className="price-circle" src={circle} alt=""/>
             <Header />
             <div className="wrapper">
                 <div className="pricing-container">

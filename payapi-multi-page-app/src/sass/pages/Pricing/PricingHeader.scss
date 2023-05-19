@@ -3,11 +3,12 @@
 
 .princing-section {
   position: relative;
-  .header-desktop {
-    img {
-      max-width: 780px;
-      transform: translate(20%, -60%);
-    }
+  .price-circle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(60%, -82%);
+    max-width: 768px;
   }
 
   .title-text {
@@ -25,6 +26,9 @@
 
 @media(min-width: 768px) {
   .princing-section {
+    .price-circle {
+      display: none;
+    }
     .header-desktop {
       img {
         max-width: 780px;
@@ -36,6 +40,7 @@
 
 @media(min-width: 1440px) {
   .princing-section {
+
     .circle-pricing {
       transform: translate(25%, -70%);
     }

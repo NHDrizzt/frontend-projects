@@ -6,6 +6,7 @@ import oracleIcon from '../../../assets/shared/desktop/oracle.svg'
 import googleIcon from '../../../assets/shared/desktop/google.svg'
 import nvidiaIcon from '../../../assets/shared/desktop/nvidia.svg'
 import circlePattern from '../../../assets/shared/desktop/bg-pattern-circle.svg'
+import {Link} from "react-router-dom";
 
 export const WorkWith = () => {
     return (
@@ -18,7 +19,7 @@ export const WorkWith = () => {
                             their accounts to apps they love using our API. We provide developers
                             with the tools they need to create easy and accessible experiences
                             for their users.</p>
-                        <button>About Us</button>
+                        <Link style={{ textDecoration: 'none' }} to="/about"><button id="work-about">About Us</button></Link>
                     </div>
                     <div className="partners-icons">
                         <img src={teslaIcon} alt="tesla-logo"/>

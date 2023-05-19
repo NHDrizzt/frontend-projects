@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export const Sidebar = ({ showSideBar, setShowSideBar }) => {
     function toggleCloseSideBar() {
@@ -25,11 +26,11 @@ export const Sidebar = ({ showSideBar, setShowSideBar }) => {
                     </svg>
                 </div>
                 <nav className="nav-sidebar">
-                    <a>Pricing</a>
-                    <a>About</a>
-                    <a>Contact</a>
+                    <Link style={{ color: "inherit", textDecoration: 'none' }} to="/pricing"><a>Pricing</a></Link>
+                    <Link style={{ color: "inherit", textDecoration: 'none' }} to="/about"><a>About</a></Link>
+                    <Link style={{ color: "inherit", textDecoration: 'none' }} to="/contact" ><a>Contact</a></Link>
                 </nav>
-                <button>Schedule a demo</button>
+                <Link style={{ textDecoration: 'none' }} to="/contact" ><button>Schedule a demo</button></Link>
             </div>
         </aside>
     );

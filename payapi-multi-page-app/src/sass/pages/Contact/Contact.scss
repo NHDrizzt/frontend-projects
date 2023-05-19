@@ -2,6 +2,14 @@
 @use "../../util/_fonts.scss" as font;
 
 .contact-page {
+  position: relative;
+  .circle-contact {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(60%, -82%);
+    max-width: 768px;
+  }
   .partners-container {
     .partners-wrapper {
       display: grid;
@@ -88,7 +96,7 @@
           content: '';
           display: block;
           margin-right: 16px;
-          width: 28px;
+          width: 40px;
           height: 24px;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='11'%3E%3Cpath d='M1 5.718L4.893 9.56l8.107-8' stroke='%23979797' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
           background-color: #979797;
@@ -120,6 +128,16 @@
 
 @media(min-width: 768px) {
   .contact-page {
+    .contact-content {
+      .form {
+        .label-checkbox {
+          &:before {
+            width: 26px;
+          }
+        }
+      }
+    }
+
     .wrapper-form {
       width: calc(100% - 18rem);
       margin-inline: auto;
@@ -164,6 +182,11 @@
       margin-top: 75px;
       .form {
         width: 70%;
+        .label-checkbox {
+          &:before {
+            width: 32px;
+          }
+        }
       }
       .contact-content {
         h3 {

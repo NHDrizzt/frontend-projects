@@ -16,7 +16,6 @@ export const ScheduleDemo = () => {
                         <input type="text" placeholder="Enter email address"/>
                         <button>Schedule a Demo</button>
                     </div>
-                    
                     <p>Have any questions? <span className="span-contact-us">Contact Us</span></p>
                 </div>
             </div>
