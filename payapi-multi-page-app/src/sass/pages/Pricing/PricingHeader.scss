@@ -40,7 +40,10 @@
 
 @media(min-width: 1440px) {
   .princing-section {
-
+    .price-circle {
+      display: block;
+      transform: translate(20%, -70%);
+    }
     .circle-pricing {
       transform: translate(25%, -70%);
     }

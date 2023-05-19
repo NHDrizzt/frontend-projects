@@ -76,6 +76,9 @@
 
 @media(min-width: 768px) {
   .about {
+    .circle-about {
+      display: none;
+    }
     .header-desktop {
       img {
         max-width: 780px;
@@ -126,9 +129,12 @@
 
 @media(min-width: 1440px) {
   .about {
+    .circle-about {
+      display: block;
+    }
     z-index: 1;
     .circle-about {
-      transform: translate(10%, -70%);
+      transform: translate(20%, -70%);
     }
     .about-content-container {
       position: relative;
