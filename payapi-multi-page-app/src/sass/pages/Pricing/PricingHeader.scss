@@ -1,0 +1,65 @@
+@use "../../util/_colors.scss" as colors;
+@use "../../util/_fonts.scss" as font;
+
+.princing-section {
+  position: relative;
+  .header-desktop {
+    .circle-pattern-header {
+      display: none;
+    }
+  }
+  .circle-pricing {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(60%, -82%);
+    max-width: 1000px;
+  }
+  .title-text {
+    text-align: center;
+    margin-top: 8px;
+    color: colors.$clr-primary-darksanjuanblue;
+  }
+  .plan-sec {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media(min-width: 768px) {
+  .princing-section {
+    .circle-pricing {
+
+      transform: translate(65%, -70%);
+    }
+  }
+}
+
+@media(min-width: 1440px) {
+  .princing-section {
+    .circle-pricing {
+      transform: translate(25%, -70%);
+    }
+    .title-text {
+      text-align: left;
+      font-weight: 400;
+      font-size: 56px;
+      line-height: 56px;
+    }
+    .plan-sec {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .pricing-container {
+      margin-top: 82px;
+    }
+    .wrap-readytostart {
+      max-width: 1250px;
+    }
+    .wrap-footer {
+      margin-left: -69px;
+    }
+  }
+}

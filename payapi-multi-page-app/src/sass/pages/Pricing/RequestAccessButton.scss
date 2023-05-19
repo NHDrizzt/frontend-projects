@@ -1,0 +1,21 @@
+@use "../../util/_colors.scss" as colors;
+@use "../../util/_fonts.scss" as font;
+
+.request-access-button {
+  all: unset;
+  align-self: center;
+  text-align: center;
+  border: 1px solid #36536B;
+  border-radius: 32px;
+  width: 168px;
+  height: 48px;
+  cursor: pointer;
+  font-family: font.$font-secondary;
+  font-weight: font.$font-weight-secondary;
+  font-size: 15px;
+  color: colors.$clr-primary-darksanjuanblue;
+  &:hover {
+    background-color: colors.$clr-primary-darksanjuanblue;
+    color: white;
+  }
+}
