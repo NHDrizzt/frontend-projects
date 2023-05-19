@@ -10,11 +10,6 @@
     transform: translate(60%, -82%);
     max-width: 1000px;
   }
-  .header-desktop {
-    .circle-pattern-header {
-      display: none;
-    }
-  }
 }
 
 .about-content-container {
@@ -72,14 +67,20 @@
     .status-count {
       margin-top: 16px;
       margin-bottom: 16px;
+      span {
+        font-family: font.$font-primary;
+      }
     }
   }
 }
 
 @media(min-width: 768px) {
   .about {
-    .circle-about {
-      transform: translate(63%, -55%);
+    .header-desktop {
+      img {
+        max-width: 780px;
+        transform: translate(20%, -65%);
+      }
     }
     .about-content-container {
       padding-bottom: 8px;
@@ -145,13 +146,6 @@
       }
       .about-texts {
         grid-template-columns: 255px 635px;
-      }
-      .status-container  {
-        .status-count {
-          span {
-            font-family: font.$font-primary;
-          }
-        }
       }
       .circle-coworkers {
         display: block;
