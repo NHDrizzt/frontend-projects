@@ -10,7 +10,6 @@ const Pricing = (props) => {
         <section className="princing-section">
             <Header />
             <div className="wrapper">
-                <img className="circle-pricing" src={circle} alt=""/>
                 <div className="pricing-container">
                     <h3 className='title-text'>Pricing</h3>
                     <div className="plan-sec">

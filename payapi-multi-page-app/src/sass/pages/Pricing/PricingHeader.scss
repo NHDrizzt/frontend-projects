@@ -4,17 +4,12 @@
 .princing-section {
   position: relative;
   .header-desktop {
-    .circle-pattern-header {
-      display: none;
+    img {
+      max-width: 780px;
+      transform: translate(20%, -60%);
     }
   }
-  .circle-pricing {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(60%, -82%);
-    max-width: 1000px;
-  }
+
   .title-text {
     text-align: center;
     margin-top: 8px;
@@ -30,8 +25,11 @@
 
 @media(min-width: 768px) {
   .princing-section {
-    .circle-pricing {
-      transform: translate(60%, -70%);
+    .header-desktop {
+      img {
+        max-width: 780px;
+        transform: translate(20%, -65%);
+      }
     }
   }
 }
