@@ -2,10 +2,6 @@
 
 ## Welcome! 👋
 
-# Frontend - PayAPI multi-page website solution
-
-This is a solution to the [PayAPI multi-page website challenge on Frontend]
-
 ## Table of contents
 
 - [Overview](#overview)
@@ -21,6 +17,8 @@ This is a solution to the [PayAPI multi-page website challenge on Frontend]
 
 ### The challenge
 
+This is a solution to the [PayAPI multi-page website challenge on Frontend]
+
 Users should be able to:
 
 - View the optimal layout for each page depending on their device's screen size
@@ -35,7 +33,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [Teste o site aqui](https://pretty-oranges.surge.sh)
+- Live Site URL: [Test here](https://pretty-oranges.surge.sh)
 
 ## My process
 
