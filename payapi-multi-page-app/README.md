@@ -1,7 +1,5 @@
 # PayAPI multi-page website
 
-![Design preview for the PayAPI multi-page website coding challenge](./preview.jpg)
-
 ## Welcome! 👋
 
 # Frontend - PayAPI multi-page website solution
@@ -31,12 +29,13 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![Design preview for the PayAPI multi-page website coding challenge](./preview.jpg)
+
 
 
 ### Links
 
-- Live Site URL: [Add live site URL here](pretty-oranges.surge.sh)
+- Live Site URL: [Teste o site aqui](https://pretty-oranges.surge.sh)
 
 ## My process
 
@@ -55,4 +54,4 @@ Users should be able to:
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
+- Website Embreve - NHDrizzt
