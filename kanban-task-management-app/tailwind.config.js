@@ -24,6 +24,7 @@ export default {
                 almostWhite: '#F4F7FD',
                 tomatoRed: '#EA5555',
                 lightTomatoRed: '#FF9898',
+                purple: '#3f3cbb',
             }
         },
     },
