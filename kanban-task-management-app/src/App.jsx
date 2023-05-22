@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './pages/Header.jsx';
 import SideBar from './pages/SideBar.jsx';
+import ColumnField from './pages/ColumnField.jsx';
 
 function App() {
 
@@ -9,7 +10,11 @@ function App() {
         <div>
             <div className="flex">
                 <SideBar/>
-                <Header/>
+                <div className="flex-1 flex-col">
+                    <Header/>
+                    <ColumnField />
+                </div>
+               
             </div>
         </div>
     );
