@@ -8,13 +8,14 @@ function App() {
 
     return (
         <div>
-            <div className="flex">
-                <SideBar/>
-                <div className="flex-1 flex-col">
-                    <Header/>
-                    <ColumnField />
+            <div className="flex flex-col h-screen">
+                <Header/>
+                <div className="flex h-screen">
+                    <SideBar/>
+                    <div className="flex-1">
+                        <ColumnField />
+                    </div>
                 </div>
-               
             </div>
         </div>
     );
