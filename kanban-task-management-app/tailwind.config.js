@@ -6,7 +6,7 @@ export default {
     ],
     theme: {
         fontFamily: {
-            'plus-jakarta': ['Plus Jakarta Sans']
+            'plus-jakarta': 'Plus Jakarta Sans'
         },
         screen: {
             sm: '375px',

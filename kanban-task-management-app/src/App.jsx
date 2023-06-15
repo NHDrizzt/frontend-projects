@@ -11,8 +11,10 @@ function App() {
             <div className="flex flex-col h-screen">
                 <Header/>
                 <div className="flex h-screen">
-                    <SideBar/>
-                    <div className="flex-1">
+                    <div className="hidden md:block">
+                        <SideBar/>
+                    </div>
+                    <div className="w-full grid place-items-center bg-almostWhite">
                         <ColumnField />
                     </div>
                 </div>

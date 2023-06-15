@@ -18,12 +18,11 @@ const Header = () => {
                 </picture>
             </div>
             <div className="flex flex-auto min-w-[50%] md:px-6 items-center justify-between">
-                <div className="flex gap-x-2 items-center ">
-                    <h1 className="text-lg font-plus-jakarta font-bold md:text-3xl">Platform Launch</h1>
-                    <img className="w-2.5 h-2.5 md:hidden" src={chevronDown} alt=""/>
+                <div className="flex gap-x-1 items-center ">
+                    <p className="text-lg w-fit font-plus-jakarta font-bold md:text-xl">Platform Launch</p>
+                    <img className="w-3 h-2 mt-1 md:hidden" src={chevronDown} alt=""/>
                 </div>
                 <div className="flex items-center">
-                    {/*<MobileButtonAddNewTask />*/}
                     <ButtonAddNewTask />
                     <div>
                         <img className="px-3 h-4 md:pl-6 md:pr-7 md:h-6 cursor-pointer" src={threeDots} alt=""/>
