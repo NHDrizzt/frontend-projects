@@ -5,6 +5,9 @@ export default {
         './src/**/*.{html,js,jsx}'
     ],
     theme: {
+        fontFamily: {
+            'plus-jakarta': ['Plus Jakarta Sans']
+        },
         screen: {
             sm: '375px',
             md: '768px',
