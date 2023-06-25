@@ -1,12 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'class',
     content: [
         './index.html',
         './src/**/*.{html,js,jsx}'
     ],
     theme: {
         fontFamily: {
-            'plus-jakarta': ['Plus Jakarta Sans']
+            'plus-jakarta': 'Plus Jakarta Sans'
         },
         screen: {
             sm: '375px',
