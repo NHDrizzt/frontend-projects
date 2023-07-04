@@ -9,7 +9,7 @@ export default {
         fontFamily: {
             'plus-jakarta': 'Plus Jakarta Sans'
         },
-        screen: {
+        screens: {
             sm: '375px',
             md: '768px',
             lg: '976px',
