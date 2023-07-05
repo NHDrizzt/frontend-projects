@@ -53,7 +53,6 @@ const DropdownSection = () => {
                                 <div className="relative container mx-auto w-11/12 md:w-[480px]">
                                     {/*content*/}
                                     <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
-                           
                                         {/*header*/}
                                         <div className="flex">
                                             <p className="text-lg text-gray-950 font-bold">
