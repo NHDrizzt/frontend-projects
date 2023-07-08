@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {ColumnContext} from '../../context/ColumnContext.jsx';
 
 import chevronCustom from '../../assets/icon-chevron-down.svg';
@@ -15,9 +15,9 @@ const ComboBox = ({ selectedOption, setSelectedOption }) => {
         <>
             <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer" value={selectedOption} onChange={handleOptionChange}>
                 <option>Select an option</option>
-                {columnFields.map(({value}, index) => (
-                    <option key={index} value={value}>
-                        {value}
+                {columnFields.map(({column}, index) => (
+                    <option key={index} value={column}>
+                        {column}
                     </option>
                 ))}
             </select>

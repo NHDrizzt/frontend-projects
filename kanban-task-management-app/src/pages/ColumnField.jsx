@@ -5,9 +5,6 @@ import {ColumnContext} from '../context/ColumnContext.jsx';
 import GenericModal from './components/GenericModal.jsx';
 
 
-
-
-
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
     const { columnFields, setColumnFields, inputColumn, setInputColumn, tasks } = useContext(ColumnContext);
@@ -25,17 +22,25 @@ const ColumnField = () => {
     
     const handleChange = (index, {target: {value}}) => {
         const newValue = [...inputColumn];
-        if (!newValue[index].color) {
-            newValue[index] = {value, color: colors[Math.floor(Math.random() * colors.length)]};
-        } else {
-            newValue[index] = {value};
-        }
+        newValue[index] = value;
+        console.log(newValue);
         setInputColumn(newValue);
     };
     
     const handleSaveChanges = () => {
         setShowModal(false);
-        setColumnFields(inputColumn);
+        
+        const yobro = inputColumn.map((value) => {
+            return {
+                column: value,
+                tasks: [],
+                color: colors[Math.floor(Math.random() * colors.length)]
+            };
+        });
+        
+        console.log(yobro);
+        //
+        setColumnFields(yobro);
     };
     
     const closeModal = () => {
@@ -69,60 +74,56 @@ const ColumnField = () => {
                     </div>
                 ) : (
                     <div className="flex justify-start">
-                        {
-                            columnFields.map((columnName, index) => {
-                                const filteredTasks = tasks.filter(task => task.selectedOption === columnName.value);
-                                
-                                return (
-                                    <div key={index} className="flex flex-col  w-[280px] mr-4">
-                                        {/*tile*/}
-                                        <div className="flex py-4 space-x-2 items-center">
-                                            <div className={`${columnName.color} w-[15px] h-[15px] rounded-full`}></div>
-                                            <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{columnName.value}{' '}{`(${filteredTasks.length})`}</p>
-                                        </div>
-                                        {/*card*/}
-                                        {
-                                            filteredTasks.map((task) => (
-                                                <div key={task.title} className="w-[280px] h-[88px] mb-4 bg-white rounded-lg shadow">
-                                                    <p>{task.title}</p>
-                                                    <p>0 of {task.subtasks.length}</p>
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                );
-                            })
-                        }
                         {/*{*/}
-                        
-                        {/*    {*/}
-                        {/*        columnFields.map((columnName, index) => (*/}
+                        {/*    columnFields.map((columnName, index) => {*/}
+                        {/*        const filteredTasks = tasks.filter(task => task.selectedOption === columnName.value);*/}
+                        {/*        */}
+                        {/*        return (*/}
                         {/*            <div key={index} className="flex flex-col  w-[280px] mr-4">*/}
                         {/*                /!*tile*!/*/}
                         {/*                <div className="flex py-4 space-x-2 items-center">*/}
                         {/*                    <div className={`${columnName.color} w-[15px] h-[15px] rounded-full`}></div>*/}
-                        {/*                    <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{columnName.value}{' '}{'(4)'}</p>*/}
+                        {/*                    <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{columnName.value}{' '}{`(${filteredTasks.length})`}</p>*/}
                         {/*                </div>*/}
                         {/*                /!*card*!/*/}
                         {/*                {*/}
-                        {/*                    tasks.map((task) => (*/}
+                        {/*                    filteredTasks.map((task) => (*/}
                         {/*                        <div key={task.title} className="w-[280px] h-[88px] mb-4 bg-white rounded-lg shadow">*/}
                         {/*                            <p>{task.title}</p>*/}
                         {/*                            <p>0 of {task.subtasks.length}</p>*/}
                         {/*                        </div>*/}
                         {/*                    ))*/}
                         {/*                }*/}
-                        
-                        {/*                /!*<div className="w-[280px] h-[88px] mb-4 bg-white rounded-lg shadow">*!/*/}
-                        {/*                /!*    <p>some</p>*!/*/}
-                        {/*                /!*</div>*!/*/}
-                        {/*                /!*<div className="w-[280px] h-[88px] mb-4 bg-white rounded-lg shadow">*!/*/}
-                        {/*                /!*    <p>some</p>*!/*/}
-                        {/*                /!*</div>*!/*/}
                         {/*            </div>*/}
-                        {/*        ))*/}
-                        {/*    }*/}
+                        {/*        );*/}
+                        {/*    })*/}
                         {/*}*/}
+                        {/*{*/}
+                        
+                        {
+                            columnFields.map((column, index) => (
+                                <div key={index} className="flex flex-col  w-[280px] mr-4">
+                                    {/*tile*/}
+                                    <div className="flex py-4 space-x-2 items-center">
+                                        <div className={`${column.color} w-[15px] h-[15px] rounded-full`}></div>
+                                        <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{column.column}{' '}{'(4)'}</p>
+                                    </div>
+                                    {/*card*/}
+                                    {
+                                        column.tasks.map((task) => (
+                                            <div key={task.title} className="w-[280px] h-[88px] mb-4 bg-white rounded-lg shadow">
+                                                {
+                                                    console.log(task)
+                                                }
+                                                <p>{task.title}</p>
+                                                <p>0 of {task.subtasks.length}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ))
+                        }
+                        
                         <div className="w-[280px] grid place-items-center bg-gradient-to-b from-indigo-50 to-indigo-50 rounded-md" onClick={() => setShowModal(true)}>
                             <p className="before:content-['+'] text-center text-slate-400 text-[24px] font-bold">New Column</p>
                         </div>
@@ -153,7 +154,7 @@ const ColumnField = () => {
                                             type="text"
                                             maxLength="25"
                                             placeholder="Todo"
-                                            value={input.value || ''}
+                                            value={input || ''}
                                             onChange={(e) => handleChange(index, e)}
                                         />
                                         <button onClick={() => handleDelete(index)}>

@@ -16,6 +16,7 @@ const ColumnContextProvider = ({children}) => {
         platformLaunch: {},
         marketingPlan: {}
     });
+
     const handleCreateTask = () => {
         const newTask = {
             title,
@@ -23,16 +24,16 @@ const ColumnContextProvider = ({children}) => {
             subtasks: [...columnTasksInput],
             selectedOption
         };
-        setTasks([...tasks, newTask]);
+        setTasks(prevTasks => [...prevTasks, newTask]);
+        setColumnFields(prevFields => prevFields.map((value) => {
+            if (newTask.selectedOption === value.column) {
+                return {...value, tasks: [...value.tasks, newTask]};
+            } else {
+                return value;
+            }
+        })
+        );
     };
-    
-    useEffect(() => {
-        let newColumnWithTasks = {...columnWithTasksJSON};
-        columnFields.forEach(({value}) => {
-            newColumnWithTasks[value] = tasks.filter((task) => task.selectedOption === value);
-            setColumnWithTasksJSON(newColumnWithTasks);
-        });
-    }, [tasks]);
     
     const values = {
         columnFields,
