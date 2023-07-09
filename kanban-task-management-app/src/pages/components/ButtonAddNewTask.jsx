@@ -3,9 +3,11 @@ import iconAdd from '../../assets/icon-add-task-mobile.svg';
 import {ColumnContext} from '../../context/ColumnContext.jsx';
 import GenericModal from './GenericModal.jsx';
 import crossMark from '../../assets/icon-cross.svg';
+import {BoardContext} from '../../context/BoardContext.jsx';
 
 const ButtonAddNewTask = () => {
-    const { columnFields, columnTasksInput, setColumnTasksInput, handleCreateTask } = useContext(ColumnContext);
+    const { columnTasksInput, setColumnTasksInput, handleCreateTask } = useContext(ColumnContext);
+    const { currentBoard } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     
     const placeholderExample = ['e.g. Make coffe', 'e.g. Drink cofee & smile', 'e.g. Be happy'];
@@ -32,7 +34,7 @@ const ButtonAddNewTask = () => {
     
     return (
         <>
-            <button className={`${'px-4 py-2 md:py-3 md:px-6 text-white rounded-full md:flex gap-x-1 md:items-center'} ${columnFields.length > 0 ? 'bg-darkPurple pointer-events-auto' : 'bg-lightPurple pointer-events-none'}`}
+            <button className={`${'px-4 py-2 md:py-3 md:px-6 text-white rounded-full md:flex gap-x-1 md:items-center'} ${currentBoard.columns.length > 0 ? 'bg-darkPurple pointer-events-auto' : 'bg-lightPurple pointer-events-none'}`}
                 onClick={() => setShowModal(true)}>
                 <img className="md:h-2 md:mt-1" src={iconAdd} alt=""/>
                 <div className="hidden md:block">
@@ -42,9 +44,6 @@ const ButtonAddNewTask = () => {
             {
                 showModal ? (
                     <GenericModal
-                        mainTitle={'Add New Task'}
-                        addInputName={'Add New Subtask'}
-                        saveButton={'Create Task'}
                         type={'Add New Task'}
                         handleInputCreation={handleInputCreation}
                         handleSaveChanges={handleCreateTask}

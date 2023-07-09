@@ -1,22 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ColumnContext} from './ColumnContext.jsx';
 import PropTypes from 'prop-types';
+import {BoardContext} from './BoardContext.jsx';
 
 const ColumnContextProvider = ({children}) => {
     
-    const [columnFields, setColumnFields] = useState([]);
     const [columnTasksInput, setColumnTasksInput] = useState([]);
     const [inputColumn, setInputColumn] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [tasks, setTasks] = useState([]);
-    const [columnWithTasksJSON, setColumnWithTasksJSON] = useState({});
-    const [board, setBoard] = useState({
-        platformLaunch: {},
-        marketingPlan: {}
-    });
-
+    const { currentBoard, setCurrentBoard } = useContext(BoardContext);
     const handleCreateTask = () => {
         const newTask = {
             title,
@@ -25,19 +20,22 @@ const ColumnContextProvider = ({children}) => {
             selectedOption
         };
         setTasks(prevTasks => [...prevTasks, newTask]);
-        setColumnFields(prevFields => prevFields.map((value) => {
-            if (newTask.selectedOption === value.column) {
-                return {...value, tasks: [...value.tasks, newTask]};
-            } else {
-                return value;
-            }
-        })
-        );
+        setCurrentBoard(prevBoard => {
+            const updatedColumns = prevBoard.columns.map(column => {
+                if (newTask.selectedOption === column.column) {
+                    return {
+                        ...column,
+                        tasks: [...column.tasks, newTask]
+                    };
+                } else {
+                    return column;
+                }
+            });
+            return {...prevBoard, columns: updatedColumns};
+        });
     };
     
     const values = {
-        columnFields,
-        setColumnFields,
         columnTasksInput,
         setColumnTasksInput,
         inputColumn,
@@ -47,7 +45,6 @@ const ColumnContextProvider = ({children}) => {
         setSelectedOption,
         handleCreateTask,
         tasks,
-        columnWithTasksJSON,
     };
     
     return (

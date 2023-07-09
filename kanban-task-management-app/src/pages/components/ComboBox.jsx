@@ -3,10 +3,12 @@ import {ColumnContext} from '../../context/ColumnContext.jsx';
 
 import chevronCustom from '../../assets/icon-chevron-down.svg';
 import PropTypes from 'prop-types';
+import {BoardContext} from '../../context/BoardContext.jsx';
 
 const ComboBox = ({ selectedOption, setSelectedOption }) => {
 
-    const { columnFields } = useContext(ColumnContext);
+    const { currentBoard } = useContext(BoardContext);
+    
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
     };
@@ -15,7 +17,7 @@ const ComboBox = ({ selectedOption, setSelectedOption }) => {
         <>
             <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer" value={selectedOption} onChange={handleOptionChange}>
                 <option>Select an option</option>
-                {columnFields.map(({column}, index) => (
+                {currentBoard.columns.map(({column}, index) => (
                     <option key={index} value={column}>
                         {column}
                     </option>
@@ -28,6 +30,7 @@ const ComboBox = ({ selectedOption, setSelectedOption }) => {
 };
 
 ComboBox.propTypes = {
+    selectedOption: PropTypes.string.isRequired,
     setSelectedOption: PropTypes.func.isRequired,
 };
 

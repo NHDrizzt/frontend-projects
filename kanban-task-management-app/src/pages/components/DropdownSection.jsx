@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import iconDropdown from '../../assets/icon-board.svg';
 import ToggleDarkMode from './ToggleDarkMode.jsx';
 import PropTypes from 'prop-types';
+import {BoardContext} from '../../context/BoardContext.jsx';
 
 const DropdownSection = () => {
-    const dropDownOptions = ['Platform Launch', 'Marketing Plan', 'Roadmap'];
+    const dropdownOptions = ['Platform Launch', 'Marketing Plan', 'Roadmap'];
     const [isButtonFocused, setIsButtonFocused] = useState(false);
     const [clickedIndex, setClickedIndex] = useState();
     const [showModal, setShowModal] = useState(false);
+    const { boards,currentBoard, setCurrentBoard, setBoards } = useContext(BoardContext);
+    
+    const handleBoardChange = (name) => {
+        const newBoard = boards.find(board => board.name === name);
+    
+        setBoards(prevBoards =>
+            prevBoards.map(board =>
+                board.name === currentBoard.name ? currentBoard : board
+            )
+        );
+        
+        setCurrentBoard(newBoard);
+    };
     
     const handleButtonFocus = (index) => {
         setIsButtonFocused(true);
@@ -25,10 +39,11 @@ const DropdownSection = () => {
             </div>
             <nav className="py-1 font-plus-jakarta text-veryLightGray" role="none">
                 {
-                    dropDownOptions.map((el, index) => (
+                    dropdownOptions.map((el, index) => (
                         <div key={ index } className={`flex gap-x-2 pl-6 items-center ${isButtonFocused && index === clickedIndex ? 'h-12 w-[240px] text-white bg-darkPurple rounded-tr-[100px] rounded-br-[100px]' : ''}`}>
                             <img className="h-4" src={iconDropdown} alt=""/>
                             <button className="block py-3.5 text-sm font-bold " role="menuitem" tabIndex="-1" onFocus={ () => handleButtonFocus(index)} onBlur={handleButtonBlur}
+                                onClick={() => handleBoardChange(el)}
                                 id="menu-item-0">{el}</button>
                         </div>
                     ))

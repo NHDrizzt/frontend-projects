@@ -1,8 +1,31 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import ComboBox from './ComboBox.jsx';
 import {ColumnContext} from '../../context/ColumnContext.jsx';
 
-const GenericModal = ({mainTitle, addInputName, saveButton, type, handleSaveChanges, handleInputCreation, closeModal, children}) => {
+const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal, children}) => {
+    
+    const memoizedValues = useMemo(() => {
+        let mainTitle = '';
+        let addInputName = '';
+        let saveButton = '';
+        
+        switch (type) {
+        case 'Add New Task':
+            mainTitle = 'Add New Task';
+            addInputName = 'Add New Subtask';
+            saveButton = 'Create Task';
+            break;
+        case 'Add New Columns':
+            mainTitle = 'Add New Column';
+            addInputName = 'Add New Column';
+            saveButton = 'Save Changes';
+            break;
+        default:
+            break;
+        }
+        
+        return { mainTitle, addInputName, saveButton };
+    }, [type]);
     
     const {
         title,
@@ -13,7 +36,10 @@ const GenericModal = ({mainTitle, addInputName, saveButton, type, handleSaveChan
         setSelectedOption,
     } = useContext(ColumnContext);
     
-    
+    const handleSaveAll = () => {
+        closeModal();
+        handleSaveChanges();
+    };
     
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -31,7 +57,7 @@ const GenericModal = ({mainTitle, addInputName, saveButton, type, handleSaveChan
                     <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <p className="text-lg text-gray-950 font-bold">
-                            {mainTitle}
+                            {memoizedValues.mainTitle}
                         </p>
                         {
                             type === 'Edit Task' || type === 'Add New Task' ? (
@@ -70,7 +96,7 @@ const GenericModal = ({mainTitle, addInputName, saveButton, type, handleSaveChan
                                 type="button"
                                 onClick={handleInputCreation}
                             >
-                                { addInputName }
+                                { memoizedValues.addInputName }
                             </button>
                             {
                                 type === 'Edit Task' || type === 'Add New Task' ? (
@@ -83,9 +109,9 @@ const GenericModal = ({mainTitle, addInputName, saveButton, type, handleSaveChan
                             <button
                                 className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={handleSaveChanges}
+                                onClick={handleSaveAll}
                             >
-                                { saveButton }
+                                { memoizedValues.saveButton }
                             </button>
                         </div>
                     </div>
