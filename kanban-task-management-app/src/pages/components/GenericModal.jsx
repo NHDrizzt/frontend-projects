@@ -20,6 +20,16 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
             addInputName = 'Add New Column';
             saveButton = 'Save Changes';
             break;
+        case 'Edit Task':
+            mainTitle = 'Edit Task';
+            addInputName = 'Add New Subtask';
+            saveButton = 'Save Changes';
+            break;
+        case 'Edit Board':
+            mainTitle = 'Edit Board';
+            addInputName = 'Add New Column';
+            saveButton = 'Save Changes';
+            break;
         default:
             break;
         }

@@ -4,6 +4,7 @@ import crossMark from '../assets/icon-cross.svg';
 import {ColumnContext} from '../context/ColumnContext.jsx';
 import GenericModal from './components/GenericModal.jsx';
 import {BoardContext} from '../context/BoardContext.jsx';
+import {nanoid} from 'nanoid';
 
 
 const ColumnField = () => {
@@ -31,6 +32,7 @@ const ColumnField = () => {
         setShowModal(false);
         const columnValues = inputColumn.map((value) => {
             return {
+                id: nanoid(),
                 column: value,
                 tasks: [],
                 color: colors[Math.floor(Math.random() * colors.length)]

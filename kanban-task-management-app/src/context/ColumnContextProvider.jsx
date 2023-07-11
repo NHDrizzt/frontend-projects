@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ColumnContext} from './ColumnContext.jsx';
 import PropTypes from 'prop-types';
 import {BoardContext} from './BoardContext.jsx';
+import {nanoid} from 'nanoid';
 
 const ColumnContextProvider = ({children}) => {
     
@@ -10,16 +11,15 @@ const ColumnContextProvider = ({children}) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
-    const [tasks, setTasks] = useState([]);
     const { currentBoard, setCurrentBoard } = useContext(BoardContext);
     const handleCreateTask = () => {
         const newTask = {
+            id: nanoid(),
             title,
             description,
             subtasks: [...columnTasksInput],
             selectedOption
         };
-        setTasks(prevTasks => [...prevTasks, newTask]);
         setCurrentBoard(prevBoard => {
             const updatedColumns = prevBoard.columns.map(column => {
                 if (newTask.selectedOption === column.column) {
@@ -35,6 +35,26 @@ const ColumnContextProvider = ({children}) => {
         });
     };
     
+    // const handleEditTask = (currentTask) => {
+    //     const getTask = currentBoard.columns.tasks.find()
+    // }
+    
+    const handleChangeInputValue = ({target: {value}}, index) => {
+        const newValue = [...columnTasksInput];
+        newValue[index] = value;
+        setColumnTasksInput(newValue);
+    };
+    
+
+    const handleInputCreation = () => {
+        console.log(columnTasksInput);
+        setColumnTasksInput([...columnTasksInput, '']);
+    };
+    
+    const handleDeleteInputField = (index) => {
+        setColumnTasksInput(columnTasksInput.filter((_, i) => i !== index));
+    };
+    
     const values = {
         columnTasksInput,
         setColumnTasksInput,
@@ -44,7 +64,9 @@ const ColumnContextProvider = ({children}) => {
         setDescription,
         setSelectedOption,
         handleCreateTask,
-        tasks,
+        handleChangeInputValue,
+        handleInputCreation,
+        handleDeleteInputField
     };
     
     return (

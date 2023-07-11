@@ -6,31 +6,15 @@ import crossMark from '../../assets/icon-cross.svg';
 import {BoardContext} from '../../context/BoardContext.jsx';
 
 const ButtonAddNewTask = () => {
-    const { columnTasksInput, setColumnTasksInput, handleCreateTask } = useContext(ColumnContext);
+    const { columnTasksInput, handleChangeInputValue, handleInputCreation, handleDeleteInputField, handleCreateTask } = useContext(ColumnContext);
     const { currentBoard } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     
     const placeholderExample = ['e.g. Make coffe', 'e.g. Drink cofee & smile', 'e.g. Be happy'];
     
-    const handleChange = ({target: {value}}, index) => {
-        const newValue = [...columnTasksInput];
-        newValue[index] = value;
-        setColumnTasksInput(newValue);
-    };
-    
     const closeModal = () => {
         setShowModal(false);
     };
-    
-    const handleInputCreation = () => {
-        setColumnTasksInput([...columnTasksInput, '']);
-    };
-    
-    const handleDelete = (index) => {
-        setColumnTasksInput(columnTasksInput.filter((_, i) => i !== index));
-    };
-    
-    
     
     return (
         <>
@@ -62,9 +46,9 @@ const ButtonAddNewTask = () => {
                                             maxLength="25"
                                             placeholder={placeholderExample[index] || 'Any...'}
                                             value={input || ''}
-                                            onChange={(e) => handleChange(e, index)}
+                                            onChange={(e) => handleChangeInputValue(e, index)}
                                         />
-                                        <button onClick={() => handleDelete(index)}>
+                                        <button onClick={() => handleDeleteInputField(index)}>
                                             <img src={crossMark} alt=""/>
                                         </button>
                                     </div>
