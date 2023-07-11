@@ -35,10 +35,6 @@ const ColumnContextProvider = ({children}) => {
         });
     };
     
-    // const handleEditTask = (currentTask) => {
-    //     const getTask = currentBoard.columns.tasks.find()
-    // }
-    
     const handleChangeInputValue = ({target: {value}}, index) => {
         const newValue = [...columnTasksInput];
         newValue[index] = value;

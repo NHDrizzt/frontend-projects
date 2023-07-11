@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BoardContext} from './BoardContext.jsx';
 import PropTypes from 'prop-types';
 import {nanoid} from 'nanoid';
@@ -10,6 +10,13 @@ const BoardContextProvider = ({children}) => {
         { id: nanoid(), name: 'Roadmap', columns: []}
     ]);
     const [currentBoard, setCurrentBoard] = useState(boards[0]);
+    useEffect(() => {
+        if (currentBoard) {
+            setBoards(boards => boards.map(board => board.id === currentBoard.id
+                ? currentBoard : board));
+        }
+    }, [currentBoard]);
+    
     return (
         <BoardContext.Provider value={{ boards, setBoards, currentBoard, setCurrentBoard }}>
             {children}

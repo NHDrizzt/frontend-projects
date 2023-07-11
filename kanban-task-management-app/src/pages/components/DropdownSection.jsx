@@ -9,11 +9,13 @@ const DropdownSection = () => {
     const [isButtonFocused, setIsButtonFocused] = useState(false);
     const [clickedIndex, setClickedIndex] = useState();
     const [showModal, setShowModal] = useState(false);
-    const { boards,currentBoard, setCurrentBoard, setBoards } = useContext(BoardContext);
+    const { boards, currentBoard, setCurrentBoard, setBoards } = useContext(BoardContext);
     
-    const handleBoardChange = (name) => {
-        const newBoard = boards.find(board => board.name === name);
     
+    console.log(boards);
+    const handleBoardChange = (id) => {
+        const newBoard = boards.find(board => board.id === id);
+        console.log(boards);
         setBoards(prevBoards =>
             prevBoards.map(board =>
                 board.name === currentBoard.name ? currentBoard : board
@@ -39,12 +41,12 @@ const DropdownSection = () => {
             </div>
             <nav className="py-1 font-plus-jakarta text-veryLightGray" role="none">
                 {
-                    dropdownOptions.map((el, index) => (
+                    boards.map((el, index) => (
                         <div key={ index } className={`flex gap-x-2 pl-6 items-center ${isButtonFocused && index === clickedIndex ? 'h-12 w-[240px] text-white bg-darkPurple rounded-tr-[100px] rounded-br-[100px]' : ''}`}>
                             <img className="h-4" src={iconDropdown} alt=""/>
                             <button className="block py-3.5 text-sm font-bold " role="menuitem" tabIndex="-1" onFocus={ () => handleButtonFocus(index)} onBlur={handleButtonBlur}
-                                onClick={() => handleBoardChange(el)}
-                                id="menu-item-0">{el}</button>
+                                onClick={() => handleBoardChange(el.id)}
+                                id="menu-item-0">{el.name}</button>
                         </div>
                     ))
                 }

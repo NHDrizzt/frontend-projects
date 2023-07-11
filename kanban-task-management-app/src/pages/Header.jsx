@@ -23,6 +23,7 @@ const Header = () => {
     const [showEditAndDeleteModal, setShowEditAndDeleteModal] = useState(false);
     const [showEditBoard, setShowEditBoard] = useState(false);
     const {currentBoard, setCurrentBoard} = useContext(BoardContext);
+    const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -39,6 +40,17 @@ const Header = () => {
     
     const closeModal = () => {
         setShowEditBoard(false);
+    };
+    
+    const handleChangeBoardName = ({target: {value}}) => {
+        setTempEditBoardChanges(prevState => ({
+            ...prevState,
+            name: value
+        }));
+    };
+    
+    const handleBoardSaveChanges = () => {
+        setCurrentBoard(tempEditBoardChanges);
     };
     
     const handleChange = (index, {target: {value}}) => {
@@ -82,7 +94,7 @@ const Header = () => {
                 </div>
                 <div className="flex flex-auto min-w-[50%] md:px-6 items-center justify-between">
                     <div className="relative">
-                        <button className="flex gap-x-1 items-center text-lg w-fit font-plus-jakarta font-bold md:text-xl dark:text-white" aria-expanded="true" aria-haspopup="true" onClick={ handleDropdown } disabled={ isScreenLarge }>Platform Launch
+                        <button className="flex gap-x-1 items-center text-lg w-fit font-plus-jakarta font-bold md:text-xl dark:text-white" aria-expanded="true" aria-haspopup="true" onClick={ handleDropdown } disabled={ isScreenLarge }>{currentBoard.name}
                             {
                                 !isScreenLarge ?  <img className="w-3 h-2 mt-1 md:hid  den" src={chevronDown} alt=""/> : <></>
                             }
@@ -144,31 +156,43 @@ const Header = () => {
                     <GenericModal
                         type="Edit Board"
                         handleInputCreation={handleInputCreation}
-                        handleSaveChanges={handleCreateTask}
+                        handleSaveChanges={handleBoardSaveChanges}
                         closeModal={closeModal}
                     >
-                        <div className="flex flex-col items-start justify-start">
-                            <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Columns</label>
-                            {
-                                currentBoard.columns.map((input, index) => (
-                                    <div key={index} className="flex items-center w-full space-x-4 mb-2">
-                                        <input
-                                            id={`nameColumns${index}`}
-                                            name={`nameColumn${index}`}
-                                            className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
-                                            type="text"
-                                            maxLength="25"
-                                            placeholder="Todo"
-                                            value={input.column || ''}
-                                            onChange={(e) => handleChange(index, e)}
-                                        />
-                                        <button onClick={() => handleDeleteInputField(input.id)}>
-                                            <img src={crossMark} alt=""/>
-                                        </button>
-                                    </div>
-                                ))
-                            }
-                        </div>
+                        <>
+                            <div className="flex flex-col items-start justify-start">
+                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Title</label>
+                                <input
+                                    name="title"
+                                    value={tempEditBoardChanges.name}
+                                    onChange={handleChangeBoardName}
+                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                    maxLength="20"
+                                    type="text"/>
+                            </div>
+                            <div className="flex flex-col items-start justify-start">
+                                <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Board Columns</label>
+                                {
+                                    currentBoard.columns.map((input, index) => (
+                                        <div key={index} className="flex items-center w-full space-x-4 mb-2">
+                                            <input
+                                                id={`nameColumns${index}`}
+                                                name={`nameColumn${index}`}
+                                                className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                type="text"
+                                                maxLength="25"
+                                                placeholder="Todo"
+                                                value={input.column || ''}
+                                                onChange={(e) => handleChange(index, e)}
+                                            />
+                                            <button onClick={() => handleDeleteInputField(input.id)}>
+                                                <img src={crossMark} alt=""/>
+                                            </button>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </>
                     </GenericModal>
                 ) : null
             }
