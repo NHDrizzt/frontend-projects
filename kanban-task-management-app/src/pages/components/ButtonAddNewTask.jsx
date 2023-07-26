@@ -6,7 +6,7 @@ import crossMark from '../../assets/icon-cross.svg';
 import {BoardContext} from '../../context/BoardContext.jsx';
 
 const ButtonAddNewTask = () => {
-    const { columnTasksInput, handleChangeInputValue, handleInputCreation, handleDeleteInputField, handleCreateTask } = useContext(ColumnContext);
+    const { columnTasksInput, handleChangeSubtaskInputValue, handleInputCreation, handleDeleteInputField, handleCreateTask } = useContext(ColumnContext);
     const { currentBoard } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     
@@ -45,8 +45,8 @@ const ButtonAddNewTask = () => {
                                             type="text"
                                             maxLength="25"
                                             placeholder={placeholderExample[index] || 'Any...'}
-                                            value={input || ''}
-                                            onChange={(e) => handleChangeInputValue(e, index)}
+                                            value={input.title || ''}
+                                            onChange={(e) => handleChangeSubtaskInputValue(e, index)}
                                         />
                                         <button onClick={() => handleDeleteInputField(index)}>
                                             <img src={crossMark} alt=""/>

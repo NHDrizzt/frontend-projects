@@ -6,18 +6,20 @@ import {nanoid} from 'nanoid';
 
 const ColumnContextProvider = ({children}) => {
     
-    const [columnTasksInput, setColumnTasksInput] = useState([]);
+    const [newSubtaskAddInput, setNewSubtaskAddInput] = useState([{ isCompleted: false, title: ''}]);
     const [inputColumn, setInputColumn] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const { currentBoard, setCurrentBoard } = useContext(BoardContext);
+    
+
     const handleCreateTask = () => {
         const newTask = {
             id: nanoid(),
             title,
             description,
-            subtasks: [...columnTasksInput],
+            subtasks: [...newSubtaskAddInput],
             selectedOption
         };
         setCurrentBoard(prevBoard => {
@@ -33,34 +35,34 @@ const ColumnContextProvider = ({children}) => {
             });
             return {...prevBoard, columns: updatedColumns};
         });
+        setNewSubtaskAddInput(prevState => prevState.map(subtask => ({ ...subtask, title: ''})));
     };
     
-    const handleChangeInputValue = ({target: {value}}, index) => {
-        const newValue = [...columnTasksInput];
-        newValue[index] = value;
-        setColumnTasksInput(newValue);
+    const handleChangeSubtaskInputValue = ({target: {value}}, index) => {
+        const newValue = [...newSubtaskAddInput];
+        newValue[index].title = value;
+        setNewSubtaskAddInput(newValue);
     };
     
 
     const handleInputCreation = () => {
-        console.log(columnTasksInput);
-        setColumnTasksInput([...columnTasksInput, '']);
+        setNewSubtaskAddInput([...newSubtaskAddInput, { isCompleted: false, title: ''}]);
     };
     
     const handleDeleteInputField = (index) => {
-        setColumnTasksInput(columnTasksInput.filter((_, i) => i !== index));
+        setNewSubtaskAddInput(newSubtaskAddInput.filter((_, i) => i !== index));
     };
     
     const values = {
-        columnTasksInput,
-        setColumnTasksInput,
+        columnTasksInput: newSubtaskAddInput,
+        setColumnTasksInput: setNewSubtaskAddInput,
         inputColumn,
         setInputColumn,
         setTitle,
         setDescription,
         setSelectedOption,
         handleCreateTask,
-        handleChangeInputValue,
+        handleChangeSubtaskInputValue,
         handleInputCreation,
         handleDeleteInputField
     };

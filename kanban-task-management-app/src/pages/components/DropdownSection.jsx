@@ -5,17 +5,13 @@ import PropTypes from 'prop-types';
 import {BoardContext} from '../../context/BoardContext.jsx';
 
 const DropdownSection = () => {
-    const dropdownOptions = ['Platform Launch', 'Marketing Plan', 'Roadmap'];
     const [isButtonFocused, setIsButtonFocused] = useState(false);
     const [clickedIndex, setClickedIndex] = useState();
     const [showModal, setShowModal] = useState(false);
     const { boards, currentBoard, setCurrentBoard, setBoards } = useContext(BoardContext);
     
-    
-    console.log(boards);
     const handleBoardChange = (id) => {
         const newBoard = boards.find(board => board.id === id);
-        console.log(boards);
         setBoards(prevBoards =>
             prevBoards.map(board =>
                 board.name === currentBoard.name ? currentBoard : board

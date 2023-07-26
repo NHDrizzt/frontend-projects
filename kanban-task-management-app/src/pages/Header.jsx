@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import ButtonAddNewTask from './components/ButtonAddNewTask.jsx';
 import threeDots from '../assets/icon-vertical-ellipsis.svg';
 import logoDark675 from '../assets/logo-dark.svg';
@@ -12,15 +12,14 @@ import GenericModal from './components/GenericModal.jsx';
 import crossMark from '../assets/icon-cross.svg';
 import {ColumnContext} from '../context/ColumnContext.jsx';
 import {BoardContext} from '../context/BoardContext.jsx';
-import {nanoid} from 'nanoid';
 
 const Header = () => {
     const dropdownRef = useRef(null);
     const { darkMode } = useContext(DarkModeContext);
     const isScreenLarge = useScreenSize();
-    const {columnTasksInput, handleChangeInputValue, handleCreateTask} = useContext(ColumnContext);
+    // const {columnTasksInput, handleChangeInputValue, handleCreateTask} = useContext(ColumnContext);
     const [showEditAndDeleteDropdown, setShowEditAndDeleteDropdown] = useState(false);
-    const [showEditAndDeleteModal, setShowEditAndDeleteModal] = useState(false);
+    // const [showEditAndDeleteModal, setShowEditAndDeleteModal] = useState(false);
     const [showEditBoard, setShowEditBoard] = useState(false);
     const {currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
@@ -33,6 +32,7 @@ const Header = () => {
         'bg-pink-500',
         'bg-teal-500',
     ];
+
     
     const handleDropdown = () => {
         dropdownRef.current.classList.toggle('hidden');
@@ -49,6 +49,7 @@ const Header = () => {
         }));
     };
     
+    
     const handleBoardSaveChanges = () => {
         setCurrentBoard(tempEditBoardChanges);
     };
@@ -56,11 +57,12 @@ const Header = () => {
     const handleChange = (index, {target: {value}}) => {
         const newValue = [...currentBoard.columns];
         newValue[index].column = value;
-        setCurrentBoard(prevState => ({
+        setTempEditBoardChanges(prevState => ({
             ...prevState,
-            column: newValue
+            columns: newValue
         }));
     };
+
     
     const handleInputCreation = () => {
         setCurrentBoard(prevState => ({
@@ -82,6 +84,9 @@ const Header = () => {
         }));
     };
     
+    useEffect(() => {
+        setTempEditBoardChanges(currentBoard);
+    }, [currentBoard]);
     
     return (
         <>
