@@ -18,15 +18,13 @@ function App() {
                 <Header />
             </div>
             <div className="flex relative flex-1">
-                <div className={`${toggle ? 'md:w-0' : ''} ${' hidden md:block md:border-r md:border-lightBlueish'}` }>
+                <div className={`${toggle ? 'md:w-0' : ''} ${' hidden md:block md:border-r md:border-lightBlueish dark:bg-mediumGray md:dark:border-lightGray'}` }>
                     <SideBar/>
                 </div>
                 <div className={`${toggle ? 'left-0 bottom-0 mb-8 block' : 'left-[301px]  hidden'} ${'absolute flex items-center pl-[15px] h-12 w-[56px] bg-darkPurple rounded-tr-[100px] rounded-br-[100px] cursor-pointer'}`} onClick={() => { setToggle(!toggle); }}>
                     <img src={showSideBar} alt=""/>
                 </div>
-                <div className="w-full flex-grow grid place-items-center bg-almostWhite dark:bg-darkGray">
-                    <ColumnField />
-                </div>
+                <ColumnField />
             </div>
         </div>
         
