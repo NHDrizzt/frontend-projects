@@ -4,15 +4,15 @@ import iconDarkTheme from '../../assets/icon-dark-theme.svg';
 import {DarkModeContext} from '../../context/DarkModeContext.jsx';
 import useScreenSize from '../../hooks/useScreenSize.jsx';
 import PropTypes from 'prop-types';
-import SideBarFooter from './SideBarFooter.jsx';
+import {SideBarContext} from '../../context/SidebarContext.jsx';
 
-const ToggleDarkMode = ({ toggle }) => {
+const ToggleDarkMode = () => {
     const { darkMode, setDarkMode } = useContext(DarkModeContext);
+    const { toggle } = useContext(SideBarContext);
     const isScreenLarger = useScreenSize();
     
-    
     return (
-        <div className={`${isScreenLarger && !toggle ? 'absolute left-6 top-[57rem]': ''} ${'w-60 h-12 mt-2 gap-x-5 mx-auto flex items-center justify-center bg-almostWhite dark:bg-darkGray rounded-md'}`}>
+        <div className={`${isScreenLarger && !toggle ? 'absolute left-6 bottom-0 mb-20': ''} ${'w-60 h-12 mt-2 gap-x-5 mx-auto flex items-center justify-center bg-almostWhite dark:bg-darkGray rounded-md'}`}>
             <img src={iconLightTheme} alt="icon-light-theme"/>
             <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer" onChange={ () => setDarkMode(!darkMode)}/>
