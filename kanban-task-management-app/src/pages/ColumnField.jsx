@@ -15,6 +15,7 @@ const ColumnField = () => {
     const {boards, setBoards, currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [checkmarkToggle, setCheckmarkToggle] = useState(false);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+    const [previoustTaskInfo, setPreviousTaskInfo] = useState({});
     const [currentTaskInfo, setCurrentTaskInfo] = useState({});
     const colors = [
         'bg-red-500',
@@ -29,10 +30,6 @@ const ColumnField = () => {
         selectedOption,
         setSelectedOption,
     } = useContext(ColumnContext);
-    //
-    // useEffect(() => {
-    //     setCurrentBoard(pendingInputField);
-    // }, [pendingInputField]);
     
     const handleSaveChanges = () => {
         setCurrentBoard(pendingInputField);
@@ -77,6 +74,7 @@ const ColumnField = () => {
     
     const handleOpenTaskInfo = (task) => {
         setIsTaskModalOpen(true);
+        setPreviousTaskInfo(task);
         setCurrentTaskInfo(task);
     };
     
@@ -97,11 +95,8 @@ const ColumnField = () => {
         setPendingInputField(prevInputState => {
             let newColumns = [...prevInputState.columns];
             newColumns.forEach(column => {
-                console.log(column);
                 column.tasks.forEach(task => {
-                    console.log(task);
                     if (task.id === currentTaskInfo.id) {
-                        console.log('in');
                         task.subtasks = currentTaskInfo.subtasks;
                     }
                 });
@@ -110,6 +105,30 @@ const ColumnField = () => {
         });
         setCurrentBoard(pendingInputField);
     }, [checkmarkToggle]);
+    
+    const handleSelectionChange = (selectedValue) => {
+        setCurrentTaskInfo(prevState => ({
+            ...prevState,
+            selectedOption: selectedValue,
+        }));
+        setPendingInputField(prevInputState => {
+            let prevInputColumns = [...prevInputState.columns];
+            
+            let columnToIterate = prevInputColumns.findIndex(c => c.column === previoustTaskInfo.selectedOption);
+            
+            let taskToIterate = prevInputColumns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
+    
+            if (taskToIterate !== -1) {
+                let removedObject = prevInputColumns[columnToIterate]?.tasks.splice(taskToIterate, 1)[0];
+                let addedObject = prevInputColumns.find(c => c.column === selectedValue);
+                addedObject.tasks.push({...removedObject, selectedOption: selectedValue});
+                setPreviousTaskInfo(prevState => ({...prevState, selectedOption: selectedValue}));
+            } else {
+                console.log('Object with ID', currentTaskInfo.id, 'not found.');
+            }
+            return prevInputState;
+        });
+    };
     
     return (
         <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
@@ -234,8 +253,13 @@ const ColumnField = () => {
                                     </div>
                                     {/*footer*/}
                                     <div className="relative flex flex-col w-full items-start justify-start mb-6">
-                                        <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Status</label>
-                                        <ComboBox selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
+                                        <label className="text-slate-400 text-[12px] py-2 pt-3 font-bold" htmlFor="">Current status</label>
+                                        <ComboBox
+                                            selectedOption={selectedOption}
+                                            setSelectedOption={setSelectedOption}
+                                            onSelectionChange={handleSelectionChange}
+                                            currentSelectedValue={currentTaskInfo.selectedOption}
+                                        />
                                     </div>
                                 </div>
                             </div>

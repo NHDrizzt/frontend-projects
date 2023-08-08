@@ -5,18 +5,24 @@ import chevronCustom from '../../assets/icon-chevron-down.svg';
 import PropTypes from 'prop-types';
 import {BoardContext} from '../../context/BoardContext.jsx';
 
-const ComboBox = ({ selectedOption, setSelectedOption }) => {
+const ComboBox = ({ selectedOption, setSelectedOption, onSelectionChange, currentSelectedValue }) => {
 
     const { currentBoard } = useContext(BoardContext);
     
     const handleOptionChange = (event) => {
+        const selectedValue = event.target.value;
         setSelectedOption(event.target.value);
+        onSelectionChange(selectedValue);
     };
+    
+    console.log('CURRENTbOARD COLUM0 ', currentBoard.columns[0].column);
     
     return (
         <>
-            <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer" value={selectedOption} onChange={handleOptionChange}>
-                <option>Select an option</option>
+            <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer"
+                value={currentSelectedValue ? currentSelectedValue : selectedOption}
+                onChange={handleOptionChange}>
+                {/*<option>Select an option</option>*/}
                 {currentBoard.columns.map(({column}, index) => (
                     <option key={index} value={column}>
                         {column}
@@ -32,6 +38,7 @@ const ComboBox = ({ selectedOption, setSelectedOption }) => {
 ComboBox.propTypes = {
     selectedOption: PropTypes.string.isRequired,
     setSelectedOption: PropTypes.func.isRequired,
+    onSelectionChange: PropTypes.func.isRequired,
 };
 
 export default ComboBox;

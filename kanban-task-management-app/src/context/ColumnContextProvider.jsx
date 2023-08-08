@@ -12,7 +12,7 @@ const ColumnContextProvider = ({children}) => {
     const [pendingInputField, setPendingInputField] = useState(currentBoard);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(currentBoard.columns[0].column);
   
     
 
@@ -39,6 +39,7 @@ const ColumnContextProvider = ({children}) => {
         });
         setNewSubtaskAddInput(prevState => prevState.map(subtask => ({ ...subtask, title: ''})));
     };
+    
     useEffect(() => {
         setPendingInputField(currentBoard);
     }, [currentBoard, setCurrentBoard]);
@@ -49,7 +50,6 @@ const ColumnContextProvider = ({children}) => {
         setNewSubtaskAddInput(newValue);
     };
     
-
     const handleInputCreation = () => {
         setNewSubtaskAddInput([...newSubtaskAddInput, { isCompleted: false, title: ''}]);
     };
@@ -57,7 +57,7 @@ const ColumnContextProvider = ({children}) => {
     const handleDeleteInputField = (index) => {
         setNewSubtaskAddInput(newSubtaskAddInput.filter((_, i) => i !== index));
     };
-    
+
     const values = {
         columnTasksInput: newSubtaskAddInput,
         setColumnTasksInput: setNewSubtaskAddInput,
@@ -65,6 +65,7 @@ const ColumnContextProvider = ({children}) => {
         setInputColumn,
         setTitle,
         setDescription,
+        selectedOption,
         setSelectedOption,
         handleCreateTask,
         handleChangeSubtaskInputValue,
