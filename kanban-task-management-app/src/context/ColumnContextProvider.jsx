@@ -12,7 +12,7 @@ const ColumnContextProvider = ({children}) => {
     const [pendingInputField, setPendingInputField] = useState(currentBoard);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [selectedOption, setSelectedOption] = useState(currentBoard.columns[0].column);
+    const [selectedOption, setSelectedOption] = useState('');
   
     
 

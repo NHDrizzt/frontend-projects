@@ -93,8 +93,6 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                                             rows="4"></textarea>
                                     </div>
                                 </>
-                                
-                                
                             ) : null
                         }
                         {/*body*/}

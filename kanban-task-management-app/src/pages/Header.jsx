@@ -23,6 +23,7 @@ const Header = () => {
     const [showEditBoard, setShowEditBoard] = useState(false);
     const {currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
+    const { boards, setBoards } = useContext(BoardContext);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -88,6 +89,13 @@ const Header = () => {
         setTempEditBoardChanges(currentBoard);
     }, [currentBoard]);
     
+    const handleDeleteCurrentBoard = () => {
+        if(boards.length > 0) {
+            setBoards(prevState => prevState.filter(board => board.id !== currentBoard.id));
+            setCurrentBoard(boards[0]);
+        }
+    };
+    
     return (
         <>
             <header className="flex border-b border-solid border-lightBlueish dark:border-b-lightGray">
@@ -118,7 +126,7 @@ const Header = () => {
                                 <button className="text-veryLightGray"
                                     onClick={() => setShowEditBoard(true)}
                                 >Edit Board</button>
-                                <button className="text-tomatoRed">Delete Board</button>
+                                <button className="text-tomatoRed" onClick={handleDeleteCurrentBoard}>Delete Board</button>
                             </div>
                         </div>
                     </div>

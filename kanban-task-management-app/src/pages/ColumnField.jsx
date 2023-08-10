@@ -11,7 +11,7 @@ import useUpdateBoards from '../hooks/useUpdateBoards.jsx';
 
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
-    const { pendingInputField, setPendingInputField } = useContext(ColumnContext);
+    const { pendingInputField, selectedOption, setSelectedOption, setPendingInputField } = useContext(ColumnContext);
     const {boards, setBoards, currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [checkmarkToggle, setCheckmarkToggle] = useState(false);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -26,12 +26,9 @@ const ColumnField = () => {
         'bg-pink-500',
         'bg-teal-500',
     ];
-    const {
-        selectedOption,
-        setSelectedOption,
-    } = useContext(ColumnContext);
     
     const handleSaveChanges = () => {
+        setSelectedOption(pendingInputField.columns[0].column);
         setCurrentBoard(pendingInputField);
     };
 
@@ -41,6 +38,7 @@ const ColumnField = () => {
     
     const closeShowInfoModal = () => {
         setIsTaskModalOpen(false);
+        setPendingInputField(currentBoard);
     };
     
     const handleChange = (index, {target: {value}}) => {
@@ -200,6 +198,7 @@ const ColumnField = () => {
                                             placeholder="Todo"
                                             value={input.column || ''}
                                             onChange={(e) => handleChange(index, e)}
+                                            autoFocus
                                         />
                                         <button onClick={() => handleDelete(input.id)}>
                                             <img src={crossMark} alt=""/>
