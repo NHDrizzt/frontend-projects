@@ -1,14 +1,20 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import iconDropdown from '../../assets/icon-board.svg';
 import ToggleDarkMode from './ToggleDarkMode.jsx';
 import PropTypes from 'prop-types';
 import {BoardContext} from '../../context/BoardContext.jsx';
+import crossMark from '../../assets/icon-cross.svg';
+import {nanoid} from 'nanoid';
 
 const DropdownSection = () => {
     const [isButtonFocused, setIsButtonFocused] = useState(false);
-    const [clickedIndex, setClickedIndex] = useState();
+    const [clickedIndex, setClickedIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
-    const { boards, currentBoard, setCurrentBoard, setBoards } = useContext(BoardContext);
+    const { boards, currentBoard,
+        setCurrentBoard, setBoards,
+        pendingCreateColumns, setPendingCreateColumns,
+        boardName, setBoardName, colors
+    } = useContext(BoardContext);
     
     const handleBoardChange = (id) => {
         const newBoard = boards.find(board => board.id === id);
@@ -17,7 +23,6 @@ const DropdownSection = () => {
                 board.name === currentBoard.name ? currentBoard : board
             )
         );
-        
         setCurrentBoard(newBoard);
     };
     
@@ -30,6 +35,45 @@ const DropdownSection = () => {
         setIsButtonFocused(false);
     };
     
+   
+    const handleChangeInputValue = ({target: {value}}, index) => {
+        setPendingCreateColumns(prevPendingCreateColumns =>
+            prevPendingCreateColumns.map((el, i) => i === index ? {...el, column: value} : el)
+        );
+    };
+    
+    const handleDeleteInputField = (index) => {
+        setPendingCreateColumns(prevPendingCreateColumns =>
+            prevPendingCreateColumns.filter((_, i) => i !== index)
+        );
+    };
+    
+    const handleCreateColumn = () => {
+        setPendingCreateColumns(prevColumns => [
+            ...prevColumns,
+            { id: nanoid(), color: colors[Math.floor(Math.random() * colors.length)], column: '', tasks: [] }
+        ]);
+    };
+    
+    const handleCreateNewBoard = () => {
+        setBoards(prevBoards => [
+            ...prevBoards,
+            {
+                id: nanoid(),
+                name: boardName,
+                columns: pendingCreateColumns
+            }
+        ]);
+        setPendingCreateColumns([{ id: nanoid(), color: colors[Math.floor(Math.random() * colors.length)], column: '', tasks: []}]);
+        setBoardName('');
+        setShowModal(false);
+    };
+    
+    useEffect(() => {
+        console.log(pendingCreateColumns);
+        // Aqui você pode chamar a função para criar o novo quadro
+    }, [pendingCreateColumns]);
+    
     return (
         <>
             <div className="ml-6 py-4 text-veryLightGray font-bold font-plus-jakarta text-xs">
@@ -38,7 +82,7 @@ const DropdownSection = () => {
             <nav className="py-1 font-plus-jakarta text-veryLightGray" role="none">
                 {
                     boards.map((el, index) => (
-                        <div key={ index } className={`flex gap-x-2 pl-6 items-center ${isButtonFocused && index === clickedIndex ? 'h-12 w-[240px] text-white bg-darkPurple rounded-tr-[100px] rounded-br-[100px]' : ''}`}>
+                        <div key={ index } className={`flex gap-x-2 pl-6 items-center  ${index === clickedIndex ? 'h-12 w-[240px] text-white bg-darkPurple rounded-tr-[100px] rounded-br-[100px]' : ''}`}>
                             <img className="h-4" src={iconDropdown} alt=""/>
                             <button className="block py-3.5 text-sm font-bold " role="menuitem" tabIndex="-1" onFocus={ () => handleButtonFocus(index)} onBlur={handleButtonBlur}
                                 onClick={() => handleBoardChange(el.id)}
@@ -78,29 +122,50 @@ const DropdownSection = () => {
                                                 <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"></span>
                                             </button>
                                         </div>
-                                        {/*body*/}
+                                        {/*board name*/}
                                         <div className="flex flex-col items-start justify-start">
                                             <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Name</label>
-                                            <input id="nameColumn" className="w-full pl-3  h-10 border border-lightGray border-opacity-25 text-gray-950 rounded-sm focus:outline-none" type="text" maxLength="25"/>
+                                            <input id="nameColumn"
+                                                className="w-full pl-3  h-10 border border-lightGray border-opacity-25 text-gray-950 rounded-sm focus:outline-none"
+                                                type="text"
+                                                maxLength="25"
+                                                value={boardName}
+                                                onChange={(e) => setBoardName(e.target.value)}
+                                                autoFocus/>
                                         </div>
+                                        {/*columns input*/}
                                         <div className="flex flex-col items-start justify-start">
-                                            <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Columns</label>
-                                            <input id="nameColumn" className="w-11/12 pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none" type="text" maxLength="25"/>
-                                            <input id="nameColumn" className="w-11/12 pl-3 mt-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none" type="text" maxLength="25"/>
+                                            <p className="text-slate-400 text-[12px] py-2 font-bold">Columns</p>
+                                            {
+                                                pendingCreateColumns.map((el, index) => (
+                                                    <div key={index} className="flex items-center w-full space-x-4 mb-2">
+                                                        <input
+                                                            className="w-11/12 pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                            value={el.column}
+                                                            onChange={(e) => handleChangeInputValue(e, index)}
+                                                            type="text"
+                                                            maxLength="25"
+                                                            autoFocus={pendingCreateColumns.length > 1}/>
+                                                        <button onClick={() => handleDeleteInputField(index)}>
+                                                            <img src={crossMark} alt=""/>
+                                                        </button>
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
-                                        {/*footer*/}
+                                        {/*Add column and save button*/}
                                         <div className="flex flex-col items-center justify-center">
                                             <button
                                                 className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+']"
                                                 type="button"
-                                                onClick={() => setShowModal(false)}
+                                                onClick={() => handleCreateColumn()}
                                             >
                                                 Add New Column
                                             </button>
                                             <button
                                                 className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                 type="button"
-                                                onClick={() => setShowModal(false)}
+                                                onClick={handleCreateNewBoard}
                                             >
                                                 Create New Board
                                             </button>

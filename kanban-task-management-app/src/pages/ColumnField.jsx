@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import iconAdd from '../assets/icon-add-task-mobile.svg';
 import crossMark from '../assets/icon-cross.svg';
 import {ColumnContext} from '../context/ColumnContext.jsx';
@@ -11,14 +11,12 @@ import useUpdateBoards from '../hooks/useUpdateBoards.jsx';
 
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
-    const { inputColumn, setInputColumn } = useContext(ColumnContext);
-    const {boards: initBoard, setBoards, currentBoard: curBoard, setCurrentBoard} = useContext(BoardContext);
-    const [closeModalInfo, setCloseModalInfo] = useState(false);
-    const [showTaskInfo, setShowTaskInfo] = useState({});
-    const [boards, currentBoard, updateBoards] = useUpdateBoards(initBoard, curBoard);
-    // const showTaskInfoName = currentBoard.columns.find((column) => {
-    //     const hi = column.tasks.find((task) => task.id === showTaskInfo);
-    // });
+    const { pendingInputField, selectedOption, setSelectedOption, setPendingInputField } = useContext(ColumnContext);
+    const {boards, setBoards, currentBoard, setCurrentBoard} = useContext(BoardContext);
+    const [checkmarkToggle, setCheckmarkToggle] = useState(false);
+    const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+    const [previoustTaskInfo, setPreviousTaskInfo] = useState({});
+    const [currentTaskInfo, setCurrentTaskInfo] = useState({});
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -28,29 +26,10 @@ const ColumnField = () => {
         'bg-pink-500',
         'bg-teal-500',
     ];
-    const {
-        selectedOption,
-        setSelectedOption,
-    } = useContext(ColumnContext);
-    
-
     
     const handleSaveChanges = () => {
-        // setShowModal(false);
-        //
-        // const columnValues = inputColumn.map((value) => {
-        //     return {
-        //         id: nanoid(),
-        //         column: value,
-        //         tasks: [],
-        //         color: colors[Math.floor(Math.random() * colors.length)]
-        //     };
-        // });
-        //
-        // setCurrentBoard(prevState => ({
-        //     ...prevState,
-        //     columns: columnValues
-        // }));
+        setSelectedOption(pendingInputField.columns[0].column);
+        setCurrentBoard(pendingInputField);
     };
 
     const closeModal = () => {
@@ -58,14 +37,15 @@ const ColumnField = () => {
     };
     
     const closeShowInfoModal = () => {
-        setCloseModalInfo(false);
+        setIsTaskModalOpen(false);
+        setPendingInputField(currentBoard);
     };
     
     const handleChange = (index, {target: {value}}) => {
-        updateBoards(board => {
-            const newColumns = [...board.columns];
-            newColumns[index].column = value;
-            return { ...board, columns: newColumns };
+        setPendingInputField(prevState => {
+            const columns = [...pendingInputField.columns];
+            columns[index].column = value;
+            return { ...prevState, columns };
         });
     };
     
@@ -77,36 +57,76 @@ const ColumnField = () => {
             color: colors[Math.floor(Math.random() * colors.length)]
         };
     
-        updateBoards(board => {
-            const newColumns = [...board.columns, newColumn];
-            return { ...board, columns: newColumns };
+        setPendingInputField(prevState => {
+            const newColumns = prevState.columns.concat(newColumn);
+            return {...prevState, columns: newColumns};
         });
     };
     
     const handleDelete = (id) => {
-        updateBoards(board => {
-            const newColumns = board.columns.filter(column => column.id !== id);
-            return { ...board, columns: newColumns };
+        setPendingInputField(prevState => {
+            const newColumns = prevState.columns.filter(column => column.id === id);
+            return  { ...prevState, columns: newColumns };
         });
     };
     
     const handleOpenTaskInfo = (task) => {
-        setCloseModalInfo(true);
-        setShowTaskInfo(task);
+        setIsTaskModalOpen(true);
+        setPreviousTaskInfo(task);
+        setCurrentTaskInfo(task);
     };
     
     const toggleCheckmark = (subtasks, index) => {
-        const newSubtasks = showTaskInfo.subtasks.map((subtask, i) => {
+        const newSubtasks = currentTaskInfo.subtasks.map((subtask, i) => {
             if (i !== index) return subtask;
             return { ...subtask, isCompleted: !subtask.isCompleted };
         });
         
-        setShowTaskInfo(prevState => ({
+        setCurrentTaskInfo(prevState => ({
             ...prevState,
             subtasks: newSubtasks
         }));
+        setCheckmarkToggle(prevState => !prevState);
     };
     
+    useEffect(() => {
+        setPendingInputField(prevInputState => {
+            let newColumns = [...prevInputState.columns];
+            newColumns.forEach(column => {
+                column.tasks.forEach(task => {
+                    if (task.id === currentTaskInfo.id) {
+                        task.subtasks = currentTaskInfo.subtasks;
+                    }
+                });
+            });
+            return { ...prevInputState, columns: newColumns };
+        });
+        setCurrentBoard(pendingInputField);
+    }, [checkmarkToggle]);
+    
+    const handleSelectionChange = (selectedValue) => {
+        setCurrentTaskInfo(prevState => ({
+            ...prevState,
+            selectedOption: selectedValue,
+        }));
+        setPendingInputField(prevInputState => {
+            let prevInputColumns = [...prevInputState.columns];
+            
+            let columnToIterate = prevInputColumns.findIndex(c => c.column === previoustTaskInfo.selectedOption);
+            
+            let taskToIterate = prevInputColumns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
+    
+            if (taskToIterate !== -1) {
+                let removedObject = prevInputColumns[columnToIterate]?.tasks.splice(taskToIterate, 1)[0];
+                let addedObject = prevInputColumns.find(c => c.column === selectedValue);
+                addedObject.tasks.push({...removedObject, selectedOption: selectedValue});
+                setPreviousTaskInfo(prevState => ({...prevState, selectedOption: selectedValue}));
+            } else {
+                console.log('Object with ID', currentTaskInfo.id, 'not found.');
+            }
+            return prevInputState;
+        });
+    };
     
     return (
         <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
@@ -137,11 +157,11 @@ const ColumnField = () => {
                                     {/*card*/}
                                     {
                                         column.tasks?.map((task) => (
-                                            <div key={task.title} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer"
+                                            <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer"
                                                 onClick={() => handleOpenTaskInfo(task)}
                                             >
                                                 <p className="text-gray-950 text-[15px] font-bold">{task.title}</p>
-                                                <p className="text-slate-400 text-[12px] font-bold">0 of {task.subtasks.length} subtasks</p>
+                                                <p className="text-slate-400 text-[12px] font-bold">{task.subtasks.filter(subtask => subtask.isCompleted).length} of {task.subtasks.length} subtasks</p>
                                             </div>
                                         ))
                                     }
@@ -167,7 +187,7 @@ const ColumnField = () => {
                         <div className="flex flex-col items-start justify-start">
                             <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Columns</label>
                             {
-                                currentBoard.columns.map((input, index) => (
+                                pendingInputField.columns.map((input, index) => (
                                     <div key={index} className="flex items-center w-full space-x-4 mb-2">
                                         <input
                                             id={`nameColumns${index}`}
@@ -178,6 +198,7 @@ const ColumnField = () => {
                                             placeholder="Todo"
                                             value={input.column || ''}
                                             onChange={(e) => handleChange(index, e)}
+                                            autoFocus
                                         />
                                         <button onClick={() => handleDelete(input.id)}>
                                             <img src={crossMark} alt=""/>
@@ -190,7 +211,7 @@ const ColumnField = () => {
                 ) : null
             }
             {
-                closeModalInfo ? (
+                isTaskModalOpen ? (
                     <div>
                         <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
                             <div className="container mx-auto w-11/12 md:w-[480px]">
@@ -199,20 +220,20 @@ const ColumnField = () => {
                                     {/*header*/}
                                     <p className="text-lg text-gray-950 font-bold">
                                         {
-                                            showTaskInfo.title
+                                            currentTaskInfo.title
                                         }
                                     </p>
                                     <p className="text-slate-400 py-6 text-[13px] font-medium leading-[23px]">
                                         {
-                                            showTaskInfo.description
+                                            currentTaskInfo.description
                                         }
                                     </p>
                                     {/*body*/}
                                     <div>
-                                        <p className="pb-2 text-xs font-bold text-veryLightGray">Subtasks ({showTaskInfo.subtasks.filter(subtask => subtask.isCompleted === true).length} of {showTaskInfo.subtasks.length})</p>
+                                        <p className="pb-2 text-xs font-bold text-veryLightGray">Subtasks ({currentTaskInfo.subtasks.filter(subtask => subtask.isCompleted === true).length} of {currentTaskInfo.subtasks.length})</p>
                                         <div>
                                             {
-                                                showTaskInfo.subtasks.map((subtasks, i) => (
+                                                currentTaskInfo.subtasks.map((subtasks, i) => (
                                                     <div key={i} className="flex items-center gap-x-4 bg-almostWhite py-3 mt-2">
                                                         <div
                                                             className={`ml-3 grid place-items-center w-[16px] h-[16px] border outline-none focus:none rounded-sm ${subtasks.isCompleted ? ' bg-darkPurple' : 'bg-white'}`}
@@ -231,8 +252,13 @@ const ColumnField = () => {
                                     </div>
                                     {/*footer*/}
                                     <div className="relative flex flex-col w-full items-start justify-start mb-6">
-                                        <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Status</label>
-                                        <ComboBox selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
+                                        <label className="text-slate-400 text-[12px] py-2 pt-3 font-bold" htmlFor="">Current status</label>
+                                        <ComboBox
+                                            selectedOption={selectedOption}
+                                            setSelectedOption={setSelectedOption}
+                                            onSelectionChange={handleSelectionChange}
+                                            currentSelectedValue={currentTaskInfo.selectedOption}
+                                        />
                                     </div>
                                 </div>
                             </div>
