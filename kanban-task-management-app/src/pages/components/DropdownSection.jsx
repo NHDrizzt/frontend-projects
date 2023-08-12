@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {BoardContext} from '../../context/BoardContext.jsx';
 import crossMark from '../../assets/icon-cross.svg';
 import {nanoid} from 'nanoid';
+import {ColumnContext} from '../../context/ColumnContext.jsx';
 
 const DropdownSection = () => {
     const [isButtonFocused, setIsButtonFocused] = useState(false);
@@ -15,6 +16,7 @@ const DropdownSection = () => {
         pendingCreateColumns, setPendingCreateColumns,
         boardName, setBoardName, colors
     } = useContext(BoardContext);
+    const { selectedOption, setSelectedOption } = useContext(ColumnContext);
     
     const handleBoardChange = (id) => {
         const newBoard = boards.find(board => board.id === id);
@@ -64,15 +66,11 @@ const DropdownSection = () => {
                 columns: pendingCreateColumns
             }
         ]);
+        setSelectedOption(pendingCreateColumns[0]?.column);
         setPendingCreateColumns([{ id: nanoid(), color: colors[Math.floor(Math.random() * colors.length)], column: '', tasks: []}]);
         setBoardName('');
         setShowModal(false);
     };
-    
-    useEffect(() => {
-        console.log(pendingCreateColumns);
-        // Aqui você pode chamar a função para criar o novo quadro
-    }, [pendingCreateColumns]);
     
     return (
         <>

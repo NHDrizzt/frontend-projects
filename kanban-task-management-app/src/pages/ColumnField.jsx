@@ -8,15 +8,23 @@ import {nanoid} from 'nanoid';
 import ComboBox from './components/ComboBox.jsx';
 import iconCheck from '../assets/icon-check.svg';
 import useUpdateBoards from '../hooks/useUpdateBoards.jsx';
+import threeDots from '../assets/icon-vertical-ellipsis.svg';
 
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
-    const { pendingInputField, selectedOption, setSelectedOption, setPendingInputField } = useContext(ColumnContext);
+    const { pendingInputField, selectedOption,
+        title, setTitle, description, setDescription,
+        setSelectedOption, setPendingInputField,
+    } = useContext(ColumnContext);
+    const placeholderExample = ['e.g. Make coffe', 'e.g. Drink cofee & smile', 'e.g. Be happy'];
     const {boards, setBoards, currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [checkmarkToggle, setCheckmarkToggle] = useState(false);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+    const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
     const [previoustTaskInfo, setPreviousTaskInfo] = useState({});
     const [currentTaskInfo, setCurrentTaskInfo] = useState({});
+    const [pendingCurrentTaskInfo, setPendingCurrentTaskInfo] = useState({});
+    const [pendingEditSelectedOption, setPendingEditSelectedOption] = useState('');
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -39,6 +47,10 @@ const ColumnField = () => {
     const closeShowInfoModal = () => {
         setIsTaskModalOpen(false);
         setPendingInputField(currentBoard);
+    };
+    
+    const closeEditTaskModal = () => {
+        setIsEditTaskModalOpen(false);
     };
     
     const handleChange = (index, {target: {value}}) => {
@@ -126,6 +138,81 @@ const ColumnField = () => {
             }
             return prevInputState;
         });
+    };
+    
+    const handleEditTaskDetails = () => {
+        closeShowInfoModal();
+        setIsEditTaskModalOpen(true);
+        setPendingCurrentTaskInfo(currentTaskInfo);
+    };
+    
+    const handleEditAddSubtasksInput = () => {
+        setPendingCurrentTaskInfo(prevState => ({
+            ...prevState,
+            subtasks: [...prevState.subtasks, {id: nanoid(), title: '', isCompleted: false}]
+        }));
+    };
+    
+    const handleEditDeleteSubtask = (index) => {
+        setPendingCurrentTaskInfo(prevState => ({
+            ...prevState,
+            subtasks: prevState.subtasks.filter((subtask, i) => i !== index)
+        }));
+    };
+    
+    const handleEditSubtaskChange = (index, {target: {value}}) => {
+        setPendingCurrentTaskInfo(prevState => {
+            const subtasks = [...prevState.subtasks];
+            subtasks[index].title = value;
+            return { ...prevState, subtasks };
+        });
+    };
+    
+    const handleEditTitleChange = ({target: {value}}) => {
+        setPendingCurrentTaskInfo(prevState => ({
+            ...prevState,
+            title: value
+        }));
+    };
+    
+    const handleEditDescriptionChange = ({target: {value}}) => {
+        setPendingCurrentTaskInfo(prevState => ({
+            ...prevState,
+            description: value
+        }));
+    };
+    
+    const handleEditSelectedOption = (selectedValue) => {
+        setPendingCurrentTaskInfo(prevState => ({
+            ...prevState,
+            selectedOption: selectedValue
+        }));
+    };
+    
+    const handleUpdateTask = () => {
+        // console.log(pendingEditSelectedOption); valor de status selecionado atual
+        setPendingInputField(prevState =>{
+            const columns = [...prevState.columns];
+            const columnToIterate = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
+            const taskToIterate = columns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
+    
+            if (columnToIterate !== -1 && taskToIterate !== -1) {
+                const taskArray = columns[columnToIterate].tasks;
+                taskArray[taskToIterate] = pendingCurrentTaskInfo;
+                if (currentTaskInfo.selectedOption !== pendingEditSelectedOption) {
+                    const removedObject = taskArray.splice(taskToIterate, 1)[0];
+                    console.log(removedObject);
+                    const addedObject = columns.find(c => c.column === pendingEditSelectedOption);
+                    addedObject.tasks.push({...pendingCurrentTaskInfo, selectedOption: pendingEditSelectedOption});
+                }
+            } else {
+                console.log('Object with ID', currentTaskInfo.id, 'not found.');
+            }
+    
+            return prevState;
+        });
+        setCurrentTaskInfo(pendingCurrentTaskInfo);
+        setIsEditTaskModalOpen(false);
     };
     
     return (
@@ -218,11 +305,17 @@ const ColumnField = () => {
                                 {/*content*/}
                                 <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
                                     {/*header*/}
-                                    <p className="text-lg text-gray-950 font-bold">
-                                        {
-                                            currentTaskInfo.title
-                                        }
-                                    </p>
+                                    <div className="flex justify-between">
+                                        <p className="text-lg text-gray-950 font-bold">
+                                            {
+                                                currentTaskInfo.title
+                                            }
+                                        </p>
+                                        <button onClick={handleEditTaskDetails}>
+                                            <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
+                                        </button>
+                                    </div>
+                                    
                                     <p className="text-slate-400 py-6 text-[13px] font-medium leading-[23px]">
                                         {
                                             currentTaskInfo.description
@@ -265,6 +358,100 @@ const ColumnField = () => {
                         </div>
                         {/*overlay*/}
                         <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeShowInfoModal}></div>
+                    </div>
+                ) : null
+            }
+    
+            {
+                isEditTaskModalOpen ? (
+                    <div>
+                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                            <div className="container mx-auto w-11/12 md:w-[480px]">
+                                {/*content*/}
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                                    {/*header*/}
+                                    <p className="text-lg text-gray-950 font-bold">
+                                        Edit Task
+                                    </p>
+                                    {
+                                        <>
+                                            <div className="flex flex-col items-start justify-start">
+                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Title</label>
+                                                <input
+                                                    name="title"
+                                                    value={pendingCurrentTaskInfo.title || ''}
+                                                    onChange={(e) => handleEditTitleChange(e)}
+                                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                    type="text"/>
+                                            </div>
+                                            <div className="flex flex-col items-start justify-start">
+                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Description</label>
+                                                <textarea
+                                                    name="description"
+                                                    value={pendingCurrentTaskInfo.description || ''}
+                                                    onChange={(e) => handleEditDescriptionChange(e)}
+                                                    className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                    id=""
+                                                    cols="20"
+                                                    rows="4"></textarea>
+                                            </div>
+                                        </>
+                                    }
+                                    {/*body*/}
+                                    <div className="flex flex-col items-start justify-start">
+                                        <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
+                                        {
+                                            pendingCurrentTaskInfo.subtasks?.map((input, index) => (
+                                                <div key={index} className="flex items-center w-full space-x-4 mb-2">
+                                                    <input
+                                                        id={`nameColumns${index}`}
+                                                        name={`nameColumn${index}`}
+                                                        className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                        type="text"
+                                                        maxLength="25"
+                                                        placeholder={placeholderExample[index] || 'Any...'}
+                                                        value={input.title || ''}
+                                                        onChange={(e) => handleEditSubtaskChange(index, e)}
+                                                    />
+                                                    <button onClick={() => handleEditDeleteSubtask(index)}>
+                                                        <img src={crossMark} alt=""/>
+                                                    </button>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    {/*footer*/}
+                                    <div className="flex flex-col items-center justify-center">
+                                        <button
+                                            className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+']"
+                                            type="button"
+                                            onClick={handleEditAddSubtasksInput}
+                                        >
+                                            Add Subtask
+                                        </button>
+                                        {
+                                            <div className="relative flex flex-col w-full items-start justify-start mb-6">
+                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Status</label>
+                                                <ComboBox
+                                                    selectedOption={selectedOption}
+                                                    setSelectedOption={setSelectedOption}
+                                                    onSelectionChange={setPendingEditSelectedOption}
+                                                />
+                                            </div>
+                                        }
+                                        <button
+                                            className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleUpdateTask}
+                                        >
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/*overlay*/}
+                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
                     </div>
                 ) : null
             }
