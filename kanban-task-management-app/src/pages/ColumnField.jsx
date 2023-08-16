@@ -25,6 +25,7 @@ const ColumnField = () => {
     const [currentTaskInfo, setCurrentTaskInfo] = useState({});
     const [pendingCurrentTaskInfo, setPendingCurrentTaskInfo] = useState({});
     const [pendingEditSelectedOption, setPendingEditSelectedOption] = useState('');
+    const [showEditAndDeleteDropdown, setShowEditAndDeleteDropdown] = useState(false);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -42,11 +43,13 @@ const ColumnField = () => {
 
     const closeModal = () => {
         setShowModal(false);
+        setShowEditAndDeleteDropdown(false);
     };
     
     const closeShowInfoModal = () => {
         setIsTaskModalOpen(false);
         setPendingInputField(currentBoard);
+        setShowEditAndDeleteDropdown(false);
     };
     
     const closeEditTaskModal = () => {
@@ -215,6 +218,22 @@ const ColumnField = () => {
         setIsEditTaskModalOpen(false);
     };
     
+    const handleDeleteCurrentTask = () => {
+        setPendingInputField(prevState => {
+            const columns = [...prevState.columns];
+            const columnToIterate = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
+            const taskToIterate = columns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
+            
+            if (columnToIterate !== -1 && taskToIterate !== -1) {
+                columns[columnToIterate].tasks.splice(taskToIterate, 1);
+            } else {
+                console.log('Object with ID', currentTaskInfo.id, 'not found.');
+            }
+            return prevState;
+        });
+        setIsTaskModalOpen(false);
+    };
+    
     return (
         <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
             {
@@ -247,7 +266,7 @@ const ColumnField = () => {
                                             <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer"
                                                 onClick={() => handleOpenTaskInfo(task)}
                                             >
-                                                <p className="text-gray-950 text-[15px] font-bold">{task.title}</p>
+                                                <p className="text-gray-950 text-[15px] font-bolthred">{task.title}</p>
                                                 <p className="text-slate-400 text-[12px] font-bold">{task.subtasks.filter(subtask => subtask.isCompleted).length} of {task.subtasks.length} subtasks</p>
                                             </div>
                                         ))
@@ -311,9 +330,18 @@ const ColumnField = () => {
                                                 currentTaskInfo.title
                                             }
                                         </p>
-                                        <button onClick={handleEditTaskDetails}>
-                                            <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
-                                        </button>
+                                        <div className="relative">
+                                            <button onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
+                                                <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
+                                            </button>
+    
+                                            <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start border -left-3 top-1 absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray rounded-lg shadow`}>
+                                                <button className="text-veryLightGray"
+                                                    onClick={() => handleEditTaskDetails(true)}
+                                                >Edit Task</button>
+                                                <button className="text-tomatoRed" onClick={handleDeleteCurrentTask}>Delete Task</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <p className="text-slate-400 py-6 text-[13px] font-medium leading-[23px]">
