@@ -26,6 +26,7 @@ const ColumnField = () => {
     const [pendingCurrentTaskInfo, setPendingCurrentTaskInfo] = useState({});
     const [pendingEditSelectedOption, setPendingEditSelectedOption] = useState('');
     const [showEditAndDeleteDropdown, setShowEditAndDeleteDropdown] = useState(false);
+    const [isConfirmDeleteTaskModalOpen, setIsConfirmDeleteTaskModalOpen ] = useState(false);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -54,6 +55,7 @@ const ColumnField = () => {
     
     const closeEditTaskModal = () => {
         setIsEditTaskModalOpen(false);
+        setIsConfirmDeleteTaskModalOpen(false);
     };
     
     const handleChange = (index, {target: {value}}) => {
@@ -193,7 +195,6 @@ const ColumnField = () => {
     };
     
     const handleUpdateTask = () => {
-        // console.log(pendingEditSelectedOption); valor de status selecionado atual
         setPendingInputField(prevState =>{
             const columns = [...prevState.columns];
             const columnToIterate = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
@@ -223,7 +224,7 @@ const ColumnField = () => {
             const columns = [...prevState.columns];
             const columnToIterate = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
             const taskToIterate = columns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
-            
+
             if (columnToIterate !== -1 && taskToIterate !== -1) {
                 columns[columnToIterate].tasks.splice(taskToIterate, 1);
             } else {
@@ -232,7 +233,21 @@ const ColumnField = () => {
             return prevState;
         });
         setIsTaskModalOpen(false);
+        setIsConfirmDeleteTaskModalOpen(false);
     };
+    
+    const handleConfirmDeleteCurrentTask = () => {
+        setIsConfirmDeleteTaskModalOpen(true);
+        setIsTaskModalOpen(false);
+    };
+    
+    const handleCloseDeleteTaskModal = () => {
+        setIsConfirmDeleteTaskModalOpen(false);
+        setIsTaskModalOpen(true);
+    };
+    
+    
+    
     
     return (
         <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
@@ -339,7 +354,7 @@ const ColumnField = () => {
                                                 <button className="text-veryLightGray"
                                                     onClick={() => handleEditTaskDetails(true)}
                                                 >Edit Task</button>
-                                                <button className="text-tomatoRed" onClick={handleDeleteCurrentTask}>Delete Task</button>
+                                                <button className="text-tomatoRed" onClick={handleConfirmDeleteCurrentTask}>Delete Task</button>
                                             </div>
                                         </div>
                                     </div>
@@ -479,6 +494,48 @@ const ColumnField = () => {
                             </div>
                         </div>
                         {/*overlay*/}
+                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
+                    </div>
+                ) : null
+            }
+    
+            {
+                isConfirmDeleteTaskModalOpen ? (
+                    <div>
+                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                            <div className="container mx-auto w-11/12 md:w-[480px]">
+                                {/*content*/}
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                                    {/*header*/}
+                                    <p className="text-lg text-tomatoRed font-bold font-plus-jakarta mb-6">
+                                        Delete this task?
+                                    </p>
+                                    {/*body*/}
+                                    <div className="flex flex-col items-start justify-start mb-6">
+                                        <p className="font-plus-jakarta text-veryLightGray text-sm">
+                                            Are you sure you want to delete &lsquo;{ currentTaskInfo.title }&rsquo; and its subtasks? This action cannot be undone.
+                                        </p>
+                                    </div>
+                                    {/*footer*/}
+                                    <div className="flex items-center gap-x-2 justify-center">
+                                        <button
+                                            className="bg-tomatoRed rounded-full w-full text-white font-bold px-6 py-2.5 text-sm outline-none shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleDeleteCurrentTask}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="bg-lightPurple bg-opacity-10 w-full rounded-full font-plus-jakarta text-darkPurple active:text-lightPurple active:bg-darkPurple font-bold text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleCloseDeleteTaskModal}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
                     </div>
                 ) : null
