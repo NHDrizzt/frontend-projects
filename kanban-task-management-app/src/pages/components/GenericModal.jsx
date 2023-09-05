@@ -4,6 +4,15 @@ import {ColumnContext} from '../../context/ColumnContext.jsx';
 
 const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal, children}) => {
     
+    const {
+        title,
+        description,
+        setTitle,
+        setDescription,
+        selectedOption,
+        setSelectedOption,
+    } = useContext(ColumnContext);
+    
     const memoizedValues = useMemo(() => {
         let mainTitle = '';
         let addInputName = '';
@@ -37,24 +46,16 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
         return { mainTitle, addInputName, saveButton };
     }, [type]);
     
-    const {
-        title,
-        setTitle,
-        description,
-        setDescription,
-        selectedOption,
-        setSelectedOption,
-    } = useContext(ColumnContext);
-    
     const handleSaveAll = () => {
         closeModal();
         handleSaveChanges();
     };
     
     const handleTitleChange = (event) => {
+        console.log(event.target.value);
         setTitle(event.target.value);
     };
-
+    
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };

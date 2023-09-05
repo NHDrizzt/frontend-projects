@@ -15,8 +15,6 @@ const ComboBox = ({ selectedOption, setSelectedOption, onSelectionChange, curren
         onSelectionChange(selectedValue);
     };
     
-    console.log('CURRENTbOARD COLUM0 ', currentBoard.columns[0].column);
-    
     return (
         <>
             <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer"
