@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import iconDropdown from '../../assets/icon-board.svg';
 import ToggleDarkMode from './ToggleDarkMode.jsx';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ const DropdownSection = () => {
         pendingCreateColumns, setPendingCreateColumns,
         boardName, setBoardName, colors
     } = useContext(BoardContext);
-    const { selectedOption, setSelectedOption } = useContext(ColumnContext);
+    const { setSelectedOption } = useContext(ColumnContext);
     
     const handleBoardChange = (id) => {
         const newBoard = boards.find(board => board.id === id);

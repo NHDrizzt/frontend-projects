@@ -10,16 +10,13 @@ import useScreenSize from '../hooks/useScreenSize.jsx';
 import {DarkModeContext} from '../context/DarkModeContext.jsx';
 import GenericModal from './components/GenericModal.jsx';
 import crossMark from '../assets/icon-cross.svg';
-import {ColumnContext} from '../context/ColumnContext.jsx';
 import {BoardContext} from '../context/BoardContext.jsx';
 
 const Header = () => {
     const dropdownRef = useRef(null);
     const { darkMode } = useContext(DarkModeContext);
     const isScreenLarge = useScreenSize();
-    // const {columnTasksInput, handleChangeInputValue, handleCreateTask} = useContext(ColumnContext);
     const [showEditAndDeleteDropdown, setShowEditAndDeleteDropdown] = useState(false);
-    // const [showEditAndDeleteModal, setShowEditAndDeleteModal] = useState(false);
     const [showEditBoard, setShowEditBoard] = useState(false);
     const {currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
@@ -133,38 +130,6 @@ const Header = () => {
                 </div>
             </header>
             {
-                // showEditAndDeleteModal ? (
-                //     <GenericModal
-                //         type='Edit Task'
-                //         handleInputCreation={handleInputCreation}
-                //         handleSaveChanges={handleCreateTask}
-                //         closeModal={closeModal}
-                //     >
-                //         <div className="flex flex-col items-start justify-start">
-                //             <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
-                //             {
-                //                 columnTasksInput.map((input, index) => (
-                //                     <div key={index} className="flex items-center w-full space-x-4 mb-2">
-                //                         <input
-                //                             id={`nameColumns${index}`}
-                //                             name={`nameColumn${index}`}
-                //                             className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
-                //                             type="text"
-                //                             maxLength="25"
-                //                             placeholder={placeholderExample[index] || 'Any...'}
-                //                             value={input || ''}
-                //                             onChange={(e) => handleChangeInputValue(e, index)}
-                //                         />
-                //                         <button onClick={() => handleDeleteInputField(index)}>
-                //                             <img src={crossMark} alt=""/>
-                //                         </button>
-                //                     </div>
-                //                 ))
-                //             }
-                //         </div>
-                //     </GenericModal>
-                // ) : null
-                
                 showEditBoard ? (
                     <GenericModal
                         type="Edit Board"

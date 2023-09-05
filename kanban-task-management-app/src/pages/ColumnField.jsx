@@ -185,13 +185,6 @@ const ColumnField = () => {
         }));
     };
     
-    const handleEditSelectedOption = (selectedValue) => {
-        setPendingCurrentTaskInfo(prevState => ({
-            ...prevState,
-            selectedOption: selectedValue
-        }));
-    };
-    
     const handleUpdateTask = () => {
         setPendingInputField(prevState =>{
             const columns = [...prevState.columns];
