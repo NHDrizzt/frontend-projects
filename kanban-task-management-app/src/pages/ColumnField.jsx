@@ -7,17 +7,15 @@ import {BoardContext} from '../context/BoardContext.jsx';
 import {nanoid} from 'nanoid';
 import ComboBox from './components/ComboBox.jsx';
 import iconCheck from '../assets/icon-check.svg';
-import useUpdateBoards from '../hooks/useUpdateBoards.jsx';
 import threeDots from '../assets/icon-vertical-ellipsis.svg';
 
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
     const { pendingInputField, selectedOption,
-        title, setTitle, description, setDescription,
         setSelectedOption, setPendingInputField,
     } = useContext(ColumnContext);
     const placeholderExample = ['e.g. Make coffe', 'e.g. Drink cofee & smile', 'e.g. Be happy'];
-    const {boards, setBoards, currentBoard, setCurrentBoard} = useContext(BoardContext);
+    const {currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [checkmarkToggle, setCheckmarkToggle] = useState(false);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
     const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false);
