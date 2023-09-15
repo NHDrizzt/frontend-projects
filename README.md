@@ -14,19 +14,19 @@ This repository serves as a collection of various frontend projects, each locate
 
 ## Projects
 
-### Project 1: [Casa de cambio](/project1)
+### Project 1: [Casa de cambio](https://github.com/NHDrizzt/frontend-projects/tree/master/casa-de-cambio-app)
 - Description: Simple project that request api call to a exchange api.
 - Technologies: HTML, CSS, Vanilla Javascript.
 
-### Project 2: [Dictionary App](/project2)
+### Project 2: [Dictionary App](https://github.com/NHDrizzt/frontend-projects/tree/master/dictionary-web-app)
 - Description: A Dictionary that works only with english vocabulary.
 - Technologies: React, Html, CSS.
 
-### Project 3: [Kanban Task Manager](/project3)
+### Project 3: [Kanban Task Manager](https://github.com/NHDrizzt/frontend-projects/tree/master/kanban-task-management-app)
 - Description: A kanban task manager where you can create, read, update and delete tasks.
 - Technologies: React, TailwindCSS, Html.
 
-### Project 4: [Payapi Multipage App](/project4)
+### Project 4: [Payapi Multipage App](https://github.com/NHDrizzt/frontend-projects/tree/master/payapi-multi-page-app)
 - Description: A multipage app.
 - Technologies: React, Html, CSS.
 
