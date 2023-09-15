@@ -1,6 +1,6 @@
 # Multiple Frontend Projects
 
-This repository contains multiple frontend projects developed using React, RTL, Tailwind CSS, and JavaScript.
+This repository contains multiple frontend projects developed using React, Tailwind CSS, and JavaScript.
 
 ## Table of Contents
 - [Introduction](#introduction)
