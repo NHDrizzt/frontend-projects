@@ -14,15 +14,25 @@ This repository serves as a collection of various frontend projects, each locate
 
 ## Projects
 
-### Project 1: [Project Name](/project1)
-- Description: Briefly describe the first project.
-- Technologies: React, Tailwind CSS, SCSS, JavaScript, etc.
+### Casa de cambio: [Project Name](/project1)
+- Description: Simple project that request api call to a exchange api.
+- Technologies: HTML, CSS, Vanilla Javascript.
 
-### Project 2: [Project Name](/project2)
-- Description: Briefly describe the second project.
-- Technologies: React, Tailwind CSS, SCSS, JavaScript, etc.
+### Dictionary App: [Project Name](/project2)
+- Description: A Dictionary that works only with english vocabulary.
+- Technologies: React, Html, CSS.
 
-### (Add more projects as needed)
+### Kanban Task Manager: [Project Name](/project3)
+- Description: A kanban task manager where you can create, read, update and delete tasks.
+- Technologies: React, TailwindCSS, Html.
+
+### Payapi Multipage App: [Project Name](/project4)
+- Description: A multipage app.
+- Technologies: React, Html, CSS.
+
+### Todo list app: [Project Name](/project5)
+- Description: A classic TODO app, where you can add, update completed tasks, filter and delete tasks.
+- Technologies: React, Html, CSS.
 
 ## Technologies Used
 
