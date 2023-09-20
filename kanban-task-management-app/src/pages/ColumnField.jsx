@@ -8,6 +8,9 @@ import {nanoid} from 'nanoid';
 import ComboBox from './components/ComboBox.jsx';
 import iconCheck from '../assets/icon-check.svg';
 import threeDots from '../assets/icon-vertical-ellipsis.svg';
+import showSideBar from '../assets/icon-show-sidebar.svg';
+import {SideBarContext} from '../context/SidebarContext.jsx';
+
 
 const ColumnField = () => {
     const [showModal, setShowModal] = useState(false);
@@ -237,11 +240,14 @@ const ColumnField = () => {
         setIsTaskModalOpen(true);
     };
     
-    
+    const { toggle, setToggle } = useContext(SideBarContext);
     
     
     return (
         <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
+            <div className={`${toggle ? 'left-0 bottom-0 mb-8 block' : 'left-[301px] hidden'} ${'absolute flex items-center pl-[15px] h-12 w-[56px] bg-darkPurple rounded-tr-[100px] rounded-br-[100px] cursor-pointer'}`} onClick={() => { setToggle(!toggle); }}>
+                <img src={showSideBar} alt=""/>
+            </div>
             {
                 currentBoard.columns.length === 0 ? (
                     <div className="w-72 md:w-80 flex items-center justify-center flex-col gap-y-2 text-center">

@@ -5,7 +5,7 @@ const SideBarFooter = () => {
     const { toggle, setToggle } = useContext(SideBarContext);
     
     return (
-        <footer className={`${toggle ? 'opacity-0' : ''} ${''}`}>
+        <footer className={`${toggle ? '' : ''} ${''}`}>
             <button className="flex items-center ml-2 gap-x-2" onClick={ () => setToggle(!toggle) }>
                 <img src={hideSideBar} alt=""/>
                 <p className="font-plus-jakarta font-bold text-veryLightGray text-[15px]">Hide Sidebar</p>
