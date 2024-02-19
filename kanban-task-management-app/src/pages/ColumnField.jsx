@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import iconAdd from '../assets/icon-add-task-mobile.svg';
 import crossMark from '../assets/icon-cross.svg';
 import {ColumnContext} from '../context/ColumnContext.jsx';
@@ -28,6 +28,7 @@ const ColumnField = () => {
     const [pendingEditSelectedOption, setPendingEditSelectedOption] = useState('');
     const [showEditAndDeleteDropdown, setShowEditAndDeleteDropdown] = useState(false);
     const [isConfirmDeleteTaskModalOpen, setIsConfirmDeleteTaskModalOpen ] = useState(false);
+    const dropdownRefEditDelete = useRef(null);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -240,6 +241,20 @@ const ColumnField = () => {
         setIsTaskModalOpen(true);
     };
     
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRefEditDelete.current && !dropdownRefEditDelete.current.contains(event.target)) {
+                setShowEditAndDeleteDropdown(false);
+            }
+        };
+        
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+    
     const { toggle, setToggle } = useContext(SideBarContext);
     
     
@@ -275,10 +290,10 @@ const ColumnField = () => {
                                     {/*card*/}
                                     {
                                         column.tasks?.map((task) => (
-                                            <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer"
+                                            <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer dark:bg-mediumGray"
                                                 onClick={() => handleOpenTaskInfo(task)}
                                             >
-                                                <p className="text-gray-950 text-[15px] font-bolthred">{task.title}</p>
+                                                <p className="text-gray-950 text-[15px] font-bolthred dark:text-white">{task.title}</p>
                                                 <p className="text-slate-400 text-[12px] font-bold">{task.subtasks.filter(subtask => subtask.isCompleted).length} of {task.subtasks.length} subtasks</p>
                                             </div>
                                         ))
@@ -287,7 +302,7 @@ const ColumnField = () => {
                             ))
                         }
                         
-                        <div className="w-[280px] grid place-items-center bg-gradient-to-b from-indigo-50 to-indigo-50 rounded-md" onClick={() => setShowModal(true)}>
+                        <div className="w-[280px] grid place-items-center bg-indigo-50 dark:bg-mediumGray  rounded-md" onClick={() => setShowModal(true)}>
                             <p className="before:content-['+'] text-center text-slate-400 text-[24px] font-bold">New Column</p>
                         </div>
                     </div>
@@ -310,7 +325,8 @@ const ColumnField = () => {
                                         <input
                                             id={`nameColumns${index}`}
                                             name={`nameColumn${index}`}
-                                            className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                            className="w-11/12  pl-3  h-10 border
+                                             border-lightGray border-opacity-25 rounded-md text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                             type="text"
                                             maxLength="25"
                                             placeholder="Todo"
@@ -334,20 +350,20 @@ const ColumnField = () => {
                         <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
                             <div className="container mx-auto w-11/12 md:w-[480px]">
                                 {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
                                     {/*header*/}
                                     <div className="flex justify-between">
-                                        <p className="text-lg text-gray-950 font-bold">
+                                        <p className="text-lg text-gray-950 font-bold dark:text-white">
                                             {
                                                 currentTaskInfo.title
                                             }
                                         </p>
-                                        <div className="relative">
+                                        <div className="relative" ref={dropdownRefEditDelete}>
                                             <button onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
                                                 <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
                                             </button>
     
-                                            <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start border -left-3 top-1 absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray rounded-lg shadow`}>
+                                            <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start border -left-3 top-1 absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray dark:border-0 rounded-lg shadow`}>
                                                 <button className="text-veryLightGray"
                                                     onClick={() => handleEditTaskDetails(true)}
                                                 >Edit Task</button>
@@ -367,14 +383,14 @@ const ColumnField = () => {
                                         <div>
                                             {
                                                 currentTaskInfo.subtasks.map((subtasks, i) => (
-                                                    <div key={i} className="flex items-center gap-x-4 bg-almostWhite py-3 mt-2">
+                                                    <div key={i} className="flex items-center gap-x-4 bg-almostWhite py-3 mt-2 dark:bg-darkGray">
                                                         <div
-                                                            className={`ml-3 grid place-items-center w-[16px] h-[16px] border outline-none focus:none rounded-sm ${subtasks.isCompleted ? ' bg-darkPurple' : 'bg-white'}`}
+                                                            className={`ml-3 grid place-items-center w-[16px] h-[16px] border outline-none focus:none rounded-sm ${subtasks.isCompleted ? ' bg-darkPurple border-0' : 'bg-white dark:bg-mediumGray dark:border-lightGray'}`}
                                                             onClick={() => toggleCheckmark(subtasks, i)}
                                                         >
-                                                            <img src={iconCheck} alt=""/>
+                                                            <img className={`${subtasks.isCompleted ? '' : 'dark:hidden'}`}  src={iconCheck} alt=""/>
                                                         </div>
-                                                        <p className={`mb-1 font-[25px] text-darkBlue ${subtasks.isCompleted ? 'line-through opacity-50' : ''}`}>
+                                                        <p className={`mb-1 font-[25px] text-darkBlue dark:text-white ${subtasks.isCompleted ? 'line-through opacity-50' : ''}`}>
                                                             {subtasks.title}
                                                         </p>
 
@@ -408,9 +424,9 @@ const ColumnField = () => {
                         <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
                             <div className="container mx-auto w-11/12 md:w-[480px]">
                                 {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
                                     {/*header*/}
-                                    <p className="text-lg text-gray-950 font-bold">
+                                    <p className="text-lg text-gray-950 font-bold dark:text-white">
                                         Edit Task
                                     </p>
                                     {
@@ -421,7 +437,7 @@ const ColumnField = () => {
                                                     name="title"
                                                     value={pendingCurrentTaskInfo.title || ''}
                                                     onChange={(e) => handleEditTitleChange(e)}
-                                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                                     type="text"/>
                                             </div>
                                             <div className="flex flex-col items-start justify-start">
@@ -430,7 +446,7 @@ const ColumnField = () => {
                                                     name="description"
                                                     value={pendingCurrentTaskInfo.description || ''}
                                                     onChange={(e) => handleEditDescriptionChange(e)}
-                                                    className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                    className="w-full border pl-4 pt-2 border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                                     id=""
                                                     cols="20"
                                                     rows="4"></textarea>
@@ -438,7 +454,7 @@ const ColumnField = () => {
                                         </>
                                     }
                                     {/*body*/}
-                                    <div className="flex flex-col items-start justify-start">
+                                    <div className="flex flex-col items-start justify-start bg-red">
                                         <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
                                         {
                                             pendingCurrentTaskInfo.subtasks?.map((input, index) => (
@@ -446,7 +462,7 @@ const ColumnField = () => {
                                                     <input
                                                         id={`nameColumns${index}`}
                                                         name={`nameColumn${index}`}
-                                                        className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                        className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                                         type="text"
                                                         maxLength="25"
                                                         placeholder={placeholderExample[index] || 'Any...'}

@@ -41,7 +41,7 @@ const ButtonAddNewTask = () => {
                                         <input
                                             id={`nameColumns${index}`}
                                             name={`nameColumn${index}`}
-                                            className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                            className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                             type="text"
                                             maxLength="25"
                                             placeholder={placeholderExample[index] || 'Any...'}

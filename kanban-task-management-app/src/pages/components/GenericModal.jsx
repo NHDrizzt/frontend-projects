@@ -65,9 +65,9 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
             <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
                 <div className="container mx-auto w-11/12 md:w-[480px]">
                     {/*content*/}
-                    <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                    <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
                         {/*header*/}
-                        <p className="text-lg text-gray-950 font-bold">
+                        <p className="text-lg text-gray-950 font-bold dark:text-white">
                             {memoizedValues.mainTitle}
                         </p>
                         {
@@ -79,16 +79,16 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                                             name="title"
                                             value={title}
                                             onChange={handleTitleChange}
-                                            className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                            className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                             type="text"/>
                                     </div>
-                                    <div className="flex flex-col items-start justify-start">
+                                    <div className="flex flex-col items-start justify-start rounded-md">
                                         <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Description</label>
                                         <textarea
                                             name="description"
                                             value={description}
                                             onChange={handleDescriptionChange}
-                                            className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                            className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                                             id=""
                                             cols="20"
                                             rows="4"></textarea>
