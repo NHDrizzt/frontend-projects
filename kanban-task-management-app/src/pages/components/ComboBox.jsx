@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import {ColumnContext} from '../../context/ColumnContext.jsx';
 
 import chevronCustom from '../../assets/icon-chevron-down.svg';
@@ -8,7 +8,6 @@ import {BoardContext} from '../../context/BoardContext.jsx';
 const ComboBox = ({ selectedOption, setSelectedOption, onSelectionChange, currentSelectedValue }) => {
 
     const { currentBoard } = useContext(BoardContext);
-    
     const handleOptionChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(event.target.value);
@@ -17,7 +16,8 @@ const ComboBox = ({ selectedOption, setSelectedOption, onSelectionChange, curren
     
     return (
         <>
-            <select className="p-4 bg-white border border-lightGray border-opacity-25 w-full appearance-none cursor-pointer"
+            <select
+                className="p-4 bg-white border border-lightGray border-opacity-25 w-full rounded-md appearance-none cursor-pointer dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
                 value={currentSelectedValue ? currentSelectedValue : selectedOption}
                 onChange={handleOptionChange}>
                 {/*<option>Select an option</option>*/}
@@ -27,7 +27,8 @@ const ComboBox = ({ selectedOption, setSelectedOption, onSelectionChange, curren
                     </option>
                 ))}
             </select>
-            <img className="absolute cursor-pointer bottom-0 right-0 mb-5 mr-4 w-[18px]" src={chevronCustom} alt=""/>
+            <img className="absolute cursor-pointer bottom-0 right-0 mb-5 mr-4 w-[18px] pointer-events-none"
+                src={chevronCustom} alt=""/>
         </>
 
     );

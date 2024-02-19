@@ -19,7 +19,9 @@ export default {
             colors: {
                 darkPurple: '#635FC7',
                 lightPurple: '#A8A4FF',
+                mediumLightPurple: '#AFB6B9',
                 darkBlue: '#000112',
+                lightMediumGray: '#828FA3',
                 darkGray: '#20212C',
                 mediumGray: '#2B2C37',
                 lightGray: '#3E3F4E',
@@ -29,6 +31,7 @@ export default {
                 tomatoRed: '#EA5555',
                 lightTomatoRed: '#FF9898',
                 purple: '#3f3cbb',
+                
             }
         },
     },

@@ -11,6 +11,8 @@ import {DarkModeContext} from '../context/DarkModeContext.jsx';
 import GenericModal from './components/GenericModal.jsx';
 import crossMark from '../assets/icon-cross.svg';
 import {BoardContext} from '../context/BoardContext.jsx';
+import '../input.css';
+import useOutsideClick from '../hooks/useOutsideClick.jsx';
 
 const Header = () => {
     const dropdownRef = useRef(null);
@@ -21,6 +23,7 @@ const Header = () => {
     const {currentBoard, setCurrentBoard} = useContext(BoardContext);
     const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
     const { boards, setBoards } = useContext(BoardContext);
+    const dropdownOptionsBoardRef = useRef(null);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -30,10 +33,10 @@ const Header = () => {
         'bg-pink-500',
         'bg-teal-500',
     ];
-
+    const [showDropdownAllBoards,setShowDropdownAllBoards] = useState(false);
     
     const handleDropdown = () => {
-        dropdownRef.current.classList.toggle('hidden');
+        setShowDropdownAllBoards(!showDropdownAllBoards);
     };
     
     const closeModal = () => {
@@ -93,6 +96,12 @@ const Header = () => {
         }
     };
     
+    const closeDropdown = () => setShowEditAndDeleteDropdown(false);
+    useOutsideClick(dropdownOptionsBoardRef, closeDropdown);
+    
+    const closeAllBoardsDropdown = () => setShowDropdownAllBoards(false);
+    useOutsideClick(dropdownRef, closeAllBoardsDropdown);
+    
     return (
         <>
             <header className="flex border-b border-solid border-lightBlueish dark:border-b-lightGray">
@@ -103,19 +112,35 @@ const Header = () => {
                     </picture>
                 </div>
                 <div className="flex flex-auto min-w-[50%] md:px-6 items-center justify-between">
-                    <div className="relative">
-                        <button className="flex gap-x-1 items-center text-lg w-fit font-plus-jakarta font-bold md:text-xl dark:text-white" aria-expanded="true" aria-haspopup="true" onClick={ handleDropdown } disabled={ isScreenLarge }>{currentBoard.name}
+                    <div className="relative" ref={dropdownRef}>
+                        <button className="flex gap-x-1 items-center text-lg w-fit font-plus-jakarta font-bold md:text-xl dark:text-white"
+                            aria-expanded="true"
+                            aria-haspopup="true"
+                            onClick={ handleDropdown }
+                            disabled={ isScreenLarge }>
+                            {currentBoard.name}
                             {
-                                !isScreenLarge ?  <img className="w-3 h-2 mt-1 md:hid  den" src={chevronDown} alt=""/> : <></>
+                                !isScreenLarge ?  <img className="w-3 h-2 mt-1 md:hidden" src={chevronDown} alt=""/> : <></>
                             }
                         </button>
-                        <div ref={dropdownRef} className={'absolute hidden right-0 left-0 mx-auto z-10 mt-7 w-64 h-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                            <DropdownSection />
+                        <div
+                            className={`${showDropdownAllBoards ? 'absolute right-0 left-0 z-10 mt-7 mx-auto w-64 h-auto origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-mediumGray' : 'hidden'}`}
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="menu-button"
+                            tabIndex="-1"
+                        >
+                            {
+                                showDropdownAllBoards && (
+                                    <DropdownSection/>
+                                )
+                            }
                         </div>
+                        
                     </div>
                     <div className="flex items-center">
                         <ButtonAddNewTask />
-                        <div className="relative">
+                        <div className="relative" ref={dropdownOptionsBoardRef}>
                             <button onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
                                 <img className="px-3 h-4 md:pl-6 md:pr-7 md:h-6 cursor-pointer" src={threeDots} alt=""/>
                             </button>
@@ -144,7 +169,7 @@ const Header = () => {
                                     name="title"
                                     value={tempEditBoardChanges.name}
                                     onChange={handleChangeBoardName}
-                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                    className="input-standard"
                                     maxLength="20"
                                     type="text"/>
                             </div>
@@ -156,7 +181,7 @@ const Header = () => {
                                             <input
                                                 id={`nameColumns${index}`}
                                                 name={`nameColumn${index}`}
-                                                className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none"
+                                                className="input-standard-delete"
                                                 type="text"
                                                 maxLength="25"
                                                 placeholder="Todo"
