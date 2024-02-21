@@ -6,7 +6,7 @@ import {nanoid} from 'nanoid';
 
 const ColumnContextProvider = ({children}) => {
     
-    const [newSubtaskAddInput, setNewSubtaskAddInput] = useState([{ isCompleted: false, title: ''}]);
+    const [newSubtaskAddInput, setNewSubtaskAddInput] = useState([]);
     const { currentBoard, setCurrentBoard } = useContext(BoardContext);
     const [inputColumn, setInputColumn] = useState([]);
     const [pendingInputField, setPendingInputField] = useState(currentBoard);
@@ -59,7 +59,6 @@ const ColumnContextProvider = ({children}) => {
     };
     
     const handleInputCreation = () => {
-        console.log(newSubtaskAddInput);
         setNewSubtaskAddInput([...newSubtaskAddInput, { isCompleted: false, title: ''}]);
     };
     
@@ -75,6 +74,7 @@ const ColumnContextProvider = ({children}) => {
         setColumnTasksInput: setNewSubtaskAddInput,
         inputColumn,
         setInputColumn,
+        title,
         setTitle,
         setDescription,
         selectedOption,

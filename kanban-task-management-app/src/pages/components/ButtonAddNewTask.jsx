@@ -6,7 +6,15 @@ import crossMark from '../../assets/icon-cross.svg';
 import {BoardContext} from '../../context/BoardContext.jsx';
 
 const ButtonAddNewTask = () => {
-    const { columnTasksInput, handleChangeSubtaskInputValue, handleInputCreation, handleDeleteInputField, handleCreateTask } = useContext(ColumnContext);
+    const { columnTasksInput,
+        setColumnTasksInput,
+        handleChangeSubtaskInputValue,
+        handleInputCreation,
+        handleDeleteInputField,
+        handleCreateTask,
+        setTitle,
+        setDescription,
+    } = useContext(ColumnContext);
     const { currentBoard } = useContext(BoardContext);
     const [showModal, setShowModal] = useState(false);
     
@@ -14,6 +22,9 @@ const ButtonAddNewTask = () => {
     
     const closeModal = () => {
         setShowModal(false);
+        setTitle('');
+        setDescription('');
+        setColumnTasksInput([]);
     };
     
     return (
@@ -37,15 +48,16 @@ const ButtonAddNewTask = () => {
                             <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
                             {
                                 columnTasksInput.map((input, index) => (
-                                    <div key={index} className="flex items-center w-full space-x-4 mb-2">
+                                    <div key={index} className={'flex items-center w-full space-x-4 mb-2'}>
                                         <input
                                             id={`nameColumns${index}`}
                                             name={`nameColumn${index}`}
-                                            className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
+                                            className={'input-standard-delete'}
                                             type="text"
                                             maxLength="25"
-                                            placeholder={placeholderExample[index] || 'Any...'}
+                                            placeholder={placeholderExample[index] || 'Any task description here...'}
                                             value={input.title || ''}
+                                            autoFocus
                                             onChange={(e) => handleChangeSubtaskInputValue(e, index)}
                                         />
                                         <button onClick={() => handleDeleteInputField(index)}>

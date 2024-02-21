@@ -12,6 +12,32 @@
     @apply w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white
 }
 
+.button-standard {
+    @apply bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150
+}
+
+.button-disabled {
+
+
+
+}
+
+.parent-hover:hover .svg-hover path {
+    fill: #635FC7;
+}
+
+.selected-parent-hover .svg-hover path {
+    fill: #ffffff;
+}
+
+.eye-icon-sidebar-hover:hover .svg-hover path {
+    fill: #635FC7;
+}
+
+.eye-icon-sidebar-hover:hover  p {
+    color: #635FC7;
+}
+
 .text {
     text-align: center;
 }

@@ -12,7 +12,7 @@ const ToggleDarkMode = () => {
     const isScreenLarger = useScreenSize();
     
     return (
-        <div className={`${isScreenLarger && !toggle ? 'absolute left-6 bottom-0 mb-20': ''} ${'w-60 h-12 mt-2 gap-x-5 mx-auto flex items-center justify-center bg-almostWhite dark:bg-darkGray rounded-md'}`}>
+        <div className={`${isScreenLarger && !toggle ? 'absolute left-6 bottom-0 mb-[88px]': ''} ${'w-60 h-12 mt-2 gap-x-5 mx-auto flex items-center justify-center bg-almostWhite dark:bg-darkGray rounded-md'}`}>
             <img src={iconLightTheme} alt="icon-light-theme"/>
             <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer" onChange={ () => setDarkMode(!darkMode)}/>

@@ -518,7 +518,7 @@ const ColumnField = () => {
                         <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
                             <div className="container mx-auto w-11/12 md:w-[480px]">
                                 {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none">
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
                                     {/*header*/}
                                     <p className="text-lg text-tomatoRed font-bold font-plus-jakarta mb-6">
                                         Delete this task?
