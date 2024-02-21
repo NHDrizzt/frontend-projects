@@ -1,6 +1,7 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import ComboBox from './ComboBox.jsx';
 import {ColumnContext} from '../../context/ColumnContext.jsx';
+import '../../input.css';
 
 const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal, children}) => {
     
@@ -12,6 +13,7 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
         selectedOption,
         setSelectedOption,
     } = useContext(ColumnContext);
+    const [buttonDisabled, setButtonDisabled] = useState(true);
     
     const memoizedValues = useMemo(() => {
         let mainTitle = '';
@@ -52,13 +54,23 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
     };
     
     const handleTitleChange = (event) => {
-        console.log(event.target.value);
         setTitle(event.target.value);
     };
     
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
+    
+    
+    
+    useEffect(() => {
+        // Example condition: Enable button if editing task/column and title is not empty.
+        // Add other conditions as needed based on your application's logic.
+        const isButtonDisabled = type === 'Add New Task' && title.trim() === '';
+        
+        setButtonDisabled(isButtonDisabled); // Assuming you have a `setButtonEnabled` state setter
+    }, [type, title]); // Add other dependencies as needed
+    
     
     return (
         <div>
@@ -74,13 +86,15 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                             type === 'Edit Task' || type === 'Add New Task' ? (
                                 <>
                                     <div className="flex flex-col items-start justify-start">
-                                        <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Title</label>
+                                        <label className="text-slate-400 text-[12px] py-2" htmlFor=""><b>Title</b> (Required)</label>
                                         <input
                                             name="title"
                                             value={title}
                                             onChange={handleTitleChange}
-                                            className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
-                                            type="text"/>
+                                            className="input-standard"
+                                            type="text"
+                                            placeholder={'e.g. Take coffe break'}
+                                            autoFocus/>
                                     </div>
                                     <div className="flex flex-col items-start justify-start rounded-md">
                                         <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Description</label>
@@ -88,8 +102,9 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                                             name="description"
                                             value={description}
                                             onChange={handleDescriptionChange}
-                                            className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
+                                            className="w-full border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white pt-2 pl-3"
                                             id=""
+                                            placeholder='e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little.'
                                             cols="20"
                                             rows="4"></textarea>
                                     </div>
@@ -101,7 +116,7 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                         {/*footer*/}
                         <div className="flex flex-col items-center justify-center">
                             <button
-                                className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+']"
+                                className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+'] dark:bg-white"
                                 type="button"
                                 onClick={handleInputCreation}
                             >
@@ -116,8 +131,9 @@ const GenericModal = ({type, handleSaveChanges, handleInputCreation, closeModal,
                                 ) : null
                             }
                             <button
-                                className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                className={`${buttonDisabled ? 'text-white bg-lightMediumGray dark:bg-lightPurple dark:text-darkPurple dark:bg-indigo-500 dark:bg-opacity-10 background-transparent' : ''} bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
                                 type="button"
+                                disabled={buttonDisabled}
                                 onClick={handleSaveAll}
                             >
                                 { memoizedValues.saveButton }
