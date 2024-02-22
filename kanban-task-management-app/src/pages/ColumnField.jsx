@@ -47,6 +47,7 @@ const ColumnField = () => {
     const closeModal = () => {
         setShowModal(false);
         setShowEditAndDeleteDropdown(false);
+        setPendingInputField(currentBoard);
     };
     
     const closeShowInfoModal = () => {
@@ -84,7 +85,7 @@ const ColumnField = () => {
     
     const handleDelete = (id) => {
         setPendingInputField(prevState => {
-            const newColumns = prevState.columns.filter(column => column.id === id);
+            const newColumns = prevState.columns.filter(column => column.id !== id);
             return  { ...prevState, columns: newColumns };
         });
     };
@@ -190,28 +191,41 @@ const ColumnField = () => {
     };
     
     const handleUpdateTask = () => {
-        setPendingInputField(prevState =>{
-            const columns = [...prevState.columns];
-            const columnToIterate = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
-            const taskToIterate = columns[columnToIterate]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
-    
-            if (columnToIterate !== -1 && taskToIterate !== -1) {
-                const taskArray = columns[columnToIterate].tasks;
-                taskArray[taskToIterate] = pendingCurrentTaskInfo;
-                if (currentTaskInfo.selectedOption !== pendingEditSelectedOption) {
-                    const removedObject = taskArray.splice(taskToIterate, 1)[0];
-                    console.log(removedObject);
-                    const addedObject = columns.find(c => c.column === pendingEditSelectedOption);
-                    addedObject.tasks.push({...pendingCurrentTaskInfo, selectedOption: pendingEditSelectedOption});
+        setPendingInputField(prevState => {
+            // Deep clone to avoid direct mutations
+            const columns = JSON.parse(JSON.stringify(prevState.columns));
+            
+            const columnToIterateIndex = columns.findIndex(c => c.column === currentTaskInfo.selectedOption);
+            const taskToIterateIndex = columns[columnToIterateIndex]?.tasks.findIndex(t => t.id === currentTaskInfo.id);
+
+            if (columnToIterateIndex !== -1 && taskToIterateIndex !== -1) {
+                // Update task in its current column
+                const filledSubtasks = pendingCurrentTaskInfo.subtasks.filter(subtask => subtask.title !== '');
+                columns[columnToIterateIndex].tasks[taskToIterateIndex] = {...pendingCurrentTaskInfo, subtasks: filledSubtasks};
+                // If moving to a new column
+                if (currentTaskInfo.selectedOption !== selectedOption) {
+                    
+                    // Remove from current column
+                    const [removedTask] = columns[columnToIterateIndex].tasks.splice(taskToIterateIndex, 1);
+                    
+                    // Find new column and add task
+                    const targetColumnIndex = columns.findIndex(c => c.column === selectedOption);
+                    if (targetColumnIndex !== -1) {
+                        columns[targetColumnIndex].tasks.push({...removedTask, selectedOption: selectedOption});
+                    } else {
+                        console.error('Target column not found.');
+                    }
                 }
             } else {
-                console.log('Object with ID', currentTaskInfo.id, 'not found.');
+                console.log('Task or column not found.');
             }
-    
-            return prevState;
+            setCurrentBoard({...prevState, columns});
+            // Return updated state
+            return { ...prevState, columns };
         });
-        setCurrentTaskInfo(pendingCurrentTaskInfo);
+        
         setIsEditTaskModalOpen(false);
+        setPendingCurrentTaskInfo({});
     };
     
     const handleDeleteCurrentTask = () => {
@@ -232,6 +246,7 @@ const ColumnField = () => {
     };
     
     const handleConfirmDeleteCurrentTask = () => {
+        setShowEditAndDeleteDropdown(false);
         setIsConfirmDeleteTaskModalOpen(true);
         setIsTaskModalOpen(false);
     };
@@ -257,303 +272,318 @@ const ColumnField = () => {
     
     const { toggle, setToggle } = useContext(SideBarContext);
     
-    
     return (
-        <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
-            <div className={`${toggle ? 'left-0 bottom-0 mb-8 block' : 'left-[301px] hidden'} ${'absolute flex items-center pl-[15px] h-12 w-[56px] bg-darkPurple rounded-tr-[100px] rounded-br-[100px] cursor-pointer'}`} onClick={() => { setToggle(!toggle); }}>
-                <img src={showSideBar} alt=""/>
-            </div>
+        <>
             {
-                currentBoard.columns.length === 0 ? (
-                    <div className="w-72 md:w-80 flex items-center justify-center flex-col gap-y-2 text-center">
-                        <p className="font-lg font-bold text-veryLightGray font-plus-jakarta-sans">
-                            This board is empty. Create a new column to get started.
-                        </p>
-                        <button
-                            className="py-3 px-5 text-white text-plus-jakarta-sans font-bold text-base bg-darkPurple rounded-full flex gap-x-1 items-center hover:bg-lightPurple"
-                            onClick={() => setShowModal(true)}
-                        >
-                            <img className="h-2 mt-1" src={iconAdd} alt="" />
-                            Add New Column
-                        </button>
-                    </div>
-                ) : (
-                    <div className="flex justify-start">
+                currentBoard ? (
+                    <div className={`${currentBoard.columns.length === 0 ? 'relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray' : 'relative overflow-y-auto max-w-full w-full  justify-start p-4 flex bg-almostWhite dark:bg-darkGray'}`}>
+                        <div className={`${toggle ? 'left-0 bottom-0 mb-8 block' : 'left-[301px] hidden'} ${'absolute flex items-center pl-[15px] h-12 w-[56px] bg-darkPurple rounded-tr-[100px] rounded-br-[100px] cursor-pointer'}`} onClick={() => { setToggle(!toggle); }}>
+                            <img src={showSideBar} alt=""/>
+                        </div>
                         {
-                            currentBoard.columns.map((column, index) => (
-                                <div key={index} className="flex flex-col  w-[280px] mr-4">
-                                    {/*tile*/}
-                                    <div className="flex py-4 space-x-2 items-center">
-                                        <div className={`${column.color} w-[15px] h-[15px] rounded-full`}></div>
-                                        <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{column.column}{' '}{`(${column.tasks?.length})`}</p>
-                                    </div>
-                                    {/*card*/}
+                            currentBoard.columns.length === 0 ? (
+                                <div className="w-72 md:w-80 flex items-center justify-center flex-col gap-y-2 text-center">
+                                    <p className="font-lg font-bold text-veryLightGray font-plus-jakarta-sans">
+                                        This board is empty. Create a new column to get started.
+                                    </p>
+                                    <button
+                                        className="py-3 px-5 text-white text-plus-jakarta-sans font-bold text-base bg-darkPurple rounded-full flex gap-x-1 items-center hover:bg-lightPurple"
+                                        onClick={() => setShowModal(true)}
+                                    >
+                                        <img className="h-2 mt-1" src={iconAdd} alt="" />
+                                        Add New Column
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex justify-start">
                                     {
-                                        column.tasks?.map((task) => (
-                                            <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer dark:bg-mediumGray"
-                                                onClick={() => handleOpenTaskInfo(task)}
-                                            >
-                                                <p className="text-gray-950 text-[15px] font-bolthred dark:text-white">{task.title}</p>
-                                                <p className="text-slate-400 text-[12px] font-bold">{task.subtasks.filter(subtask => subtask.isCompleted).length} of {task.subtasks.length} subtasks</p>
+                                        currentBoard.columns.map((column, index) => (
+                                            <div key={index} className="flex flex-col  w-[280px] mr-4">
+                                                {/*tile*/}
+                                                <div className="flex py-4 space-x-2 items-center">
+                                                    <div className={`${column.color} w-[15px] h-[15px] rounded-full`}></div>
+                                                    <p className="uppercase text-slate-400 text-[12px] font-bold tracking-widest">{column.column}{' '}{`(${column.tasks?.length})`}</p>
+                                                </div>
+                                                {/*card*/}
+                                                {
+                                                    column.tasks?.map((task) => (
+                                                        <div key={task.id} className="flex flex-col justify-center px-4 py-[23px] w-[280px] mb-4 bg-white rounded-lg shadow cursor-pointer dark:bg-mediumGray"
+                                                            onClick={() => handleOpenTaskInfo(task)}
+                                                        >
+                                                            <p className="text-gray-950 text-[15px] font-bolthred dark:text-white">{task.title}</p>
+                                                            <p className="text-slate-400 text-[12px] font-bold">{task.subtasks.filter(subtask => subtask.isCompleted).length} of {task.subtasks.length} subtasks</p>
+                                                        </div>
+                                                    ))
+                                                }
                                             </div>
                                         ))
                                     }
-                                </div>
-                            ))
-                        }
-                        
-                        <div className="w-[280px] grid place-items-center bg-indigo-50 dark:bg-mediumGray  rounded-md" onClick={() => setShowModal(true)}>
-                            <p className="before:content-['+'] text-center text-slate-400 text-[24px] font-bold">New Column</p>
-                        </div>
-                    </div>
                     
-                )
-            }
-            {
-                showModal ? (
-                    <GenericModal
-                        type={'Add New Columns'}
-                        handleSaveChanges={handleSaveChanges}
-                        handleInputCreation={handleInputSaveCreation}
-                        closeModal={closeModal}
-                    >
-                        <div className="flex flex-col items-start justify-start">
-                            <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Columns</label>
-                            {
-                                pendingInputField.columns.map((input, index) => (
-                                    <div key={index} className="flex items-center w-full space-x-4 mb-2">
-                                        <input
-                                            id={`nameColumns${index}`}
-                                            name={`nameColumn${index}`}
-                                            className="w-11/12  pl-3  h-10 border
-                                             border-lightGray border-opacity-25 rounded-md text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
-                                            type="text"
-                                            maxLength="25"
-                                            placeholder="Todo"
-                                            value={input.column || ''}
-                                            onChange={(e) => handleChange(index, e)}
-                                            autoFocus
-                                        />
-                                        <button onClick={() => handleDelete(input.id)}>
-                                            <img src={crossMark} alt=""/>
-                                        </button>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </GenericModal>
-                ) : null
-            }
-            {
-                isTaskModalOpen ? (
-                    <div>
-                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
-                            <div className="container mx-auto w-11/12 md:w-[480px]">
-                                {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
-                                    {/*header*/}
-                                    <div className="flex justify-between">
-                                        <p className="text-lg text-gray-950 font-bold dark:text-white">
-                                            {
-                                                currentTaskInfo.title
-                                            }
-                                        </p>
-                                        <div className="relative" ref={dropdownRefEditDelete}>
-                                            <button onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
-                                                <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
-                                            </button>
-    
-                                            <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start border -left-3 top-1 absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray dark:border-0 rounded-lg shadow`}>
-                                                <button className="text-veryLightGray"
-                                                    onClick={() => handleEditTaskDetails(true)}
-                                                >Edit Task</button>
-                                                <button className="text-tomatoRed" onClick={handleConfirmDeleteCurrentTask}>Delete Task</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <p className="text-slate-400 py-6 text-[13px] font-medium leading-[23px]">
-                                        {
-                                            currentTaskInfo.description
-                                        }
-                                    </p>
-                                    {/*body*/}
-                                    <div>
-                                        <p className="pb-2 text-xs font-bold text-veryLightGray">Subtasks ({currentTaskInfo.subtasks.filter(subtask => subtask.isCompleted === true).length} of {currentTaskInfo.subtasks.length})</p>
-                                        <div>
-                                            {
-                                                currentTaskInfo.subtasks.map((subtasks, i) => (
-                                                    <div key={i} className="flex items-center gap-x-4 bg-almostWhite py-3 mt-2 dark:bg-darkGray">
-                                                        <div
-                                                            className={`ml-3 grid place-items-center w-[16px] h-[16px] border outline-none focus:none rounded-sm ${subtasks.isCompleted ? ' bg-darkPurple border-0' : 'bg-white dark:bg-mediumGray dark:border-lightGray'}`}
-                                                            onClick={() => toggleCheckmark(subtasks, i)}
-                                                        >
-                                                            <img className={`${subtasks.isCompleted ? '' : 'dark:hidden'}`}  src={iconCheck} alt=""/>
-                                                        </div>
-                                                        <p className={`mb-1 font-[25px] text-darkBlue dark:text-white ${subtasks.isCompleted ? 'line-through opacity-50' : ''}`}>
-                                                            {subtasks.title}
-                                                        </p>
-
-                                                    </div>
-                                                ))
-                                            }
-                                        </div>
-                                    </div>
-                                    {/*footer*/}
-                                    <div className="relative flex flex-col w-full items-start justify-start mb-6">
-                                        <label className="text-slate-400 text-[12px] py-2 pt-3 font-bold" htmlFor="">Current status</label>
-                                        <ComboBox
-                                            selectedOption={selectedOption}
-                                            setSelectedOption={setSelectedOption}
-                                            onSelectionChange={handleSelectionChange}
-                                            currentSelectedValue={currentTaskInfo.selectedOption}
-                                        />
+                                    <div className="w-[280px] grid place-items-center bg-indigo-50 dark:bg-mediumGray  rounded-md" onClick={() => setShowModal(true)}>
+                                        <p className="before:content-['+'] text-center text-slate-400 text-[24px] font-bold">New Column</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        {/*overlay*/}
-                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeShowInfoModal}></div>
-                    </div>
-                ) : null
-            }
-    
-            {
-                isEditTaskModalOpen ? (
-                    <div>
-                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
-                            <div className="container mx-auto w-11/12 md:w-[480px]">
-                                {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
-                                    {/*header*/}
-                                    <p className="text-lg text-gray-950 font-bold dark:text-white">
-                                        Edit Task
-                                    </p>
-                                    {
-                                        <>
-                                            <div className="flex flex-col items-start justify-start">
-                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Title</label>
-                                                <input
-                                                    name="title"
-                                                    value={pendingCurrentTaskInfo.title || ''}
-                                                    onChange={(e) => handleEditTitleChange(e)}
-                                                    className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
-                                                    type="text"/>
-                                            </div>
-                                            <div className="flex flex-col items-start justify-start">
-                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Description</label>
-                                                <textarea
-                                                    name="description"
-                                                    value={pendingCurrentTaskInfo.description || ''}
-                                                    onChange={(e) => handleEditDescriptionChange(e)}
-                                                    className="w-full border pl-4 pt-2 border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
-                                                    id=""
-                                                    cols="20"
-                                                    rows="4"></textarea>
-                                            </div>
-                                        </>
-                                    }
-                                    {/*body*/}
-                                    <div className="flex flex-col items-start justify-start bg-red">
-                                        <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
+            
+                            )
+                        }
+                        {
+                            showModal ? (
+                                <GenericModal
+                                    type={'Add New Columns'}
+                                    handleSaveChanges={handleSaveChanges}
+                                    handleInputCreation={handleInputSaveCreation}
+                                    closeModal={closeModal}
+                                >
+                                    <div className="flex flex-col items-start justify-start">
+                                        <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Columns</label>
                                         {
-                                            pendingCurrentTaskInfo.subtasks?.map((input, index) => (
+                                            pendingInputField.columns.map((input, index) => (
                                                 <div key={index} className="flex items-center w-full space-x-4 mb-2">
                                                     <input
                                                         id={`nameColumns${index}`}
                                                         name={`nameColumn${index}`}
-                                                        className="w-11/12  pl-3  h-10 border border-lightGray border-opacity-25 rounded-sm text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
+                                                        className="input-standard-delete"
                                                         type="text"
                                                         maxLength="25"
-                                                        placeholder={placeholderExample[index] || 'Any...'}
-                                                        value={input.title || ''}
-                                                        onChange={(e) => handleEditSubtaskChange(index, e)}
+                                                        placeholder="Todo"
+                                                        value={input.column || ''}
+                                                        onChange={(e) => handleChange(index, e)}
+                                                        autoFocus
                                                     />
-                                                    <button onClick={() => handleEditDeleteSubtask(index)}>
+                                                    <button onClick={() => handleDelete(input.id)}>
                                                         <img src={crossMark} alt=""/>
                                                     </button>
                                                 </div>
                                             ))
                                         }
                                     </div>
-                                    {/*footer*/}
-                                    <div className="flex flex-col items-center justify-center">
-                                        <button
-                                            className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+']"
-                                            type="button"
-                                            onClick={handleEditAddSubtasksInput}
-                                        >
-                                            Add Subtask
-                                        </button>
-                                        {
-                                            <div className="relative flex flex-col w-full items-start justify-start mb-6">
-                                                <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Status</label>
-                                                <ComboBox
-                                                    selectedOption={selectedOption}
-                                                    setSelectedOption={setSelectedOption}
-                                                    onSelectionChange={setPendingEditSelectedOption}
-                                                />
+                                </GenericModal>
+                            ) : null
+                        }
+                        {
+                            isTaskModalOpen ? (
+                                <div>
+                                    <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                                        <div className="container mx-auto w-11/12 md:w-[480px]">
+                                            {/*content*/}
+                                            <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
+                                                {/*header*/}
+                                                <div className="flex justify-between">
+                                                    <p className="text-lg text-gray-950 font-bold dark:text-white">
+                                                        {
+                                                            currentTaskInfo.title
+                                                        }
+                                                    </p>
+                                                    <div className="relative" ref={dropdownRefEditDelete}>
+                                                        <button className={'w-8 h-8 absolute flex items-center justify-center -translate-x-[32px]'} onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
+                                                            <img className=" h-4 md:h-6 cursor-pointer" src={threeDots} alt=""/>
+                                                        </button>
+                                        
+                                                        <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start border -left-3 top-1 absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray dark:border-0 rounded-lg shadow`}>
+                                                            <button className="text-veryLightGray"
+                                                                onClick={() => handleEditTaskDetails(true)}
+                                                            >Edit Task</button>
+                                                            <button className="text-tomatoRed" onClick={handleConfirmDeleteCurrentTask}>Delete Task</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                
+                                                <p className="text-slate-400 py-6 text-[13px] font-medium leading-[23px]">
+                                                    {
+                                                        currentTaskInfo.description
+                                                    }
+                                                </p>
+                                                {/*body*/}
+                                                <div>
+                                                    <p className="pb-2 text-xs font-bold text-veryLightGray">Subtasks ({currentTaskInfo.subtasks.filter(subtask => subtask.isCompleted === true).length} of {currentTaskInfo.subtasks.length})</p>
+                                                    <div className={'max-h-[271px] overflow-y-auto pr-2'}>
+                                                        {
+                                                            currentTaskInfo.subtasks.map((subtasks, i) => (
+                                                                <div key={i} className="flex items-center gap-x-4 bg-almostWhite py-3 mt-2 dark:bg-darkGray">
+                                                                    <div
+                                                                        className={`ml-3 grid place-items-center w-[16px] h-[16px] border outline-none focus:none rounded-sm ${subtasks.isCompleted ? ' bg-darkPurple border-0' : 'bg-white dark:bg-mediumGray dark:border-lightGray'}`}
+                                                                        onClick={() => toggleCheckmark(subtasks, i)}
+                                                                    >
+                                                                        <img className={`${subtasks.isCompleted ? '' : 'dark:hidden'}`}  src={iconCheck} alt=""/>
+                                                                    </div>
+                                                                    <p className={`mb-1 font-[25px] text-darkBlue dark:text-white ${subtasks.isCompleted ? 'line-through opacity-50' : ''}`}>
+                                                                        {subtasks.title}
+                                                                    </p>
+                                                
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                </div>
+                                                {/*footer*/}
+                                                <div className="relative flex flex-col w-full items-start justify-start mb-6">
+                                                    <label className="text-slate-400 text-[12px] py-2 pt-3 font-bold" htmlFor="">Current status</label>
+                                                    <ComboBox
+                                                        selectedOption={selectedOption}
+                                                        setSelectedOption={setSelectedOption}
+                                                        onSelectionChange={handleSelectionChange}
+                                                        currentSelectedValue={currentTaskInfo.selectedOption}
+                                                    />
+                                                </div>
                                             </div>
-                                        }
-                                        <button
-                                            className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={handleUpdateTask}
-                                        >
-                                            Save Changes
-                                        </button>
+                                        </div>
                                     </div>
+                                    {/*overlay*/}
+                                    <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeShowInfoModal}></div>
                                 </div>
-                            </div>
-                        </div>
-                        {/*overlay*/}
-                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
-                    </div>
-                ) : null
-            }
-    
-            {
-                isConfirmDeleteTaskModalOpen ? (
-                    <div>
-                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
-                            <div className="container mx-auto w-11/12 md:w-[480px]">
-                                {/*content*/}
-                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
-                                    {/*header*/}
-                                    <p className="text-lg text-tomatoRed font-bold font-plus-jakarta mb-6">
-                                        Delete this task?
-                                    </p>
-                                    {/*body*/}
-                                    <div className="flex flex-col items-start justify-start mb-6">
-                                        <p className="font-plus-jakarta text-veryLightGray text-sm">
-                                            Are you sure you want to delete &lsquo;{ currentTaskInfo.title }&rsquo; and its subtasks? This action cannot be undone.
-                                        </p>
+                            ) : null
+                        }
+        
+                        {
+                            isEditTaskModalOpen ? (
+                                <div>
+                                    <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                                        <div className="container mx-auto w-11/12 md:w-[480px]">
+                                            {/*content*/}
+                                            <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
+                                                {/*header*/}
+                                                <p className="text-lg text-gray-950 font-bold dark:text-white">
+                                                    Edit Task
+                                                </p>
+                                                {
+                                                    <>
+                                                        <div className="flex flex-col items-start justify-start">
+                                                            <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Title</label>
+                                                            <input
+                                                                name="title"
+                                                                value={pendingCurrentTaskInfo.title || ''}
+                                                                onChange={(e) => handleEditTitleChange(e)}
+                                                                className="w-full pl-3 mb-4 h-10 border border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
+                                                                type="text"/>
+                                                        </div>
+                                                        <div className="flex flex-col items-start justify-start">
+                                                            <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Description</label>
+                                                            <textarea
+                                                                name="description"
+                                                                value={pendingCurrentTaskInfo.description || ''}
+                                                                onChange={(e) => handleEditDescriptionChange(e)}
+                                                                className="w-full border pl-4 pt-2 border-lightGray border-opacity-25 rounded text-gray-950 focus:outline-none dark:bg-mediumGray dark:border-lightMediumGray dark:border-opacity-25 dark:caret-white dark:text-white"
+                                                                id=""
+                                                                cols="20"
+                                                                rows="4"></textarea>
+                                                        </div>
+                                                    </>
+                                                }
+                                                {/*body*/}
+                                                <div className="flex flex-col items-start justify-start bg-red">
+                                                    <label htmlFor="nameColumn" className="text-slate-400 text-[12px] py-2 font-bold">Subtasks</label>
+                                                    {
+                                                        pendingCurrentTaskInfo.subtasks?.map((input, index) => (
+                                                            <div key={index} className="flex items-center w-full space-x-4 mb-2">
+                                                                <input
+                                                                    id={`nameColumns${index}`}
+                                                                    name={`nameColumn${index}`}
+                                                                    className="input-standard-delete"
+                                                                    type="text"
+                                                                    maxLength="25"
+                                                                    placeholder={placeholderExample[index] || 'Any...'}
+                                                                    value={input.title || ''}
+                                                                    onChange={(e) => handleEditSubtaskChange(index, e)}
+                                                                />
+                                                                <button onClick={() => handleEditDeleteSubtask(index)}>
+                                                                    <img src={crossMark} alt=""/>
+                                                                </button>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                                {/*footer*/}
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <button
+                                                        className="bg-indigo-500 bg-opacity-10 mt-3 rounded-full w-full mb-8 text-darkPurple background-transparent font-bold mt-2 px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 before:content-['+']"
+                                                        type="button"
+                                                        onClick={handleEditAddSubtasksInput}
+                                                    >
+                                                        Add Subtask
+                                                    </button>
+                                                    {
+                                                        <div className="relative flex flex-col w-full items-start justify-start mb-6">
+                                                            <label className="text-slate-400 text-[12px] py-2 font-bold" htmlFor="">Status</label>
+                                                            <ComboBox
+                                                                selectedOption={selectedOption}
+                                                                setSelectedOption={setSelectedOption}
+                                                                onSelectionChange={setPendingEditSelectedOption}
+                                                            />
+                                                        </div>
+                                                    }
+                                                    <button
+                                                        className="bg-darkPurple w-full rounded-full font-plus-jakarta mb-6 text-white active:bg-lightPurple font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        type="button"
+                                                        onClick={handleUpdateTask}
+                                                    >
+                                                        Save Changes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {/*footer*/}
-                                    <div className="flex items-center gap-x-2 justify-center">
-                                        <button
-                                            className="bg-tomatoRed rounded-full w-full text-white font-bold px-6 py-2.5 text-sm outline-none shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={handleDeleteCurrentTask}
-                                        >
-                                            Delete
-                                        </button>
-                                        <button
-                                            className="bg-lightPurple bg-opacity-10 w-full rounded-full font-plus-jakarta text-darkPurple active:text-lightPurple active:bg-darkPurple font-bold text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={handleCloseDeleteTaskModal}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
+                                    {/*overlay*/}
+                                    <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
+                            ) : null
+                        }
+        
+                        {
+                            isConfirmDeleteTaskModalOpen ? (
+                                <div>
+                                    <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                                        <div className="container mx-auto w-11/12 md:w-[480px]">
+                                            {/*content*/}
+                                            <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
+                                                {/*header*/}
+                                                <p className="text-lg text-tomatoRed font-bold font-plus-jakarta mb-6">
+                                                    Delete this task?
+                                                </p>
+                                                {/*body*/}
+                                                <div className="flex flex-col items-start justify-start mb-6">
+                                                    <p className="font-plus-jakarta text-veryLightGray text-sm">
+                                                        Are you sure you want to delete &lsquo;{ currentTaskInfo.title }&rsquo; and its subtasks? This action cannot be undone.
+                                                    </p>
+                                                </div>
+                                                {/*footer*/}
+                                                <div className="flex items-center gap-x-2 justify-center">
+                                                    <button
+                                                        className="bg-tomatoRed rounded-full w-full text-white font-bold px-6 py-2.5 text-sm outline-none shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                                        type="button"
+                                                        onClick={handleDeleteCurrentTask}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                    <button
+                                                        className="bg-lightPurple bg-opacity-10 w-full rounded-full font-plus-jakarta text-darkPurple active:text-lightPurple active:bg-darkPurple font-bold text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                                        type="button"
+                                                        onClick={handleCloseDeleteTaskModal}
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeEditTaskModal}></div>
+                                </div>
+                            ) : null
+                        }
                     </div>
-                ) : null
+                ) : (
+                    <div className='relative w-full flex-grow justify-center items-center flex bg-almostWhite dark:bg-darkGray'>
+                        <div className={`${toggle ? 'left-0 bottom-0 mb-8 block' : 'left-[301px] hidden'} ${'absolute flex items-center pl-[15px] h-12 w-[56px] bg-darkPurple rounded-tr-[100px] rounded-br-[100px] cursor-pointer'}`} onClick={() => { setToggle(!toggle); }}>
+                            <img src={showSideBar} alt=""/>
+                        </div>
+                        <div className="w-72 md:w-80 flex items-center justify-center flex-col gap-y-2 text-center">
+                            <p className="font-lg font-bold text-veryLightGray font-plus-jakarta-sans">
+                                No current board. Create a new board to get started.
+                            </p>
+                        </div>
+                    </div>)
             }
-        </div>
+        </>
+        
     );
 };
 

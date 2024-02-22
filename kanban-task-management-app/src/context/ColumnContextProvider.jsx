@@ -17,11 +17,12 @@ const ColumnContextProvider = ({children}) => {
     
 
     const handleCreateTask = () => {
+        const filledSubtasks = newSubtaskAddInput.filter(subtask => subtask.title !== '');
         const newTask = {
             id: nanoid(),
             title,
             description,
-            subtasks: [...newSubtaskAddInput],
+            subtasks: [...filledSubtasks],
             selectedOption
         };
         setCurrentBoard(prevBoard => {

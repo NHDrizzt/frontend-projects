@@ -29,7 +29,7 @@ const ButtonAddNewTask = () => {
     
     return (
         <>
-            <button className={`${'px-4 py-2 md:py-3 md:px-6 text-white rounded-full md:flex gap-x-1 md:items-center'} ${currentBoard.columns.length > 0 ? 'bg-darkPurple pointer-events-auto' : 'bg-lightPurple pointer-events-none'}`}
+            <button className={`${'px-4 py-2 md:py-3 md:px-6 text-white rounded-full md:flex gap-x-1 md:items-center'} ${currentBoard?.columns.length > 0 ? 'bg-darkPurple pointer-events-auto' : 'bg-lightPurple pointer-events-none'}`}
                 onClick={() => setShowModal(true)}>
                 <img className="md:h-2 md:mt-1" src={iconAdd} alt=""/>
                 <div className="hidden md:block">
