@@ -13,6 +13,7 @@ import crossMark from '../assets/icon-cross.svg';
 import {BoardContext} from '../context/BoardContext.jsx';
 import '../input.css';
 import useOutsideClick from '../hooks/useOutsideClick.jsx';
+import {nanoid} from 'nanoid';
 
 const Header = () => {
     const dropdownRef = useRef(null);
@@ -24,6 +25,7 @@ const Header = () => {
     const [tempEditBoardChanges, setTempEditBoardChanges] = useState(currentBoard);
     const { boards, setBoards } = useContext(BoardContext);
     const dropdownOptionsBoardRef = useRef(null);
+    const [isConfirmDeleteBoardModalOpen, setIsConfirmDeleteBoardModalOpen] = useState(false);
     const colors = [
         'bg-red-500',
         'bg-blue-500',
@@ -90,10 +92,32 @@ const Header = () => {
     }, [currentBoard]);
     
     const handleDeleteCurrentBoard = () => {
-        if(boards.length > 0) {
-            setBoards(prevState => prevState.filter(board => board.id !== currentBoard.id));
-            setCurrentBoard(boards[0]);
+        setIsConfirmDeleteBoardModalOpen(true);
+    };
+    
+    const handleConfirmDeleteCurrentBoard = () => {
+        if (boards.length > 0) {
+            const updatedBoards = boards.filter(board => board.id !== currentBoard.id);
+            setBoards(updatedBoards);
+            
+            // Check if updatedBoards is not empty to avoid setting an undefined currentBoard
+            if (updatedBoards.length > 0) {
+                setCurrentBoard(updatedBoards[0]);
+            } else {
+                // Handle the case where there are no more boards left
+                setCurrentBoard(null); // or some default value
+            }
+            
+            setIsConfirmDeleteBoardModalOpen(false);
         }
+    };
+    
+    const handleCloseDeleteBoardModal = () => {
+        setIsConfirmDeleteBoardModalOpen(false);
+    };
+    
+    const closeBoardModal = () => {
+        setIsConfirmDeleteBoardModalOpen(false);
     };
     
     const closeDropdown = () => setShowEditAndDeleteDropdown(false);
@@ -104,6 +128,9 @@ const Header = () => {
     
     return (
         <>
+            {/*{*/}
+            {/*    currentBoard ? () : (<div>no board</div>)*/}
+            {/*}*/}
             <header className="flex border-b border-solid border-lightBlueish dark:border-b-lightGray">
                 <div className="flex py-5 px-4 md:px-[34px] md:w-[301px] md:items-center md:h-[97px] md:border-r md:border-solid md:border-lightBlueish md:dark:border-lightGray">
                     <picture>
@@ -118,7 +145,7 @@ const Header = () => {
                             aria-haspopup="true"
                             onClick={ handleDropdown }
                             disabled={ isScreenLarge }>
-                            {currentBoard.name}
+                            {currentBoard?.name}
                             {
                                 !isScreenLarge ?  <img className="w-3 h-2 mt-1 md:hidden" src={chevronDown} alt=""/> : <></>
                             }
@@ -140,15 +167,17 @@ const Header = () => {
                     </div>
                     <div className="flex items-center">
                         <ButtonAddNewTask />
-                        <div className="relative" ref={dropdownOptionsBoardRef}>
+                        <div className={`relative ${!currentBoard ? 'pointer-events-none' : ''}`} ref={dropdownOptionsBoardRef}>
                             <button onClick={() => setShowEditAndDeleteDropdown(!showEditAndDeleteDropdown)}>
                                 <img className="px-3 h-4 md:pl-6 md:pr-7 md:h-6 cursor-pointer" src={threeDots} alt=""/>
                             </button>
                             <div className={`${!showEditAndDeleteDropdown ? 'hidden': ''} flex flex-col items-start absolute z-50 text-[13px] leading-snug font-plus-jakarta px-4 py-5 space-y-5 -translate-x-[80%] translate-y-6 mx-auto w-48 h-[94px] bg-white dark:bg-darkGray rounded-lg shadow`}>
                                 <button className="text-veryLightGray"
-                                    onClick={() => setShowEditBoard(true)}
+                                    onClick={() => setShowEditBoard(true)
+                                    }
                                 >Edit Board</button>
-                                <button className="text-tomatoRed" onClick={handleDeleteCurrentBoard}>Delete Board</button>
+                                <button className="text-tomatoRed"
+                                    onClick={handleDeleteCurrentBoard}>Delete Board</button>
                             </div>
                         </div>
                     </div>
@@ -197,6 +226,48 @@ const Header = () => {
                             </div>
                         </>
                     </GenericModal>
+                ) : null
+            }
+    
+            {
+                isConfirmDeleteBoardModalOpen ? (
+                    <div>
+                        <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none outline-none focus:outline-none">
+                            <div className="container mx-auto w-11/12 md:w-[480px]">
+                                {/*content*/}
+                                <div className="p-8 rounded-lg flex flex-col pointer-events-auto bg-white outline-none focus:outline-none dark:bg-mediumGray">
+                                    {/*header*/}
+                                    <p className="text-lg text-tomatoRed font-bold font-plus-jakarta mb-6">
+                                        Delete this board?
+                                    </p>
+                                    {/*body*/}
+                                    <div className="flex flex-col items-start justify-start mb-6">
+                                        <p className="font-plus-jakarta text-veryLightGray text-sm">
+                                            Are you sure you want to delete &lsquo;{ currentBoard.name }&rsquo; and its tasks? This action cannot be undone.
+                                        </p>
+                                    </div>
+                                    {/*footer*/}
+                                    <div className="flex items-center gap-x-2 justify-center">
+                                        <button
+                                            className="bg-tomatoRed rounded-full w-full text-white font-bold px-6 py-2.5 text-sm outline-none shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleConfirmDeleteCurrentBoard}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="bg-lightPurple bg-opacity-10 w-full rounded-full font-plus-jakarta text-darkPurple active:text-lightPurple active:bg-darkPurple font-bold text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleCloseDeleteBoardModal}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="opacity-25 fixed inset-0 z-40 bg-black" onClick={closeBoardModal}></div>
+                    </div>
                 ) : null
             }
         </>

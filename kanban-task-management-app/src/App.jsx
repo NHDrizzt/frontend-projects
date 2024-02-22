@@ -11,7 +11,7 @@ function App() {
     
     const { darkMode } = useContext(DarkModeContext);
     const { toggle } = useContext(SideBarContext);
-    console.log(toggle);
+    
     return (
         <div className={`${darkMode ? 'dark' : ''} flex flex-col h-screen`}>
             <div className="flex flex-col dark:bg-mediumGray">

@@ -56,14 +56,16 @@ const DropdownSection = () => {
     };
     
     const handleCreateNewBoard = () => {
+        const newBoard = {
+            id: nanoid(),
+            name: boardName,
+            columns: pendingCreateColumns
+        };
+        
         setBoards(prevBoards => [
-            ...prevBoards,
-            {
-                id: nanoid(),
-                name: boardName,
-                columns: pendingCreateColumns
-            }
+            ...prevBoards, newBoard
         ]);
+        setCurrentBoard(newBoard);
         setSelectedOption(pendingCreateColumns[0]?.column);
         setPendingCreateColumns([{ id: nanoid(), color: colors[Math.floor(Math.random() * colors.length)], column: '', tasks: []}]);
         setBoardName('');
